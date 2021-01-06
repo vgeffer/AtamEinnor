@@ -34,7 +34,12 @@ void Mat2DMakeRotation(float angle, Mat2x2* out){
     out->content[1][1] = cosf(angle);
 }
 void Mat2DMultiply(Mat2x2* a, Mat2x2* b, Mat2x2* out){}
-void Mat2DMultiplyVector(Mat2x2* a, Vec2* b, Vec2* out){}
+void Mat2DMultiplyVector(Mat2x2* a, Vec2* b, Vec2* out){
+
+    out->x = (a->content[0][0] * b->x) + (a->content[0][1] * b->y);
+    out->y = (a->content[1][0] * b->x) + (a->content[1][1] * b->y);
+
+}
 
 
 void Vec2Multiply(Vec2* a, Vec2* b, Vec2* out){}

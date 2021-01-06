@@ -17,8 +17,8 @@
     #define __BUILD_STRING__ "HexEngTest0"
 #endif
 //Include SDL
-#ifdef __WIN32
-    //TODO: Windows Include
+#ifdef _WIN32
+    #include "SDL2/SDL.h"
 #else
     #include <SDL2/SDL.h>
 #endif
