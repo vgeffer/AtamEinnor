@@ -1,0 +1,48 @@
+//======================================
+//
+//  Platform.hpp
+//
+//  Contains all platform-related shit
+//
+//======================================
+#pragma once
+
+//Comment out when release build is done
+#define __DEBUG__
+
+//Esentialy title of the window
+#ifdef __DEBUG__
+    #define __BUILD_STRING__ "build 291220 - engine test"
+#else
+    #define __BUILD_STRING__ "HexEngTest0"
+#endif
+//Include SDL
+#ifdef __WIN32
+    //TODO: Windows Include
+#else
+    #include <SDL2/SDL.h>
+#endif
+
+//Err codes
+#include "Common.hpp"
+
+//Window struct
+struct Window{
+	SDL_Window* 	Window = NULL;
+	SDL_Renderer* 	Renderer = NULL;
+	SDL_Texture* 	ScreenBuffer = NULL;
+
+
+    int W, H;
+    char Flags;
+};
+
+//Video mode struct
+struct VideoMode{
+    int W, H;
+    bool fs, vs;
+};
+
+int CreateWindow(VideoMode mode, Window* win);
+void PushFrame(uint32_t* fbuffer, Window* win);
+int DestroyWindow(Window* win);
