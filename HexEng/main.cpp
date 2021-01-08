@@ -1,4 +1,5 @@
 #include <chrono>
+#include <ctime>
 
 #include "Platform.hpp"
 #include "Common.hpp"
@@ -19,6 +20,11 @@ int main(void) {
     CreateWindow({800,600, false, false}, &win);
     fbuffer = (uint32_t*)malloc(800 * 600 * sizeof(uint32_t));
 
+
+    //Seed RNG
+    std::time_t t = std::time(0);   // get time now
+    std::tm* tm_now = std::localtime(&t);
+    srand((tm_now->tm_year - tm_now->tm_yday) * tm_now->tm_sec + (tm_now->tm_wday * tm_now->tm_min) - tm_now->tm_sec * tm_now->tm_mday);
 
 
     //Main Game Loop

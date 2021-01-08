@@ -42,7 +42,10 @@ void Mat2DMultiplyVector(Mat2x2* a, Vec2* b, Vec2* out){
 }
 
 
-void Vec2Multiply(Vec2* a, Vec2* b, Vec2* out){}
+void Vec2ElementProduct(Vec2* a, Vec2* b, Vec2* out){}
+void Vec2CrossProduct(Vec2* a, Vec2* b, Vec2* out){}
+void Vec2DotProduct(Vec2* a, Vec2* b, Vec2* out){}
+void Vec2Normalize(Vec2* a){}
 void Vec2Add(Vec2* a, Vec2* b, Vec2* out) {
     out->x = a->x + b->x;
     out->y = a->y + b->y;

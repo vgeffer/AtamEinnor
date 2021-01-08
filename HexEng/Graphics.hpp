@@ -8,7 +8,7 @@
 #pragma once
 
 #include <iostream>
-#include <sstream>
+#include <fstream>
 
 #include "Math.hpp"
 #include "Common.hpp"
@@ -36,3 +36,5 @@ struct Sprite{
 void DrawTransformed(Sprite* spr, uint32_t* surface);
 void DrawRaw(Sprite* spr, uint32_t* surface);
 
+
+int LoadSprite(const char* path, Sprite* spr);
