@@ -54,7 +54,7 @@ int LoadSprite(const char* path, Sprite* spr){
     std::ifstream img = std::ifstream(path, std::ifstream::binary);
 
     //If file not found, throw an error
-    if(!img.is_open())return FILE_NOT_FOUND;
+    if(!img.is_open())return ErrCode::FILE_NOT_FOUND;
     
     //Img Data
     char Header[16], *RawData;
@@ -106,7 +106,7 @@ int LoadSprite(const char* path, Sprite* spr){
             }
         }
 
-        return OK;
+        return ErrCode::OK;
     }
 
     for(int i = 0; i < length; i++) {
@@ -114,5 +114,5 @@ int LoadSprite(const char* path, Sprite* spr){
         uint32_t col = RawData[i++] << 24 | RawData[i++] << 16 | RawData[i++] << 8 | RawData[i++]; 
         spr->data[imgInd++] = col;
     }
-
+    return ErrCode::OK;
 }

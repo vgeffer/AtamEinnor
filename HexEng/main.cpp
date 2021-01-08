@@ -17,7 +17,7 @@ int main(void) {
 
 
     //TODO: EDIT THIS TO ALLOW RES
-    CreateWindow({800,600, false, false}, &win);
+    if(CreateWindow({800,600, false, false}, &win) > OK) return;
     fbuffer = (uint32_t*)malloc(800 * 600 * sizeof(uint32_t));
 
 
