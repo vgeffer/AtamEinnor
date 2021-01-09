@@ -9,7 +9,7 @@ int CreateWindow(VideoMode mode, Window* win) {
 	}
 
 	//Create a window and a Renderer that will draw to it
-	win->Window = SDL_CreateWindow(__BUILD_STRING__, 200, 200, mode.W, mode.H, 0);
+	win->Window = SDL_CreateWindow(__BUILD_STRING__, 200, 200, mode.W, mode.H, mode.fs ? SDL_WINDOW_FULLSCREEN : 0);
 	win->Renderer = SDL_CreateRenderer(win->Window , -1, mode.vs ? SDL_RENDERER_PRESENTVSYNC : 0);
 
 	if (!(win->Window)){

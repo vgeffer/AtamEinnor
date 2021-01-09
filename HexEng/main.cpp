@@ -5,7 +5,7 @@
 #include "Common.hpp"
 
 
-int main(void) {
+int main(int argc, char *argv[]) {
 
     Window win;
     uint32_t* fbuffer; //IMPORTANT!!1!!1: Colors are ARGB!!!1!
@@ -17,7 +17,7 @@ int main(void) {
 
 
     //TODO: EDIT THIS TO ALLOW RES
-    if(CreateWindow({800,600, false, false}, &win) > OK) return;
+    if(CreateWindow({800,600, true, false}, &win) > OK) return -1;
     fbuffer = (uint32_t*)malloc(800 * 600 * sizeof(uint32_t));
 
 

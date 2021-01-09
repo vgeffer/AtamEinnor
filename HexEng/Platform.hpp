@@ -7,8 +7,9 @@
 //======================================
 #pragma once
 
-//Comment out when release build is done
-#define __DEBUG__
+//Uncomment this to force debug mode
+//Otherwise, define it in g++
+//#define __DEBUG__
 
 //Esentialy title of the window
 #ifdef __DEBUG__
