@@ -106,6 +106,7 @@ int LoadSprite(const char* path, Sprite* spr){
             }
         }
 
+        free(RawData);
         return ErrCode::OK;
     }
 
@@ -114,5 +115,7 @@ int LoadSprite(const char* path, Sprite* spr){
         uint32_t col = RawData[i++] << 24 | RawData[i++] << 16 | RawData[i++] << 8 | RawData[i++]; 
         spr->data[imgInd++] = col;
     }
+    
+    free(RawData);
     return ErrCode::OK;
 }
