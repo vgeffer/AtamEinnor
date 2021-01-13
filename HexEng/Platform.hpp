@@ -20,7 +20,7 @@
 
 //Include SDL
 #ifdef _WIN32
-    #include "SDL2/SDL.h"
+    #include "lib/SDL2/SDL.h"
 #else
     #include <SDL2/SDL.h>
 #endif
@@ -45,6 +45,13 @@ struct VideoMode{
     bool fs, vs;
 };
 
+struct FrameBuffer{
+    int W, H;
+    uint32_t* data;
+};
+
 int CreateWindow(VideoMode mode, Window* win);
-void PushFrame(uint32_t* fbuffer, Window* win);
+int CreateFrameBuffer(VideoMode mode, FrameBuffer* fb);
+void PushFrame(FrameBuffer* fb, Window* win);
 int DestroyWindow(Window* win);
+int DestroyFrameBuffer(FrameBuffer* fb);

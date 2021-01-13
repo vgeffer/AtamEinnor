@@ -7,19 +7,22 @@
 
 int main(int argc, char *argv[]) {
 
+
+
     Window win;
-    uint32_t* fbuffer; //IMPORTANT!!1!!1: Colors are ARGB!!!1!
+    VideoMode mode;
+    FrameBuffer fbuf; //IMPORTANT!!1!!1: Colors are ARGB!!!1!
     SDL_Event e;
 
     auto prev = std::chrono::system_clock::now();
     auto now = std::chrono::system_clock::now();
 
 
+    mode = {800, 600, false, false};
 
     //TODO: EDIT THIS TO ALLOW RES
-    if(CreateWindow({800,600, true, false}, &win) > OK) return -1;
-    fbuffer = (uint32_t*)malloc(800 * 600 * sizeof(uint32_t));
-
+    if(CreateWindow(mode, &win) > OK) return -1;
+    if(CreateFrameBuffer(mode, &fbuf) > OK) return -1;
 
     //Seed RNG
     std::time_t t = std::time(0);   // get time now
@@ -49,14 +52,14 @@ int main(int argc, char *argv[]) {
 
 
 
-        PushFrame(fbuffer, &win);
+        PushFrame(&fbuf, &win);
     }
 
     //Needed for some things
     quit:
 
     //Cleanup
-    free(fbuffer);
+    DestroyFrameBuffer(&fbuf);
     DestroyWindow(&win);
 
     return 0;

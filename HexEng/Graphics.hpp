@@ -10,6 +10,7 @@
 #include <iostream>
 #include <fstream>
 
+#include "Platform.hpp"
 #include "Math.hpp"
 #include "Common.hpp"
 
@@ -33,8 +34,9 @@ struct Sprite{
 };
 
 
-void DrawTransformed(Sprite* spr, uint32_t* surface);
-void DrawRaw(Sprite* spr, uint32_t* surface);
+void DrawTransformed(Sprite* spr, FrameBuffer* fb);
+void DrawRaw(Sprite* spr, FrameBuffer* fb);
 
 
 int LoadSprite(const char* path, Sprite* spr);
+void DestroySprite(Sprite* spr);

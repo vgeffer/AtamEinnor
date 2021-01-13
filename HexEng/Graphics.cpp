@@ -2,7 +2,7 @@
 
 
 
-void DrawTransformed(Sprite* spr, uint32_t* surface){
+void DrawTransformed(Sprite* spr, FrameBuffer* fb){
 
     for(int x = 0; x < spr->W; x++){
         for(int y = 0; y < spr->H; y++){
@@ -15,13 +15,13 @@ void DrawTransformed(Sprite* spr, uint32_t* surface){
 
 
                 Mat2DMultiplyVector(&(spr->transformMatrix), &transformVector, &pixelPos);
-                 Vec2Add(&pixelPos, &(spr->trasformOrigin), &pixelPos);
+                Vec2Add(&pixelPos, &(spr->trasformOrigin), &pixelPos);
 
                 switch(spr->sampling){
                     case SamplingType::NEAREST_NEIGHBOR:
-                        //Get XY pos on surface
-
-                        uint32_t a = spr->data[((int)(pixelPos.y)) * spr->W + ((int)(pixelPos.x))];
+                        int spriteX = (int)spr->position.x, spriteY = (int)spr->position.y;
+                        if(spriteX + x >= fb->W || spriteY + y >= fb->H) break; //Clip sprite against edges of screen
+                        fb->data[(spriteY + y) * fb->W + (spriteX + x)] = spr->data[((int)(pixelPos.y)) * spr->W + ((int)(pixelPos.x))];
                     break;
                 }    
 
@@ -33,23 +33,28 @@ void DrawTransformed(Sprite* spr, uint32_t* surface){
 }
 
 
-void DrawRaw(Sprite* spr, uint32_t* surface){
+void DrawRaw(Sprite* spr,FrameBuffer* fb){
 
      for(int x = 0; x < spr->W; x++){
         for(int y = 0; y < spr->H; y++){
 
-            //Get XY pos on surface
-
-            uint32_t a = spr->data[y * spr->W + x];
-
-
+            switch(spr->sampling){
+                case SamplingType::NEAREST_NEIGHBOR:
+                    int spriteX = (int)spr->position.x, spriteY = (int)spr->position.y;
+                    if(spriteX + x >= fb->W || spriteY + y >= fb->H) break; //Clip sprite against edges of screen
+                    fb->data[(spriteY + y) * fb->W + (spriteX + x)] = spr->data[y * spr->W + x];
+                break;
+            }    
         }
     }
 
 
 }
 
-int LoadSprite(const char* path, Sprite* spr){
+int CreateSpriteSprite(const char* path, Sprite* spr){
+
+
+    spr = (Sprite*)malloc(sizeof(Sprite));
 
     std::ifstream img = std::ifstream(path, std::ifstream::binary);
 
@@ -118,4 +123,9 @@ int LoadSprite(const char* path, Sprite* spr){
     
     free(RawData);
     return ErrCode::OK;
+}
+
+void DestroySprite(Sprite* spr) {
+    free(spr->data);
+    free(spr);
 }

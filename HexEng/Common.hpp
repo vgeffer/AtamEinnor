@@ -12,9 +12,18 @@ enum ErrCode{
 
     OK = 0,
     GENERAL_ERROR = 1,
-    
-
+    INSUFFICIENT_MEMORY = 2,
     FILE_NOT_FOUND = 5,
     SDL_INIT_ERROR = 10
 
 };
+
+//======================================
+//
+//  Interdev Msg Board
+//
+//======================================
+//
+//  Hugo. Nebudem pouzivat classy v game code
+//  Structy sa lajsie serializuju
+//      -V

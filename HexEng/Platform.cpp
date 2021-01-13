@@ -27,10 +27,21 @@ int CreateWindow(VideoMode mode, Window* win) {
     return ErrCode::OK;
 }
 
+int CreateFrameBuffer(VideoMode mode, FrameBuffer* fb) {
+
+	fb->W = mode.W;
+	fb->H = mode.H;
+	fb->data = NULL;
+
+	fb->data = (uint32_t *)malloc(mode.W * mode.H * sizeof(uint32_t));
+	if(!(fb->data))return ErrCode::INSUFFICIENT_MEMORY;
+	return ErrCode::OK;
+}
+
 
 //Update the screen
-void PushFrame(uint32_t* fbuffer, Window* win) {
-	SDL_UpdateTexture(win->ScreenBuffer, NULL, fbuffer, win->W * sizeof(Uint32));
+void PushFrame(FrameBuffer* fb, Window* win) {
+	SDL_UpdateTexture(win->ScreenBuffer, NULL, fb->data, win->W * sizeof(Uint32));
 	SDL_RenderClear(win->Renderer);
     SDL_RenderCopy(win->Renderer, win->ScreenBuffer, NULL, NULL);
     SDL_RenderPresent(win->Renderer);
@@ -53,3 +64,11 @@ int DestroyWindow(Window* win) {
 
 }
 
+int DestroyFrameBuffer(FrameBuffer* fb){
+	fb->W = 0;
+	fb->H = 0;
+	free(fb->data);
+	
+	fb->data = NULL;
+	return ErrCode::OK;
+}
