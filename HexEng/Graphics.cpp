@@ -32,7 +32,6 @@ void DrawTransformed(Sprite* spr, FrameBuffer* fb){
 
 }
 
-
 void DrawRaw(Sprite* spr,FrameBuffer* fb){
 
      for(int x = 0; x < spr->W; x++){
