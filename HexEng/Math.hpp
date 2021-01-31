@@ -24,7 +24,9 @@ struct Vec3 {
     float x, y, z;
 };
 
-
+struct Rectangle {
+    Vec2 beg, end;
+};
 
 
 void Mat2DMakeRotation(float angle, Mat2x2* out) {
@@ -47,7 +49,7 @@ void Vec2ElementProduct(Vec2* a, Vec2* b, Vec2* out) {
     out->y = a->y * b->y;
 }
 
-void Vec2CrossProduct(Vec2* a, Vec2* b, Vec2* out){}
+void Vec2CrossProduct(Vec2* a, Vec2* b, Vec2* out){ throw; }
 void Vec2DotProduct(Vec2* a, Vec2* b, Vec2* out){}
 void Vec2Normalize(Vec2* a){}
 void Vec2Add(Vec2* a, Vec2* b, Vec2* out) {

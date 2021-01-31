@@ -20,7 +20,6 @@ enum SamplingType{
 
 };
 
-
 struct Sprite{
 
     int W, H;
@@ -32,6 +31,8 @@ struct Sprite{
     Vec2 trasformOrigin;
     Mat2x2 transformMatrix;
 };
+
+
 
 
 void DrawTransformed(Sprite* spr, FrameBuffer* fb);

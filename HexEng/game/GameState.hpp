@@ -3,9 +3,9 @@
 #pragma once
 #include "Entity.hpp"
 
-struct GameState {
+struct gmstate_t {
 
-    GameEntity* target;
-    uint32_t command;
+    entity_t* p_target;
+    int n_command;
 
 };
