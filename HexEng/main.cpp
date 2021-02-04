@@ -77,10 +77,14 @@ int main(int argc, char *argv[]) {
         for(int i = 0; i < 255; i++) {
             
 
-            //Pass through "holding keys" 
+            if(i == GetKey("CAM_U") && keymap[i]) c_plrcam->c_pos.y += CAM_FIXED_PAN_SPEED * elapsed;
+            if(i == GetKey("CAM_D") && keymap[i]) c_plrcam->c_pos.y -= CAM_FIXED_PAN_SPEED * elapsed;
+            if(i == GetKey("CAM_L") && keymap[i]) c_plrcam->c_pos.x += CAM_FIXED_PAN_SPEED * elapsed;
+            if(i == GetKey("CAM_R") && keymap[i]) c_plrcam->c_pos.x -= CAM_FIXED_PAN_SPEED * elapsed;
         }
 
 
+        RenderImage(nullptr); //Render main camera
         PushFrame(&fbuf, &win);
     }
 

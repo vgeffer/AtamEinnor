@@ -15,3 +15,4 @@ struct camera_t{
 
 void CreateCam(camera_t* out);
 void AssignTarget(camera_t* cam, FrameBuffer* target);
+
