@@ -7,23 +7,23 @@ void DrawTransformed(Sprite* spr, FrameBuffer* fb){
     for(int x = 0; x < spr->W; x++){
         for(int y = 0; y < spr->H; y++){
 
-                Vec2 pixelPos = {0 , 0};
-                Vec2 transformVector = {
-                        x + spr->position.x - spr->trasformOrigin.x,
-                        y + spr->position.y - spr->trasformOrigin.y
-                    };
+            Vec2 pixelPos = {0 , 0};
+            Vec2 transformVector = {
+                x + spr->position.x - spr->trasformOrigin.x,
+                y + spr->position.y - spr->trasformOrigin.y
+            };
 
 
-                Mat2DMultiplyVector(&(spr->transformMatrix), &transformVector, &pixelPos);
-                Vec2Add(&pixelPos, &(spr->trasformOrigin), &pixelPos);
+            Mat2DMultiplyVector(&(spr->transformMatrix), &transformVector, &pixelPos);
+            Vec2Add(&pixelPos, &(spr->trasformOrigin), &pixelPos);
 
-                switch(spr->sampling){
-                    case SamplingType::NEAREST_NEIGHBOR:
-                        int spriteX = (int)spr->position.x, spriteY = (int)spr->position.y;
-                        if(spriteX + x >= fb->W || spriteY + y >= fb->H) break; //Clip sprite against edges of screen
-                        fb->data[(spriteY + y) * fb->W + (spriteX + x)] = spr->data[((int)(pixelPos.y)) * spr->W + ((int)(pixelPos.x))];
+            switch(spr->sampling){
+                case SamplingType::NEAREST_NEIGHBOR:
+                    int spriteX = (int)spr->position.x, spriteY = (int)spr->position.y;
+                    if(spriteX + x >= fb->W || spriteY + y >= fb->H) break; //Clip sprite against edges of screen
+                    fb->data[(spriteY + y) * fb->W + (spriteX + x)] = spr->data[((int)(pixelPos.y)) * spr->W + ((int)(pixelPos.x))];
                     break;
-                }    
+            }    
 
         }
     }

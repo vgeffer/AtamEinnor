@@ -78,13 +78,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\w1Lo\source\repos\HexEng\HexEng\lib;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\w1Lo\source\repos\HexEng\HexEng\lib\bin;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\w1Lo\Documents\GitHub\HexEng\HexEng\HexEng\lib;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\w1Lo\Documents\GitHub\HexEng\HexEng\HexEng\lib\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\w1Lo\source\repos\HexEng\HexEng\lib;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\w1Lo\source\repos\HexEng\HexEng\lib\bin;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\w1Lo\Documents\GitHub\HexEng\HexEng\HexEng\lib;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\w1Lo\Documents\GitHub\HexEng\HexEng\HexEng\lib\bin;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

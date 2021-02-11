@@ -97,12 +97,6 @@ int main(int argc, char *argv[]) {
 
 
 
-
-       for (int i = 0; i < win.W * win.H; i++) {
-
-           fbuf.data[i] = debug_col;
-       }
-
         //RenderImage(nullptr); //Render main camera
         PushFrame(&fbuf, &win);
     }
