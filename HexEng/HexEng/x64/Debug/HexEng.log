@@ -1,0 +1,3 @@
+﻿  main.cpp
+C:\Users\w1Lo\source\repos\HexEng\HexEng\main.cpp(70,25): warning C4390: ';': empty controlled statement found; is this the intent?
+  HexEng.vcxproj -> C:\Users\w1Lo\source\repos\HexEng\x64\Debug\HexEng.exe

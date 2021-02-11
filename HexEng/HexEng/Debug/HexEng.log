@@ -1,0 +1,34 @@
+﻿  Game.cpp
+C:\Users\w1Lo\source\repos\HexEng\HexEng\Platform.hpp(33,22): error C2461: 'Window': constructor syntax missing formal parameters
+  Graphics.cpp
+C:\Users\w1Lo\source\repos\HexEng\HexEng\Platform.hpp(33,22): error C2461: 'Window': constructor syntax missing formal parameters
+C:\Users\w1Lo\source\repos\HexEng\HexEng\Graphics.cpp(83,16): warning C4244: 'initializing': conversion from 'std::streamoff' to 'int', possible loss of data
+C:\Users\w1Lo\source\repos\HexEng\HexEng\Graphics.cpp(108,30): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+C:\Users\w1Lo\source\repos\HexEng\HexEng\Platform.hpp(33,22): error C2461: 'Window': constructor syntax missing formal parameters
+C:\Users\w1Lo\source\repos\HexEng\HexEng\main.cpp(80,15): error C2664: 'uint16_t GetKey(char [])': cannot convert argument 1 from 'const char [6]' to 'char []'
+C:\Users\w1Lo\source\repos\HexEng\HexEng\main.cpp(80,28): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\Users\w1Lo\source\repos\HexEng\HexEng\game\settings\Keybinds.hpp(19,10): message : see declaration of 'GetKey'
+C:\Users\w1Lo\source\repos\HexEng\HexEng\main.cpp(81,15): error C2664: 'uint16_t GetKey(char [])': cannot convert argument 1 from 'const char [6]' to 'char []'
+C:\Users\w1Lo\source\repos\HexEng\HexEng\main.cpp(81,28): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\Users\w1Lo\source\repos\HexEng\HexEng\game\settings\Keybinds.hpp(19,10): message : see declaration of 'GetKey'
+C:\Users\w1Lo\source\repos\HexEng\HexEng\main.cpp(82,15): error C2664: 'uint16_t GetKey(char [])': cannot convert argument 1 from 'const char [6]' to 'char []'
+C:\Users\w1Lo\source\repos\HexEng\HexEng\main.cpp(82,28): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\Users\w1Lo\source\repos\HexEng\HexEng\game\settings\Keybinds.hpp(19,10): message : see declaration of 'GetKey'
+C:\Users\w1Lo\source\repos\HexEng\HexEng\main.cpp(83,15): error C2664: 'uint16_t GetKey(char [])': cannot convert argument 1 from 'const char [6]' to 'char []'
+C:\Users\w1Lo\source\repos\HexEng\HexEng\main.cpp(83,28): message : Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+C:\Users\w1Lo\source\repos\HexEng\HexEng\game\settings\Keybinds.hpp(19,10): message : see declaration of 'GetKey'
+C:\Users\w1Lo\source\repos\HexEng\HexEng\main.cpp(32,28): error C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  Platform.cpp
+C:\Users\w1Lo\source\repos\HexEng\HexEng\Platform.hpp(33,22): error C2461: 'Window': constructor syntax missing formal parameters
+C:\Users\w1Lo\source\repos\HexEng\HexEng\Platform.cpp(12,7): error C7624: Type name 'Window' cannot appear on the right side of a class member access expression
+C:\Users\w1Lo\source\repos\HexEng\HexEng\Platform.hpp(32,8): message : see declaration of 'Window'
+C:\Users\w1Lo\source\repos\HexEng\HexEng\Platform.cpp(13,42): error C7624: Type name 'Window' cannot appear on the right side of a class member access expression
+C:\Users\w1Lo\source\repos\HexEng\HexEng\Platform.hpp(32,8): message : see declaration of 'Window'
+C:\Users\w1Lo\source\repos\HexEng\HexEng\Platform.cpp(15,13): error C7624: Type name 'Window' cannot appear on the right side of a class member access expression
+C:\Users\w1Lo\source\repos\HexEng\HexEng\Platform.hpp(32,8): message : see declaration of 'Window'
+C:\Users\w1Lo\source\repos\HexEng\HexEng\Platform.cpp(25,34): warning C4805: '|': unsafe mix of type 'int' and type 'bool' in operation
+C:\Users\w1Lo\source\repos\HexEng\HexEng\Platform.cpp(56,25): error C7624: Type name 'Window' cannot appear on the right side of a class member access expression
+C:\Users\w1Lo\source\repos\HexEng\HexEng\Platform.hpp(32,8): message : see declaration of 'Window'
+  Text.cpp
+  Generating Code...
