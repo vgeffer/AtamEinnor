@@ -8,6 +8,8 @@ int CreateWindow(VideoMode mode, Window* win) {
 		return ErrCode::SDL_INIT_ERROR;
 	}
 
+	TTF_Init();
+
 	//Create a window and a Renderer that will draw to it
 	win->Window = SDL_CreateWindow(__BUILD_STRING__, 200, 200, mode.W, mode.H, mode.fs ? SDL_WINDOW_FULLSCREEN : 0);
 	win->Renderer = SDL_CreateRenderer(win->Window , -1, mode.vs ? SDL_RENDERER_PRESENTVSYNC : 0);
@@ -17,7 +19,7 @@ int CreateWindow(VideoMode mode, Window* win) {
 	}
 
 	//Create the fbuffer texture
-	win->ScreenBuffer = SDL_CreateTexture(win->Renderer,SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, mode.W, mode.H);
+	win->ScreenBuffer = SDL_CreateTexture(win->Renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, mode.W, mode.H);
 
 	//Save properties and flags
 	win->W = mode.W; 
@@ -41,6 +43,9 @@ int CreateFrameBuffer(VideoMode mode, FrameBuffer* fb) {
 
 //Update the screen
 void PushFrame(FrameBuffer* fb, Window* win) {
+
+	if (SDL_GetWindowFlags(win->Window) & SDL_WINDOW_MINIMIZED) return; //Do not draw!
+
 	SDL_UpdateTexture(win->ScreenBuffer, NULL, fb->data, win->W * sizeof(Uint32));
 	SDL_RenderClear(win->Renderer);
     SDL_RenderCopy(win->Renderer, win->ScreenBuffer, NULL, NULL);
@@ -56,6 +61,9 @@ int DestroyWindow(Window* win) {
 	SDL_DestroyWindow(win->Window);
 	SDL_DestroyRenderer(win->Renderer);
 	
+	//Quit TTF subsystem
+	TTF_Quit();
+
 	//Quit SDL subsystems
 	SDL_Quit();
 

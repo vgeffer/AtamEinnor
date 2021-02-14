@@ -4,11 +4,32 @@
 #include <chrono>
 #include <ctime>
 #include <map>
+#include <math.h>
 
-#include "game/Game.hpp"
+#include "game/Renderer.hpp"
 #include "Platform.hpp"
 #include "Common.hpp"
 
+
+void circle(Vec2 pos, float radius, uint32_t color, FrameBuffer* buffer) {
+    int intRadius = (int)radius;
+
+    unsigned int* topBuffer = buffer->data;
+    unsigned int* bottomBuffer = buffer->data + 2 * intRadius * buffer->W;
+
+    for (float row = 0; row < radius; row++) {
+        float cosinef = sqrtf((radius * radius) - (radius - row) * (radius - row));
+        int cosine = (int)ceilf(cosinef);
+
+        for (int i = intRadius - cosine; i <= intRadius + cosine; i++) {
+            topBuffer[i + (int)(pos.y * buffer->W + pos.x)] = color - i * 2;
+            bottomBuffer[i + (int)(pos.y * buffer->W + pos.x)] = color + i * 2;
+        }
+
+        topBuffer += buffer->W;
+        bottomBuffer -= buffer->W;
+    }
+}
 
 int main(int argc, char *argv[]) {
 
@@ -22,11 +43,13 @@ int main(int argc, char *argv[]) {
 
     std::map<uint32_t, bool> keymap; //Keyboard map
 
+    camera_t cam;
+
     auto prev = std::chrono::system_clock::now();
     auto now = std::chrono::system_clock::now();
 
 
-    mode = {800, 600, false, false};
+    mode = {800, 800, false, false};
 
     if(CreateWindow(mode, &win) > OK) return -1;
     if(CreateFrameBuffer(mode, &fbuf) > OK) return -1;
@@ -40,14 +63,16 @@ int main(int argc, char *argv[]) {
     // Create game-related stuff
     //===========================
     
-    CreateCam(&c_plrcam); 
-    AssignTarget(&c_plrcam, &fbuf);
+
+    //DEBUG
+    TTF_Font* font = TTF_OpenFont("arial.ttf", 25);
+
+
+
+    CreateCam(&cam); 
+    AssignTarget(&cam, &fbuf);
 
     LoadKeybinds(&keyboard);
-
-  
-
-    uint32_t debug_col = 0xFF000000;
 
     //Main Game Loop
     while(1) {
@@ -89,13 +114,13 @@ int main(int argc, char *argv[]) {
         //for held keys
         for (auto const& element : keymap) {
 
-            if (element.first == keyboard.GetKey("CAM_U") && element.second) c_plrcam.c_pos.y += CAM_FIXED_PAN_SPEED * elapsed;
-            if (element.first == keyboard.GetKey("CAM_D") && element.second) c_plrcam.c_pos.y -= CAM_FIXED_PAN_SPEED * elapsed;
-            if (element.first == keyboard.GetKey("CAM_L") && element.second) c_plrcam.c_pos.x += CAM_FIXED_PAN_SPEED * elapsed;
-            if (element.first == keyboard.GetKey("CAM_R") && element.second) c_plrcam.c_pos.x -= CAM_FIXED_PAN_SPEED * elapsed;
+            if (element.first == keyboard.GetKey("CAM_U") && element.second) cam.c_pos.y += CAM_FIXED_PAN_SPEED * elapsed;
+            if (element.first == keyboard.GetKey("CAM_D") && element.second) cam.c_pos.y -= CAM_FIXED_PAN_SPEED * elapsed;
+            if (element.first == keyboard.GetKey("CAM_L") && element.second) cam.c_pos.x += CAM_FIXED_PAN_SPEED * elapsed;
+            if (element.first == keyboard.GetKey("CAM_R") && element.second) cam.c_pos.x -= CAM_FIXED_PAN_SPEED * elapsed;
         }
 
-
+        circle({ 10, 10 }, 101, 0xFFFF0000, &fbuf);
 
         //RenderImage(nullptr); //Render main camera
         PushFrame(&fbuf, &win);
@@ -105,7 +130,10 @@ int main(int argc, char *argv[]) {
     quit:
 
     //Cleanup
-    DestroyFrameBuffer(&fbuf);
+    
+    TTF_CloseFont(font);
+    
+    DestroyFrameBuffer(&fbuf);    
     DestroyWindow(&win);
 
     return 0;

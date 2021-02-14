@@ -24,12 +24,13 @@ enum ErrCode{
 #define _INTRETURN_ inline int32_t
 #define _UINTRETURN_ inline uint32_t
 
+
 //======================================
 //
-//  Interdev Msg Board
+// TODO
 //
 //======================================
 //
-//  Hugo. Nebudem pouzivat classy v game code
-//  Structy sa lajsie serializuju
-//      -V
+//    Add this to credits:
+//      Portions of this software are copyright © 2021 The FreeType
+//      Project(www.freetype.org). All rights reserved.

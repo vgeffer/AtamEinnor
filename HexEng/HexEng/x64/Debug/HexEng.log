@@ -1,3 +1,6 @@
-﻿  main.cpp
-C:\Users\w1Lo\source\repos\HexEng\HexEng\main.cpp(70,25): warning C4390: ';': empty controlled statement found; is this the intent?
-  HexEng.vcxproj -> C:\Users\w1Lo\source\repos\HexEng\x64\Debug\HexEng.exe
+﻿  Renderer.cpp
+  main.cpp
+  Platform.cpp
+C:\Users\w1Lo\Documents\GitHub\HexEng\HexEng\HexEng\Platform.cpp(25,34): warning C4805: '|': unsafe mix of type 'int' and type 'bool' in operation
+  Generating Code...
+  HexEng.vcxproj -> C:\Users\w1Lo\Documents\GitHub\HexEng\HexEng\x64\Debug\HexEng.exe
