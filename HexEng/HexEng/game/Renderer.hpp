@@ -26,7 +26,7 @@ private:
 
 	void thread_spin(void(* rnd_method)());
 
-	std::thread gfx_rnd_light( thread_spin, &DrawLights);
+	//std::thread gfx_rnd_light( thread_spin, &DrawLights);
 	std::thread gfx_rnd_back;
 	std::thread gfx_rnd_ent;
 	std::thread gfx_rnd_front;

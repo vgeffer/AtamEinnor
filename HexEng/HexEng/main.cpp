@@ -17,7 +17,7 @@ void circle(Vec2 pos, float radius, uint32_t color, FrameBuffer* buffer) {
     unsigned int* topBuffer = buffer->data;
     unsigned int* bottomBuffer = buffer->data + 2 * intRadius * buffer->W;
 
-    for (float row = 0; row < radius; row++) {
+    for (float row = 0; row < radius + 1; row++) {
         float cosinef = sqrtf((radius * radius) - (radius - row) * (radius - row));
         int cosine = (int)ceilf(cosinef);
 
@@ -48,7 +48,6 @@ int main(int argc, char *argv[]) {
     auto prev = std::chrono::system_clock::now();
     auto now = std::chrono::system_clock::now();
 
-
     mode = {800, 800, false, false};
 
     if(CreateWindow(mode, &win) > OK) return -1;
@@ -62,12 +61,6 @@ int main(int argc, char *argv[]) {
     //===========================
     // Create game-related stuff
     //===========================
-    
-
-    //DEBUG
-    TTF_Font* font = TTF_OpenFont("arial.ttf", 25);
-
-
 
     CreateCam(&cam); 
     AssignTarget(&cam, &fbuf);
@@ -120,7 +113,7 @@ int main(int argc, char *argv[]) {
             if (element.first == keyboard.GetKey("CAM_R") && element.second) cam.c_pos.x -= CAM_FIXED_PAN_SPEED * elapsed;
         }
 
-        circle({ 10, 10 }, 101, 0xFFFF0000, &fbuf);
+        circle({ 10, 10 }, 300, 0xFFFF0000, &fbuf);
 
         //RenderImage(nullptr); //Render main camera
         PushFrame(&fbuf, &win);

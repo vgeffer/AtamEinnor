@@ -1,6 +1,2 @@
-﻿  Renderer.cpp
-  main.cpp
-  Platform.cpp
-C:\Users\w1Lo\Documents\GitHub\HexEng\HexEng\HexEng\Platform.cpp(25,34): warning C4805: '|': unsafe mix of type 'int' and type 'bool' in operation
-  Generating Code...
-  HexEng.vcxproj -> C:\Users\w1Lo\Documents\GitHub\HexEng\HexEng\x64\Debug\HexEng.exe
+﻿  main.cpp
+  HexEng.vcxproj -> C:\Users\w1lo\Documents\GitHub\HexEng\HexEng\x64\Debug\HexEng.exe
