@@ -27,9 +27,6 @@
     <ClInclude Include="Platform.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Text.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="game\Entity.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -59,10 +56,10 @@
     <ClCompile Include="Platform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Text.cpp">
+    <ClCompile Include="game\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\Renderer.cpp">
+    <ClCompile Include="game\ui\UI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

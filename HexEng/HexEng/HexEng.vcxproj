@@ -155,14 +155,13 @@
     <ClInclude Include="Graphics.hpp" />
     <ClInclude Include="Math.hpp" />
     <ClInclude Include="Platform.hpp" />
-    <ClInclude Include="Text.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game\Renderer.cpp" />
+    <ClCompile Include="game\ui\UI.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Platform.cpp" />
-    <ClCompile Include="Text.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

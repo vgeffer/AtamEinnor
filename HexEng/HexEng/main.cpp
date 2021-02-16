@@ -22,8 +22,8 @@ void circle(Vec2 pos, float radius, uint32_t color, FrameBuffer* buffer) {
         int cosine = (int)ceilf(cosinef);
 
         for (int i = intRadius - cosine; i <= intRadius + cosine; i++) {
-            topBuffer[i + (int)(pos.y * buffer->W + pos.x)] = color - i * 2;
-            bottomBuffer[i + (int)(pos.y * buffer->W + pos.x)] = color + i * 2;
+            topBuffer[i + (int)(pos.y * buffer->W + pos.x)] = MIX_ALPHA(color, 0xCCCCCCCC);
+            bottomBuffer[i + (int)(pos.y * buffer->W + pos.x)] = color;
         }
 
         topBuffer += buffer->W;
@@ -123,9 +123,6 @@ int main(int argc, char *argv[]) {
     quit:
 
     //Cleanup
-    
-    TTF_CloseFont(font);
-    
     DestroyFrameBuffer(&fbuf);    
     DestroyWindow(&win);
 

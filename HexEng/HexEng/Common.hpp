@@ -25,6 +25,12 @@ enum ErrCode{
 #define _UINTRETURN_ inline uint32_t
 
 
+_UINTRETURN_ MIX_ALPHA(uint32_t col, uint32_t bckg) {
+    float alpha = (float)((col >> 24) & 0xFF) / (float)0xFF;
+
+    return (alpha * col) + ((1 - alpha) * bckg);
+}
+
 //======================================
 //
 // TODO
