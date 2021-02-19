@@ -2,7 +2,7 @@
 
 
 function OnLoadEventHandler() {
-    
+
     /*LOAD SETTINGS FROM LocalStorage*/
     RenderSettings = window.localStorage.getItem('RENDSETT');
     if(RenderSettings === null) {
@@ -67,7 +67,14 @@ function OnMouseWheelHandler(event) {
 }
 
 
+function OnMenuButtonClick(event) {
 
+    switch(event) {
+        case 'newgame':
+        break;
+    }
+
+}
 
 //Create Event Listeners
 window.onload = OnLoadEventHandler;

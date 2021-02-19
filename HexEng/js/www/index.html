@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+    	<meta charset = "UTF-8" lang = "en-US">
+    	<meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+    
+		<!--link fonts-->
+		<link rel = "preconnect" href = "https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap" rel="stylesheet"> 
+
+		<!--link css-->
+		<link rel="stylesheet" href="page.css"/>   
+
+		<!--link libs-->
+		<script src = "js/gl-matrix-min.js"></script>
+
+		<!--link functionality-->
+		<script src = "js/global_var.js"></script>
+		<script src = "js/event.js"></script>
+
+		<!--link rendering-->
+		<script src = "js/renderer.js"></script>
+
+    	<title>w1Los_space</title>
+    </head>
+  
+  
+    <body>
+		<div id = "menu">
+			<div class = "bckg">
+				<img id = "bckg_img" src = "res/page/7521f3de1d242efde48394f446acb4e189f6e551.jpg" alt = "It broken!">
+			</div>
+
+			<div class = "gmttl">
+				<h1> A title of this game </h1>
+			</div>
+
+			<div class = "menu">
+				<button class = "menu_button" onclick = "OnMenuButtonClick('newgame')">New Game</button>
+				<button class = "menu_button" onclick = "OnMenuButtonClick('join')">Join Game</button>
+				<button class = "menu_button" onclick = "OnMenuButtonClick('settings')">Settings</button>
+				<button class = "menu_button" onclick = "OnMenuButtonClick('about')">About</button>
+			</div>
+
+			<div class = "popup hidden">
+				<h1> A title of this game </h1>
+				<p class = "text">Project Lead: Hugo Halász<br>Coding: Viliam Geffert<br>Graphics: </p>
+				<img src = "res/page/upjs_opaque.png" alt = "upjs_logo">
+			</div>
+
+		</div>
+
+
+
+
+		<div id = "game" class = "bckg hidden">
+			<canvas id = "window"></canvas>
+		</div>
+    </body>
+</html>

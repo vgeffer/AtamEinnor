@@ -1,0 +1,25 @@
+
+body{
+    font-family: 'Amatic SC';
+    margin: 0px;
+    z-index: 1;
+    overflow: hidden; 
+}
+
+.bckg{
+    z-index: -1 !important;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+}
+
+.gmttl{
+    text-align: center;
+    /*color: white;*/
+    margin-top: 5em;
+    font-size: 2em;
+}
+
+.hidden {
+    display: none;
+}
