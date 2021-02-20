@@ -11,10 +11,8 @@
 		<!--link css-->
 		<link rel="stylesheet" href="page.css"/>   
 
-		<!--link libs-->
-		<script src = "js/gl-matrix-min.js"></script>
-
 		<!--link functionality-->
+		<script src = "js/menu.js"></script>
 		<script src = "js/global_var.js"></script>
 		<script src = "js/event.js"></script>
 
@@ -26,34 +24,54 @@
   
   
     <body>
-		<div id = "menu">
+		<div id = "Menu" class = "">
 			<div class = "bckg">
-				<img id = "bckg_img" src = "res/page/7521f3de1d242efde48394f446acb4e189f6e551.jpg" alt = "It broken!">
+				<img id = "bckg_img" src = "res/page/kn57ft7mw4u51.jpg" alt = "It broken!">
 			</div>
 
 			<div class = "gmttl">
-				<h1> A title of this game </h1>
+				<h1> Atam Einnor </h1>
 			</div>
 
 			<div class = "menu">
-				<button class = "menu_button" onclick = "OnMenuButtonClick('newgame')">New Game</button>
-				<button class = "menu_button" onclick = "OnMenuButtonClick('join')">Join Game</button>
-				<button class = "menu_button" onclick = "OnMenuButtonClick('settings')">Settings</button>
-				<button class = "menu_button" onclick = "OnMenuButtonClick('about')">About</button>
+				<button onclick = "OpenPopup('NewGamePopup')">New Game</button>
+				<button onclick = "OpenPopup('JoinGamePopup')">Join Game</button>
+				<button onclick = "OpenPopup(null)">Settings</button>
+				<button onclick = "OpenPopup('AboutPopup')">About</button>
 			</div>
 
-			<div class = "popup hidden">
-				<h1> A title of this game </h1>
-				<p class = "text">Project Lead: Hugo Halász<br>Coding: Viliam Geffert<br>Graphics: </p>
+			<div id = 'NewGamePopup' class = "popup center hidden">
+
+				<button class = "close" onclick = "ClosePopup('NewGamePopup')">X</button>
+			</div>
+
+			<div id = 'JoinGamePopup' class = "popup center hidden">
+				<p id = "err" class = "error hidden">Invalid Code</p>
+				<p id = "suc" class = "success hidden">Joining The Game</p>
+				<p id = "ser" class = "warning hidden">Searching...</p>
+				<input id = "nick" type = "text" placeholder = "Nick" onchange = ""/>
+				<input id = "join_code" type = "text" placeholder = "code" onchange = "JoinGame()"/> <br>
+				<button onclick = "JoinGame()">Join</button>
+
+				<button class = "close" onclick = "ClosePopup('JoinGamePopup')">X</button>
+			</div>
+
+			<div id = 'AboutPopup' class = "popup center hidden">
+				<div>
+					<h1> Atam Einnor </h1>
+					<p class = "text">
+						Project Lead: Hugo Halász<br>Coding: Viliam Geffert<br>Graphics: Ivan Čabra 
+						<br><br>Made for: <a href = "https://ics.upjs.sk/ihra/" target = "_blank">Ihra competition</a>
+						<br> The All-Mighty Server Powered By <a href = "https://temp.kotol.cloud" target = "_blank" style = "color: #FCAC34;">Kotol</a>
+					</p>
+				</div>
 				<img src = "res/page/upjs_opaque.png" alt = "upjs_logo">
+				<button class = "close" onclick = "ClosePopup('AboutPopup')">X</button>
 			</div>
 
 		</div>
 
-
-
-
-		<div id = "game" class = "bckg hidden">
+		<div id = "Game" class = "bckg hidden">
 			<canvas id = "window"></canvas>
 		</div>
     </body>

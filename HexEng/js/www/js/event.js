@@ -18,7 +18,7 @@ function OnLoadEventHandler() {
     }
 
 
-    /*GL CONTEXT CREATION*/
+    /*CONTEXT CREATION*/
     CanvasElement = document.getElementById('window');
     CanvasElement.style = "width: " + window.innerWidth + "px; height: " + window.innerHeight + "px;";
 
@@ -38,8 +38,8 @@ function OnLoadEventHandler() {
     TimePrev = performance.now();
     TimeNow = performance.now();
 
-    /*START GAME*/
-    requestAnimationFrame(NextFrame);
+    /*CLEAR THE CANVAS*/
+    ctx.clearRect(0, 0, CanvasElement.width, CanvasElement.height);
 }
 
 function OnResizeEventHandler() {
@@ -66,16 +66,6 @@ function OnMouseWheelHandler(event) {
 
 }
 
-
-function OnMenuButtonClick(event) {
-
-    switch(event) {
-        case 'newgame':
-        break;
-    }
-
-}
-
 //Create Event Listeners
 window.onload = OnLoadEventHandler;
 window.onresize = OnResizeEventHandler;
@@ -84,3 +74,7 @@ window.onkeydown = OnKeyDownEventHandler;
 window.onmousedown = OnMouseDownHandler;
 window.onmousemove = OnMouseMoveEventHandler;
 window.onmousewheel = OnMouseWheelHandler;
+
+
+//Page Stuff
+

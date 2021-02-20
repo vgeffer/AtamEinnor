@@ -15,6 +15,9 @@ var CanvasElement = null;
 var ctx = null;
 var RenderSettings = null;
 
+//Assets
+var TileSet = null;
+
 //Timing
 var TimePrev = null;
 var TimeNow = null;
