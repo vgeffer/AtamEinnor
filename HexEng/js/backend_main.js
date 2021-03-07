@@ -5,8 +5,11 @@ const fs            = require('fs');
 const url           = require('url'); 
 const path          = require('path');
 
-const network = require('./backend_network.sj');
-
+//temp workaround
+const room = require('./services/game/room.js');
+const { PassThrough } = require('stream');
+const { verify_jwt } = require('./services/network/jwt.js');
+const { isUndefined } = require('util');
 
 
 const err403 = "<title>403: Access denied</title><h1>403:</h1>You don't have permision to view this content!";
@@ -26,7 +29,34 @@ const server = http.createServer(async (req, res) => {
 
 
                 switch(parsedBody.type){
-                
+
+                    case "join-room":
+
+                        //setup response
+                        res.statusCode = 200;
+
+                        let vroom = room.get_room(parsedBody.room_id); //Room getting verified
+                        if(vroom === undefined || vroom.players.length == vroom.pcount) res.end("invalid");
+                        
+                      
+                        
+                    break;
+
+
+                    case "join-token":
+                        
+                        //setup response
+                        res.statusCode = 200;
+
+                        let parsed_token = verify_jwt(parsedBody.token);
+                        if(parsed_token === undefined) res.end("invalid"); //if token is invalid, throw err
+
+
+                        
+
+
+                    break;
+
                 }
 
 
