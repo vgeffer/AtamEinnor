@@ -14,6 +14,7 @@ exports.create_room = function(player_count) {
     /*CREATE ROOM OBJ*/
     room_obj.pcount = player_count;
     room_obj.seed = crypto.randomBytes(16);
+    room_obj.spcount = 0;
     room_obj.lifetime = 60;
     room_obj.world = null;
 

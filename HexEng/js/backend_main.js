@@ -37,8 +37,10 @@ const server = http.createServer(async (req, res) => {
 
                         let vroom = room.get_room(parsedBody.room_id); //Room getting verified
                         if(vroom === undefined || vroom.players.length == vroom.pcount) res.end("invalid");
+                        if(vroom.spcount < vroom.pcount) res.end("invalid");
                         
-                      
+                        
+
                         
                     break;
 
