@@ -1,13 +1,18 @@
 
 Short Term:
+    -Do networking
+    -Do parameter validation in backend
+    -Parameter validation in frontend
 
 
 Long Term:
-    -Do networking
+    -Change private key on release
+    -Rework menu UI
     
 Low Priority:
     -Change font to something better
     -Create animations for menus
+    -Clean Up fucking spagetti code!
 
 
 Finnished:

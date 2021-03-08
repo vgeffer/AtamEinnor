@@ -97,6 +97,10 @@ body{
     border-bottom: 1px solid white;
 }
 
+.popup input:disabled {
+    color: #AFAFAF;
+}
+
 .popup input:focus {
     border-bottom: 1px solid white;
 }
@@ -152,6 +156,17 @@ body{
     text-align: center;
 }
 
+.warning_text {
+    color: #fcc223;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+.groupTitle {
+    font-weight: bolder;
+    font-size: .9em;
+}
 
 /*Specific, id-tied css*/
 #AboutPopup {

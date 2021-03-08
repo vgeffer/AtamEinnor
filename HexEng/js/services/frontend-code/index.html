@@ -41,16 +41,28 @@
 			</div>
 
 			<div id = 'NewGamePopup' class = "popup center hidden">
-
+				<p id = "nerr" class = "error hidden">Error Creating Game</p>
+				<p id = "nsuc" class = "success hidden">Joining The Game</p>
+				<p id = "nser" class = "warning hidden">Creating...</p>
 				<button class = "close" onclick = "ClosePopup('NewGamePopup')">X</button>
+				<div class = "gameprop">
+					<p class = "groupTitle">Game Properties</p>
+					<input id = "player_count" type = "number" min = "2" max = "6" placeholder = "Player Count"> 
+					<p class = "warning_text">Warning! <br> Room will be automaticly deleted 12 hours after it's creation!</p>
+				</div>
+				<div class = "playerprop">
+					<p class = "groupTitle">Player info</p>
+					<input id = "ngnick" type = "text" placeholder = "Nick"/>
+					<button onclick = "CreateGame()">Create</button>
+				</div>
 			</div>
 
 			<div id = 'JoinGamePopup' class = "popup center hidden">
-				<p id = "err" class = "error hidden">Invalid Code</p>
-				<p id = "suc" class = "success hidden">Joining The Game</p>
-				<p id = "ser" class = "warning hidden">Searching...</p>
-				<input id = "nick" type = "text" placeholder = "Nick" onchange = ""/>
-				<input id = "join_code" type = "text" placeholder = "code" onchange = "JoinGame()"/> <br>
+				<p id = "jerr" class = "error hidden">Invalid Code</p>
+				<p id = "jsuc" class = "success hidden">Joining The Game</p>
+				<p id = "jser" class = "warning hidden">Searching...</p>
+				<input id = "jgnick" type = "text" placeholder = "Nick"/>
+				<input id = "join_code" type = "text" placeholder = "Code"/> <br>
 				<button onclick = "JoinGame()">Join</button>
 
 				<button class = "close" onclick = "ClosePopup('JoinGamePopup')">X</button>

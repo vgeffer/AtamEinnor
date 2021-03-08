@@ -4,8 +4,8 @@
 function OnLoadEventHandler() {
 
     /*LOAD SETTINGS FROM LocalStorage*/
-    RenderSettings = window.localStorage.getItem('RENDSETT');
-    if(RenderSettings === null) {
+    RenderSettings = JSON.parse(window.localStorage.getItem('RENDSETT'));
+    if(RenderSettings == null) {
 
         RenderSettings = {};
 
@@ -14,7 +14,7 @@ function OnLoadEventHandler() {
         RenderSettings.Alpha                = false;
         RenderSettings.TextureQuality       = LOD_MED;
 
-        window.localStorage.setItem('RENDSETT', RenderSettings);
+        window.localStorage.setItem('RENDSETT', JSON.stringify(RenderSettings));
     }
 
 
@@ -27,7 +27,7 @@ function OnLoadEventHandler() {
         preserveDrawingBuffer: RenderSettings.Desynchronize
     });
 
-    if(ctx === null) {
+    if (ctx === null) {
 
         alert("Web Browser Not Compatible With 2d Context!");
         window.location = "https://www.google.com/intl/en_us/chrome/";
@@ -40,10 +40,36 @@ function OnLoadEventHandler() {
 
     /*CLEAR THE CANVAS*/
     ctx.clearRect(0, 0, CanvasElement.width, CanvasElement.height);
+
+
+    /*CHECK FOR ?join_room QUERY*/
+    if (location.search.startsWith("?")){
+        const query = location.search.substring(1, location.search.length);
+        const split = query.split("&");
+
+        const queryObject = {};
+
+        for (const parameter of split){
+            const subsplit = parameter.split("=");
+            const key = subsplit[0];
+            const value = subsplit[1];
+            queryObject[key] = value;
+        }
+
+
+        if (queryObject.hasOwnProperty("join_room")){
+            OpenPopup("JoinGamePopup");
+
+            document.getElementById("join_code").value = queryObject.join_room;
+            document.getElementById("join_code").disabled = true;
+        }
+    }
 }
 
 function OnResizeEventHandler() {
-    CanvasElement.style = "width: " + window.innerWidth + "px; height: " + window.innerHeight + "px;";
+    if (CanvasElement != null) {
+        CanvasElement.style = "width: " + window.innerWidth + "px; height: " + window.innerHeight + "px;";
+    }
 }
 
 function OnKeyPressHandler(event) {
