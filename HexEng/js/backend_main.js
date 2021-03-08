@@ -98,3 +98,4 @@ const server = http.createServer(async (req, res) => {
 
 
 server.listen(6502, "127.0.0.1");
+require("./services/network/socket.js")(server);

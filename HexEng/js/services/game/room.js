@@ -17,7 +17,7 @@ exports.create_room = function(player_count) {
     room_obj.spcount = 0;
     room_obj.exp = Date.now() + 12 * 60 * 60 * 1000; //12 hours lifetime
     room_obj.world = null;
-
+    room_obj.chat = [];
 
 
     //Create all room objs
