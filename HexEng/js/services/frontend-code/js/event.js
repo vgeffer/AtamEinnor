@@ -3,6 +3,8 @@
 
 function OnLoadEventHandler() {
 
+    
+
     /*LOAD SETTINGS FROM LocalStorage*/
     RenderSettings = JSON.parse(window.localStorage.getItem('RENDSETT'));
     if(RenderSettings == null) {

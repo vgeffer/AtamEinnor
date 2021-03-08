@@ -43,7 +43,7 @@ module.exports = function(httpServer){
 
             switch(payload.type){
                 case "load_messages":
-                    ws.send(JSON.stringify({type: "data", content:current_room.chat}));
+                    ws.json({type: "data", content:current_room.chat});
                 break;
 
                 case "send_message":
@@ -58,7 +58,7 @@ module.exports = function(httpServer){
 
                 case "id_response":
                     let parsed_token = await jwt.verify_jwt(payload.content);
-                    if (parsed_token === undefined) return ws.send(JSON.stringify({type: "response", content: "failed"}));
+                    if (parsed_token === undefined) return ws.json({type: "response", content: "failed"});
 
                     usr_nick = parsed_token.nick;
                     current_room = room.get_room(parsed_token.room_id);
@@ -70,14 +70,14 @@ module.exports = function(httpServer){
                             break;
                         }
                     }
-
+                    ws.json({type: "response", content: "success"});
                 break;
 
                 case "check_host_privileges":
                     if(usr_nick === current_room.players[0].pnick)
-                        ws.send(JSON.stringify({type: "response", content: "true"}));
+                        ws.json({type: "response", content: "true"});
                     else
-                        ws.send(JSON.stringify({type: "response", content: "false"}));
+                        ws.json({type: "response", content: "false"});
                 break;
 
                 case "host_action":

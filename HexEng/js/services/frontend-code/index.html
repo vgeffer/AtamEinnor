@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang = "en">
-    <head>
-    	<meta charset = "UTF-8" lang = "en-US">
-    	<meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
-    
+	<head>
+		<meta charset = "UTF-8" lang = "en-US">
+		<meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+		
 		<!--link fonts-->
 		<link rel = "preconnect" href = "https://fonts.gstatic.com">
 		<link href="https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap" rel="stylesheet"> 
@@ -19,11 +19,11 @@
 		<!--link rendering-->
 		<script src = "js/renderer.js"></script>
 
-    	<title>w1Los_space</title>
-    </head>
-  
-  
-    <body>
+		<title>w1Los_space</title>
+	</head>
+
+
+	<body>
 		<div id = "Menu" class = "">
 			<div class = "bckg">
 				<img id = "bckg_img" src = "res/page/kn57ft7mw4u51.jpg" alt = "It broken!">
@@ -36,7 +36,7 @@
 			<div class = "menu">
 				<button onclick = "OpenPopup('NewGamePopup')">New Game</button>
 				<button onclick = "OpenPopup('JoinGamePopup')">Join Game</button>
-				<button onclick = "OpenPopup(null)">Settings</button>
+				<button onclick = "OpenPopup('SettingsPopup')">Settings</button>
 				<button onclick = "OpenPopup('AboutPopup')">About</button>
 			</div>
 
@@ -52,7 +52,7 @@
 				</div>
 				<div class = "playerprop">
 					<p class = "groupTitle">Player info</p>
-					<input id = "ngnick" type = "text" placeholder = "Nick"/>
+					<input id = "ngnick" type = "text" autocomplete = "off" placeholder = "Nick"/>
 					<button onclick = "CreateGame()">Create</button>
 				</div>
 			</div>
@@ -61,8 +61,8 @@
 				<p id = "jerr" class = "error hidden">Invalid Code</p>
 				<p id = "jsuc" class = "success hidden">Joining The Game</p>
 				<p id = "jser" class = "warning hidden">Searching...</p>
-				<input id = "jgnick" type = "text" placeholder = "Nick"/>
-				<input id = "join_code" type = "text" placeholder = "Code"/> <br>
+				<input id = "jgnick" type = "text" autocomplete = "off" placeholder = "Nick"/>
+				<input id = "join_code" type = "text" autocomplete = "off" placeholder = "Code"/> <br>
 				<button onclick = "JoinGame()">Join</button>
 
 				<button class = "close" onclick = "ClosePopup('JoinGamePopup')">X</button>
@@ -70,9 +70,9 @@
 
 
 			<div id = 'SettingsPopup' class = "popup center hidden">
-					<h1> Settings </h1>
-					<div class = "tooltip"> </div>
-				<button class = "close" onclick = "ClosePopup('AboutPopup')">X</button>
+				<h1> Settings </h1>
+				<div class = "tooltip"> </div>
+				<button class = "close" onclick = "ClosePopup('SettingsPopup')">X</button>
 			</div>
 
 
@@ -80,7 +80,7 @@
 				<div>
 					<h1> Atam Einnor </h1>
 					<p class = "text">
-						Project Lead: Hugo Halász<br>Coding: Viliam Geffert<br>Graphics: Ivan Čabra 
+						Coding: Viliam Geffert<br>Graphics: Ivan Čabra<br>Project Lead: Hugo Halász
 						<br><br>Made for: <a href = "https://ics.upjs.sk/ihra/" target = "_blank">Ihra competition</a>
 						<br> The All-Mighty Server Powered By <a href = "https://temp.kotol.cloud" target = "_blank" style = "color: #FCAC34;">Kotol</a>
 					</p>
@@ -94,5 +94,5 @@
 		<div id = "Game" class = "bckg hidden">
 			<canvas id = "window"></canvas>
 		</div>
-    </body>
+	</body>
 </html>

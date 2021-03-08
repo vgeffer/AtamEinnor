@@ -93,6 +93,10 @@ body{
     border: none;
 }
 
+.popup input[type = number] {
+    width: 6.5em;
+} 
+
 .popup input:hover {
     border-bottom: 1px solid white;
 }
@@ -109,6 +113,9 @@ body{
     color: #afafaf;
 }
 
+.popup a {
+    color: #b600dc;
+}
 
 
 .center {

@@ -1,0 +1,14 @@
+{
+    "en": {
+        "settings_desync_tooltip" : "Desynchronizes rendering routines. It may boost performance, but may result in flicker when enabled on slower computer.",
+        "settings_alpha_tooltip" : "Allows transparency through the canvas.",
+        "settings_relog_tooltip" : "Automaticly reconnect to last running game.",
+        "settings_lang_tooltip" : "Language of the game."
+    },
+
+    "sk": {
+        "settings_desync_tooltip" : "Desynchronizuje kreslenie. Môže zvýšiť výkon, no na pomalších počítačoch môže spôsobiť blikanie.",
+        "settings_alpha_tooltip": "TODO.",
+        "settings_lang_tooltip": "Jazyk hry."
+    }
+}

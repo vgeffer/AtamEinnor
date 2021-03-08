@@ -1,0 +1,6 @@
+function StartGame() {
+
+
+
+    requestAnimationFrame(NextFrame);
+}
