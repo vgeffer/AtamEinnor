@@ -116,6 +116,7 @@ function CreateGame() {
 
         res.text().then(function(text){
             gameID = text;
+            console.log(text);
         }).then( () => {
 
             //Check, if the code exists
