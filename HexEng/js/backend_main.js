@@ -8,7 +8,7 @@ const path          = require('path');
 const room = require('./services/game/room.js');
 const jwt = require('./services/network/jwt.js');
 
-
+//HTTP error pages
 const err403 = "<title>403: Access denied</title><h1>403:</h1>You don't have permision to view this content!";
 const err404 = "<title>404: Not Found</title><h1>404:</h1>Unable to fetch ./www";
 

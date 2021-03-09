@@ -5,6 +5,7 @@ const room = require("./../game/room.js");
 let wss = null;
 
 module.exports = function(httpServer){
+    if(httpServer == null) return;
     wss = new WebSocketServer({noServer: true});
 
     httpServer.on("upgrade", (request, socket, head) => {
@@ -96,4 +97,13 @@ module.exports = function(httpServer){
 
         });
     });
+}
+
+exports.force_conn_end = function(socket, msg){
+    socket.send(
+        JSON.parse({
+            type: "close",
+            reason: message
+        })
+    );
 }
