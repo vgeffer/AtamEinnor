@@ -168,7 +168,4 @@ function CreateGame() {
             });
         });
     });
-    //If yes, Negoshiate the socket connection
-
-    //Start the game
 }

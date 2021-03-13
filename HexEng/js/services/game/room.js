@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 const ws = require('./../network/socket.js');
-
+const rng = require('./../util/prng.js');
 let rooms = new Map();
 
 exports.create_room = function(player_count) {
@@ -14,8 +14,8 @@ exports.create_room = function(player_count) {
 
     /*CREATE ROOM OBJ*/
     room_obj.pcount = player_count;
-    room_obj.seed = [crypto.randomBytes(4).readUInt32BE(), crypto.randomBytes(4).readUInt32BE(), 
-                     crypto.randomBytes(4).readUInt32BE(), crypto.randomBytes(4).readUInt32BE()];
+    room_obj.seed = crypto.randomBytes(4).readUInt32BE();
+    room_obj.rng = new rng();
     room_obj.spcount = 0;
     room_obj.exp = Date.now() + 12 * 60 * 60 * 1000; //12 hours lifetime
     room_obj.world = null;
@@ -53,7 +53,7 @@ setInterval(() => {
         let room = roms.get(keys[i]);
         if(room.exp < Date.now()) {
             for(let j = 0; j < room.pcount; j++) {
-                socket.force_conn_end(room.players[i].socket, "Game has ended");
+                ws.force_conn_end(room.players[i].socket, "Game has ended");
             }
             rooms.delete(keys[i]);
         }   

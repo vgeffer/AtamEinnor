@@ -1,186 +1,72 @@
 
-body{
+body {
     font-family: 'Amatic SC';
-    margin: 0px;
     z-index: 1;
     overflow: hidden; 
+    background-color: black;
 }
 
-.bckg{
-    z-index: -1 !important;
+.bckg {
+    z-index: -1;
+
     position: fixed;
     top: 0px;
     left: 0px;
 }
 
-.gmttl{
-    text-align: center;
-    /*color: white;*/
-    margin-top: 5em;
-    font-size: 2em;
-}
-
-.menu {
-    position: fixed;
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.menu button {
-    margin-left: 2em;
-    background-color: transparent;
-    border: 2px solid white;
-    outline: none;
-    font-family: 'Amatic SC';
-    font-size: 2em;
-    color: white;
-
-}
-
-.menu button:hover {
-    color: #afafaf;
-    border: 2px solid #afafaf;
-}
-
-.menu button:active {
-    color: #7f7f7f;
-    border: 2px solid #7f7f7f;
-    transition: 100ms;
-}
-
-.popup {
-    color: white;
-    background-color: #272424;
-    border: 3px solid #c0c0c0;
-    border-radius: 18px;
-    padding: 1.5rem;
-    box-shadow: 0 0 12px 8px #404040;
-    z-index: 1;
-    max-width: calc(92vw - 3em);
-    max-height: 80vh;
-    overflow: hidden;
-}
-
-.popup p {
-    font-size: 1.5em;
-}
-
-.popup img {
-    width: 50%;
-    height: 50%;
-    margin: 0px;
-    margin-left: 2em;
-}
-
-.popup button {
-    margin-left: 2em;
-    color: white;
-    background-color: transparent;
-    font-family: 'Amatic SC';
-    font-size: 2em;
-    outline: none;
-    transition: 500ms;
-    border: none;
-}
-
-.popup input {
-    color: white;
-    background-color: transparent;
-    font-family: 'Amatic SC';
-    font-size: 2em;
-    outline: none;
-    border: none;
-}
-
-.popup input[type = number] {
-    width: 6.5em;
-} 
-
-.popup input:hover {
-    border-bottom: 1px solid white;
-}
-
-.popup input:disabled {
-    color: #AFAFAF;
-}
-
-.popup input:focus {
-    border-bottom: 1px solid white;
-}
-
-.popup button:hover {
-    color: #afafaf;
-}
-
-.popup a {
-    color: #b600dc;
-}
-
-
-.center {
-    position: fixed;
-    top: 46%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    transform-origin: top left;
-}
-
 .hidden {
-    display: none !important;
+    display: none;
 }
 
-.close {
-    position: absolute;
-    top: 1em;
-    right: 1em;
-}
+/*Main Menu*/
 
-.error {
-    background-color: #DF2F00;
-    width: 100%;
-    position: absolute;
-    top: -1.5rem;
-    left: 0px;
+.GameTitle {
+    color: white;
     text-align: center;
-}
+    font-size: 4em;
+    
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
 
-.success {
-    background-color: #2FCF00;
-    width: 100%;
-    position: absolute;
-    top: -1.5rem;
-    left: 0px;
-    text-align: center;
-}
-
-.warning {
-    background-color: #fcc223;
-    width: 100%;
-    position: absolute;
-    top: -1.5rem;
-    left: 0px;
-    text-align: center;
-}
-
-.warning_text {
-    color: #fcc223;
-    text-align: center;
-    font-weight: bold;
+    white-space: nowrap;
 }
 
 
-.groupTitle {
-    font-weight: bolder;
-    font-size: .9em;
-}
-
-/*Specific, id-tied css*/
-#AboutPopup {
+.MenuBox {
     display: flex;
-    flex-direction: row;
+
+    border: 2px solid white;
+    width: 20%;
+
+    flex-direction: column;
+    justify-content: center;
+
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    padding: 1em;
 }
 
-#join_code {
-    margin-top: 2em;
+.MenuBox button:not(:first-child) {
+    margin-top: 1em;
 }
+
+
+
+/*Submenu-Container*/
+.Container {
+    z-index: 2;
+
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: gray;
+
+    padding: 2em;
+}
+

@@ -8,13 +8,12 @@ Short Term:
 Long Term:
     -Change private key on release
     -Rework menu UI
-    -Finnish locale.json *Slovak needed for some playtesters*
     
 Low Priority:
     -Change font to something better
     -Create animations for menus
     -Clean Up fucking spagetti code!
-
+    -Probably add in-chunk interpolation
 
 Finnished:
     -Rewrite RENDSETT
