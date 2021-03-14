@@ -69,6 +69,11 @@ function OnLoadEventHandler() {
 }
 
 function OnResizeEventHandler() {
+    if((window.innerWidth < 500 || window.innerHeight < 380) && !ResAlertShown) {
+        ResAlertShown = true;
+        alert("It's quite likely that I'll break at this resolutions.");
+    }
+    
     if (CanvasElement != null) {
         CanvasElement.style = "width: " + window.innerWidth + "px; height: " + window.innerHeight + "px;";
     }

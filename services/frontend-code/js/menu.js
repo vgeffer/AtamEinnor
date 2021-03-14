@@ -7,19 +7,16 @@ function ClosePopup(popupid) {
     document.getElementById(popupid).classList.add('hidden');
 }
 
+
+
 function JoinGame() {
 
     if (document.getElementById('jgnick').value == "") return;
 
-    //Hide all messages
-    document.getElementById('jerr').classList.add('hidden');
-    document.getElementById('jser').classList.add('hidden');
-    document.getElementById('jsuc').classList.add('hidden');
 
     document.getElementById('join_code').disabled = true;
     document.getElementById('jgnick').disabled = true;
 
-    
     var gameID = document.getElementById('join_code').value;
 
     //Check if ID is valid
@@ -33,9 +30,6 @@ function JoinGame() {
         document.getElementById('jgnick').disabled = false;
         return;
     }
-
-    //Show 'SEARCHING...' text
-    document.getElementById('jser').classList.remove('hidden');
 
     //Check, if the code exists
     fetch('', {

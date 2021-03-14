@@ -1,4 +1,9 @@
+/*Misc*/
+::placeholder {
+    color: black;
+}
 
+/*Global Element Style*/
 body {
     font-family: 'Amatic SC';
     z-index: 1;
@@ -6,19 +11,65 @@ body {
     background-color: black;
 }
 
-.bckg {
+input {
+    
+    background-color: transparent;
+    color: white;
+
+    font-size: 1.5rem;
+    font-family: 'Amatic SC';
+    text-align: center;
+
+    outline: none;
+    border: none;
+    border-bottom: 1px solid white;
+}
+
+button {
+    background-color: transparent;
+    color: white;
+
+    font-size: 1.5rem;
+    font-family: 'Amatic SC';
+    text-align: center;
+
+    outline: none;
+    border: none;
+    border: 1px solid white;
+
+    transition: 500ms;
+}
+
+a {
+    color: black;
+}
+
+button:hover {
+    border: 1px solid #FCAC34; /*TODO:CHANGE*/
+}
+
+button:disabled {
+    color: #4F4F4F;
+}
+
+input:hover {
+    border-bottom: 1px solid #FCAC34;
+}
+
+a:hover {
+    text-decoration-color: #FCAC34;
+}
+
+/*Main Menu*/
+
+
+.Background {
     z-index: -1;
 
     position: fixed;
     top: 0px;
     left: 0px;
 }
-
-.hidden {
-    display: none;
-}
-
-/*Main Menu*/
 
 .GameTitle {
     color: white;
@@ -47,7 +98,7 @@ body {
     top: 50%;
     transform: translate(-50%, -50%);
 
-    padding: 1em;
+    padding: 4em 2em 4em 2em;
 }
 
 .MenuBox button:not(:first-child) {
@@ -67,6 +118,44 @@ body {
 
     background-color: gray;
 
-    padding: 2em;
+    white-space: nowrap;
+    font-size: 2em;
+
+    padding: 0 1em 1em 1em; 
+}
+
+.SubContainer {
+    width: 100%;
+    height: 100%;
+    margin-top: 1em;
+    /*border: 2px solid #fe019a; /*debug*/
+}
+
+.InputBoxes {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+.InputBoxes input:not(:first-child) {
+    margin-top: 1em;
+}
+
+
+/*Media*/
+@media(max-width: 620px) {
+    .Container {
+        font-size: 1em;
+    }
+}
+
+
+
+/*Adjustment of Game Title*/
+@media(max-height: 580px) {
+    .GameTitle {
+        font-size: 2em;
+    }
 }
 

@@ -6,11 +6,12 @@
 		
 		<!--link fonts-->
 		<link rel = "preconnect" href = "https://fonts.gstatic.com">
-		<link href="https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap" rel="stylesheet"> 
+		<link href = "https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap" rel = "stylesheet"> 
 
 		<!--link css-->
-		<link rel="stylesheet" href="page.css"/>
-
+		<link rel = "stylesheet" href = "page.css"/>
+		<link rel = "stylesheet" href = "state.css"/>
+		
 		<!--link functionality-->
 		<script src = "js/menu.js"></script>
 		<script src = "js/global_var.js"></script>
@@ -27,39 +28,63 @@
 		
 		<div id = "Menu">
 
+			<!--background-->
+
 			<!--add anim-->
 			<div class = "GameTitle">
 				<h1>Atam Einnor</h1>
 			</div>
 
 			<div class = "MenuBox">
-				<button>Play</button>
-				<button>Settings</button>
-				<button>About us</button>
+				<button onclick = "OpenPopup('PlayContainer')">Play</button>
+				<button onclick = "OpenPopup('SettingsContainer')">Settings</button>
+				<button onclick = "OpenPopup('AboutUsContainer')">About us</button>
 			</div>
 
 
 			<div id = "PlayContainer" class = "Container hidden">
-				<div class = "TopToggleBars">
-					<a href = "javascript:void(0)" onclick = "">Join Game</a>
-					<a href = "javascript:void(0)" onclick = "">Create Game</a>
+				<div class = "center-content top-margin">
+					<a href = "javascript:void(0)" onclick = "{OpenPopup('JoinGameSubcontainer'); ClosePopup('CreateGameSubcontainer');}">Join Game</a>
+					<a href = "javascript:void(0)" onclick = "{OpenPopup('CreateGameSubcontainer'); ClosePopup('JoinGameSubcontainer');}" class = "left-margin">Create Game</a>
 				</div>
 
 				<div id = "JoinGameSubcontainer" class = "SubContainer">
+					<div class = "InputBoxes">
+						<input id = "JoinNick" type = "text" placeholder = "Nick"/> 
+						<input id = "JoinCode" type = "text" placeholder = "Code"/>
+					</div>
 
+					<div class = "center-content top-margin">
+						<button>Join</button>
+						<button disabled>Rejoin</button>
+					</div>
 				</div>
 
-				<div id = "JoinGameSubcontainer" class = "SubContainer">
+				<div id = "CreateGameSubcontainer" class = "SubContainer hidden">
+					<div class = "InputBoxes">
+						<input id = "CreatePlayerCount" type = "number" max = "6" min = "2" placeholder = "Player Count"/> 
+						<input id = "CreateNick" type = "text" placeholder = "Nick"/>
+					</div>
 
+					<div class = "center-content top-margin">
+						<button>Create</button>
+					</div>
+				</div>
+
+				<div class = "center-content top-margin">
+					<button onclick = "ClosePopup('PlayContainer')">Close</button>
 				</div>
 			</div>
 
-			<div id = "SettingsContainer" class = "Container ">
-
+			<div id = "SettingsContainer" class = "Container hidden">
+				<h2>Settings</h2>
 				<input type = "checkbox"/> Desynchonize Renedring <br>
 				<input type = "checkbox"/> Lower-Quality Textures <br>
 				<input type = "checkbox"/> Auto-Reconnect 
 
+				<div class = "center-content top-margin">
+					<button onclick = "ClosePopup('SettingsContainer')">Close</button>
+				</div>
 			</div>
 
 			<div id = "AboutUsContainer" class = "Container hidden">
@@ -80,18 +105,23 @@
 
 					<h1>Playtesters: </h1>
 					<p> <!--Playtesters-->
-						
+						In no particular order: <br>
+						Kotlík, 
 					</p>
 				</div>
 
 				The All-Mighty server powered by <a href = "https://temp.kotol.cloud" target = "_blank" style = "color: #FCAC34;">kotol.cloud</a>
+
+				<div class = "center-content top-margin">
+					<button onclick = "ClosePopup('AboutUsContainer')">Close</button>
+				</div>
 
 			</div>
 
 		</div>
 
 
-		<div id = "Game" class = "bckg hidden">
+		<div id = "Game" class = "Background hidden">
 			<canvas id = "window"></canvas>
 		</div>
 	</body>

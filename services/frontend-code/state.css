@@ -1,0 +1,25 @@
+.hidden {
+    display: none;
+}
+
+.center-content {
+
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+
+.top-margin {
+    margin-top: 1em;
+}
+
+.left-margin {
+    margin-left: 1em;
+}
+
+.force_black {
+    color: black !important;
+}

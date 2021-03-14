@@ -23,3 +23,6 @@ var TimePrev = null;
 var TimeNow = null;
 var TimeElapsed = null;
 
+
+//Misc
+var ResAlertShown = false;
