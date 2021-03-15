@@ -19,6 +19,7 @@ module.exports = function(httpServer){
     wss.on("connection", function(ws){
 
         let usr_nick = "";
+        let current_room_code = "";
         let current_room = null;
 
         console.log("user connected");
@@ -36,6 +37,8 @@ module.exports = function(httpServer){
             let payload = {};
             try{
                 payload = JSON.parse(msg);
+                if (current_room_code != "")
+                    current_room = room.get_room(current_room_code);
             } catch(e){
                 return;
             }
@@ -46,7 +49,6 @@ module.exports = function(httpServer){
                 break;
 
                 case "send_message":
-                    console.log(usr_nick);
                     if (current_room != null) {
                         current_room.chat.push({
                             nick: usr_nick,
@@ -66,22 +68,23 @@ module.exports = function(httpServer){
 
                 case "id_response":
                     let parsed_token = await jwt.verify_jwt(payload.content);
-                    console.log(parsed_token);
                     if (parsed_token === undefined) return ws.json({type: "auth_response", content: "failed"});
 
-                    console.log(parsed_token.nick);
-
                     usr_nick = parsed_token.nick;
+                    current_room_code = parsed_token.room_id;
                     current_room = room.get_room(parsed_token.room_id);
+
 
                     //assign socket
                     for(let i = 0; i < current_room.pcount; i++) {
-                        if(current_room.players[i].nick == usr_nick) {
+                        if(current_room.players[i].pnick == usr_nick) {
+                            console.log(current_room);
                             current_room.players[i].socket = ws;
-                            break;
+                            ws.json({type: "auth_response", content: "success"});
+                            return;
                         }
                     }
-                    ws.json({type: "auth_response", content: "success"});
+                    ws.json({type: "auth_response", content: "failed"});
                 break;
 
                 case "check_host_privileges":

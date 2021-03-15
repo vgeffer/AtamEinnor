@@ -20,7 +20,11 @@
     margin-left: 1em;
 }
 
-.right-margin {
+.right-half-margin {
+    margin-right: .5em;
+}
+
+.top-half-margin {
     margin-right: .5em;
 }
 
