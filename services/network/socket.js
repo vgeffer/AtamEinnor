@@ -42,10 +42,11 @@ module.exports = function(httpServer){
 
             switch(payload.type){
                 case "load_messages":
-                    ws.json({type: "data", content:current_room.chat});
+                    ws.json({type: "chat_data", content: current_room.chat});
                 break;
 
                 case "send_message":
+                    console.log(usr_nick);
                     if (current_room != null) {
                         current_room.chat.push({
                             nick: usr_nick,
@@ -53,18 +54,22 @@ module.exports = function(httpServer){
                         });
 
                         for(let i = 0; i < current_room.spcount; i++) {
-                            current_room.players[i].socket.send(JSON.parse({
+                            current_room.players[i].socket.send(JSON.stringify({
                                 type: "new_msg",
                                 nick: usr_nick,
                                 message: payload.content
                             }));
                         }
+                        
                     }
                 break;
 
                 case "id_response":
                     let parsed_token = await jwt.verify_jwt(payload.content);
+                    console.log(parsed_token);
                     if (parsed_token === undefined) return ws.json({type: "auth_response", content: "failed"});
+
+                    console.log(parsed_token.nick);
 
                     usr_nick = parsed_token.nick;
                     current_room = room.get_room(parsed_token.room_id);

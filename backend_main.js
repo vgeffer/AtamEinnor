@@ -39,7 +39,7 @@ const server = http.createServer(async (req, res) => {
                         searched_room.players[searched_room.spcount++].pnick = parsedBody.nick;
         
                         res.end(jwt.sign_jwt({
-                            nick: parsedBody.pnick,
+                            nick: parsedBody.nick,
                             room_id: parsedBody.room_id
                         }));
 

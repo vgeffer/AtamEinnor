@@ -16,14 +16,30 @@ function CreateWebSocket(){
 
 	socket.addEventListener("message", (event) => {
 		console.log("Message from The Server ", event.data);
-		const payload = JSON.parse(event.data);
+		
+        const payload = JSON.parse(event.data);
 		switch (payload.type){
+
+            case "chat_data":
+                for(var i = 0; i < payload.content.length; i++) {
+                    DisplayChatMessage(payload.content[i].nick, payload.content[i].message);
+                }
+            break;
+
+            case "new_msg":
+                DisplayChatMessage(payload.nick, payload.message);
+            break;
 
 			case "auth_response":
 				if(payload.content != "success") {
                     socket.close(); //Verification failed, close the communication
                     window.location = window.location;
                 }    
+
+                socket.send(JSON.stringify({
+                    type: "load_messages"
+                }));
+
                 console.log("success");
            break;
 
@@ -34,7 +50,7 @@ function CreateWebSocket(){
 
 			case "error":
 				handleError(payload);
-				break;
+			break;
 		}
 	});
 }

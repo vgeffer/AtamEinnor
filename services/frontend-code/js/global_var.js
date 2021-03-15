@@ -24,7 +24,7 @@ var TimeNow = null;
 var TimeElapsed = null;
 
 //Networking
-var Socket = null;
+var socket = null;
 
 //Misc
 var ResAlertShown = false;

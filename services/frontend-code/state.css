@@ -20,6 +20,10 @@
     margin-left: 1em;
 }
 
+.right-margin {
+    margin-right: .5em;
+}
+
 .inline {
 
     width: 100%;
@@ -30,6 +34,6 @@
     justify-content: space-evenly;
 }
 
-.block-display{
-     
+.bold-text {
+    font-weight: bold;
 }
