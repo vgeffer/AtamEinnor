@@ -9,11 +9,11 @@ const LOD_ULT = 3; //Should talk with kotlos bout dat
 
 //Document
 var CanvasElement = null;
-
+var ChatboxElement = null;
 
 //Rendering
 var ctx = null;
-var RenderSettings = null;
+var GameSettings = null;
 
 //Assets
 var TileSet = null;
@@ -23,6 +23,10 @@ var TimePrev = null;
 var TimeNow = null;
 var TimeElapsed = null;
 
+//Networking
+var Socket = null;
 
 //Misc
 var ResAlertShown = false;
+var FirstMessage = true;
+var GameRunning = false;

@@ -21,6 +21,8 @@ module.exports = function(httpServer){
         let usr_nick = "";
         let current_room = null;
 
+        console.log("user connected");
+
         ws.json = function (data){
 			this.send(JSON.stringify(data));
 		}
@@ -28,11 +30,7 @@ module.exports = function(httpServer){
 		ws.error = function(description){
 			this.send(JSON.stringify({type:"error", message: description}));
 		}
-
-        ws.send(JSON.stringify({
-            type: "identify_self"
-        }));
-
+        
         ws.on("message", async (msg) => {
 
             let payload = {};
@@ -51,15 +49,22 @@ module.exports = function(httpServer){
                     if (current_room != null) {
                         current_room.chat.push({
                             nick: usr_nick,
-                            time: Date.now(),
                             message: payload.content
                         });
+
+                        for(let i = 0; i < current_room.spcount; i++) {
+                            current_room.players[i].socket.send(JSON.parse({
+                                type: "new_msg",
+                                nick: usr_nick,
+                                message: payload.content
+                            }));
+                        }
                     }
                 break;
 
                 case "id_response":
                     let parsed_token = await jwt.verify_jwt(payload.content);
-                    if (parsed_token === undefined) return ws.json({type: "response", content: "failed"});
+                    if (parsed_token === undefined) return ws.json({type: "auth_response", content: "failed"});
 
                     usr_nick = parsed_token.nick;
                     current_room = room.get_room(parsed_token.room_id);
@@ -71,7 +76,7 @@ module.exports = function(httpServer){
                             break;
                         }
                     }
-                    ws.json({type: "response", content: "success"});
+                    ws.json({type: "auth_response", content: "success"});
                 break;
 
                 case "check_host_privileges":

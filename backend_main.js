@@ -34,6 +34,8 @@ const server = http.createServer(async (req, res) => {
 
                         if(!room.verify_room(parsedBody.room_id)) return res.end("invalid");
                         searched_room = room.get_room(parsedBody.room_id.toLowerCase());
+                        for(let i = 0; i < searched_room.spcount; i++)
+                            if(searched_room.players[i].pnick == parsedBody.nick) return res.end("player_exist");
                         searched_room.players[searched_room.spcount++].pnick = parsedBody.nick;
         
                         res.end(jwt.sign_jwt({

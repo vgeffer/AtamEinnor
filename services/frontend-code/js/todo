@@ -7,7 +7,6 @@ Short Term:
 
 Long Term:
     -Change private key on release
-    -Rework menu UI
     
 Low Priority:
     -Change font to something better
@@ -18,3 +17,4 @@ Low Priority:
 Finnished:
     -Rewrite RENDSETT
     -Update loop so it takes 2d instead of WebGL
+    -Rework menu UI

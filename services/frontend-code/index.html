@@ -11,14 +11,20 @@
 		<!--link css-->
 		<link rel = "stylesheet" href = "page.css"/>
 		<link rel = "stylesheet" href = "state.css"/>
+		<link rel = "stylesheet" href = "custom_checkbox.css"/>
+		
 		
 		<!--link functionality-->
 		<script src = "js/menu.js"></script>
 		<script src = "js/global_var.js"></script>
 		<script src = "js/event.js"></script>
+		<script src = "js/game.js"></script>
 
 		<!--link rendering-->
 		<script src = "js/renderer.js"></script>
+
+		<!--link network-->
+		<script src = "js/network.js"></script>
 
 		<title>Atam Einnor</title>
 	</head>
@@ -50,24 +56,24 @@
 
 				<div id = "JoinGameSubcontainer" class = "SubContainer">
 					<div class = "InputBoxes">
-						<input id = "JoinNick" type = "text" placeholder = "Nick"/> 
-						<input id = "JoinCode" type = "text" placeholder = "Code"/>
+						<input id = "JoinNick" autocomplete = "off" type = "text" placeholder = "Nick" oninput = "ResetStyle('JoinNick')"/> 
+						<input id = "JoinCode" autocomplete = "off" type = "text" placeholder = "Code" oninput = "ResetStyle('JoinCode')"/>
 					</div>
 
 					<div class = "center-content top-margin">
-						<button>Join</button>
+						<button onclick = "JoinGame()">Join</button>
 						<button disabled>Rejoin</button>
 					</div>
 				</div>
 
 				<div id = "CreateGameSubcontainer" class = "SubContainer hidden">
 					<div class = "InputBoxes">
-						<input id = "CreatePlayerCount" type = "number" max = "6" min = "2" placeholder = "Player Count"/> 
-						<input id = "CreateNick" type = "text" placeholder = "Nick"/>
+						<input id = "CreatePlayerCount" autocomplete = "off" type = "number" max = "6" min = "2" placeholder = "Player Count"/> 
+						<input id = "CreateNick" autocomplete = "off" type = "text" placeholder = "Nick"/>
 					</div>
 
 					<div class = "center-content top-margin">
-						<button>Create</button>
+						<button onclick = "CreateGame()">Create</button>
 					</div>
 				</div>
 
@@ -78,12 +84,12 @@
 
 			<div id = "SettingsContainer" class = "Container hidden">
 				<h2>Settings</h2>
-				<input type = "checkbox"/> Desynchonize Renedring <br>
-				<input type = "checkbox"/> Lower-Quality Textures <br>
-				<input type = "checkbox"/> Auto-Reconnect 
+				<input id = "Desynchronize" type = "checkbox"/> Desynchonize Renedring <br>
+				<input id = "LowQualTextures" type = "checkbox"/> Lower-Quality Textures <br>
+				<input id = "AutoReconect" type = "checkbox"/> Auto-Reconnect 
 
 				<div class = "center-content top-margin">
-					<button onclick = "ClosePopup('SettingsContainer')">Close</button>
+					<button onclick = "SaveSettings()">Close</button>
 				</div>
 			</div>
 
@@ -121,10 +127,33 @@
 		</div>
 
 
-		<div id = "Game" class = "Background hidden">
-			<canvas id = "window"></canvas>
+		<div id = "Game" class = "hidden">
+			<canvas id = "window" class = "Background"></canvas>
+
+			<!--Chat-->
+			<div id = "ChatWindow" class = "Chat Container">
+				<div id = "Messages" class = "MessageBox top-margin">
+					<div class = "inline"> message message message message message</div>
+					<div class = "inline top-margin"> message message message message message</div>
+					<div class = "inline top-margin"> message message message message message</div>
+					<div class = "inline top-margin"> message message message message message</div>
+					<div class = "inline top-margin"> message message message message message</div>
+				</div>
+
+
+				<div class = "inline">
+					<input id = "Message" type = "text" placeholder = "Message"/>
+					<button class = "left-margin">Send</button>
+				</div>
+
+				<div class = "center-content top-margin">
+					<button onclick = "ClosePopup('ChatWindow')">Close</button>
+				</div>
+			</div>
+
 		</div>
 	</body>
 </html>
 
 <!--Amogus-->
+<script src = "js/checkbox.js"></script>

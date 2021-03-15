@@ -2,21 +2,18 @@
 
 
 function OnLoadEventHandler() {
-
-    
-
     /*LOAD SETTINGS FROM LocalStorage*/
-    RenderSettings = JSON.parse(window.localStorage.getItem('RENDSETT'));
-    if(RenderSettings == null) {
+    GameSettings = JSON.parse(window.localStorage.getItem('GAMESETT'));
+    if(GameSettings == null) {
 
-        RenderSettings = {};
+        GameSettings = {};
 
         //Create Defaults
-        RenderSettings.Desynchronize        = true;
-        RenderSettings.Alpha                = false;
-        RenderSettings.TextureQuality       = LOD_MED;
+        GameSettings.Desynchronize        = true;
+        GameSettings.LowQualTextures      = false;
+        GameSettings.AutoReconect         = false;
 
-        window.localStorage.setItem('RENDSETT', JSON.stringify(RenderSettings));
+        window.localStorage.setItem('GAMESETT', JSON.stringify(GameSettings));
     }
 
 
@@ -25,8 +22,8 @@ function OnLoadEventHandler() {
     CanvasElement.style = "width: " + window.innerWidth + "px; height: " + window.innerHeight + "px;";
 
     ctx = CanvasElement.getContext("2d", {
-        desynchronized: RenderSettings.Desynchronize,
-        preserveDrawingBuffer: RenderSettings.Desynchronize
+        desynchronized: GameSettings.Desynchronize,
+        preserveDrawingBuffer: GameSettings.Desynchronize
     });
 
     if (ctx === null) {
@@ -60,16 +57,25 @@ function OnLoadEventHandler() {
 
 
         if (queryObject.hasOwnProperty("join_room")){
-            OpenPopup("JoinGamePopup");
-
-            document.getElementById("join_code").value = queryObject.join_room;
-            document.getElementById("join_code").disabled = true;
+            //For safety also swich to JoinSubContainer
+            OpenPopup("PlayContainer");
+            OpenPopup("JoinGameSubcontainer"); 
+            ClosePopup("CreateGameSubcontainer");
+            
+            document.getElementById("JoinCode").value = queryObject.join_room;
+            document.getElementById("JoinCode").disabled = true;
         }
     }
+
+    /*SET VALUES TO UI*/
+    document.getElementById("Desynchronize").checked = GameSettings.Desynchronize;
+    document.getElementById("LowQualTextures").checked = GameSettings.LowQualTextures;
+    document.getElementById("AutoReconect").checked = GameSettings.AutoReconect;
+
 }
 
 function OnResizeEventHandler() {
-    if((window.innerWidth < 500 || window.innerHeight < 380) && !ResAlertShown) {
+    if((window.innerWidth < 500 || window.innerHeight < 420) && !ResAlertShown) {
         ResAlertShown = true;
         alert("It's quite likely that I'll break at this resolutions.");
     }
@@ -77,6 +83,8 @@ function OnResizeEventHandler() {
     if (CanvasElement != null) {
         CanvasElement.style = "width: " + window.innerWidth + "px; height: " + window.innerHeight + "px;";
     }
+
+    console.log(window.innerHeight);
 }
 
 function OnKeyPressHandler(event) {
