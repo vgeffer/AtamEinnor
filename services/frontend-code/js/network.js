@@ -1,6 +1,5 @@
 
-
-function CreateWebSocket(){
+function CreateWebSocket() {
 
 	socket = new WebSocket(`${(location.protocol === "https:" ? "wss:" : "ws:")}//${location.host}`);
 	socket.addEventListener("open", (event) => {
@@ -53,6 +52,16 @@ function CreateWebSocket(){
 			break;
 		}
 	});
+}
+
+function RequestChunk(x, y) {
+    socket.send(JSON.stringify({
+        type: "player_action",
+        content: {
+            type: "load-chunk",
+            position: {X: x, Y: y}
+        }
+    }));
 }
 
 function JoinGame() {

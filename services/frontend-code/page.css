@@ -149,6 +149,19 @@ a:hover {
 
 
 .Chat {    
+    z-index: 2;
+
+    position: fixed;
+    left: 100%;
+    top: 50%;
+    transform: translate(-100%, -50%);
+
+    background-color: gray;
+
+    white-space: nowrap;
+    font-size: 2em;
+
+    padding: 0 1em 1em 1em; 
     width: 11em;    
 }
 

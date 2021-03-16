@@ -83,8 +83,6 @@ function OnResizeEventHandler() {
     if (CanvasElement != null) {
         CanvasElement.style = "width: " + window.innerWidth + "px; height: " + window.innerHeight + "px;";
     }
-
-    console.log(window.innerHeight);
 }
 
 function OnKeyPressHandler(event) {

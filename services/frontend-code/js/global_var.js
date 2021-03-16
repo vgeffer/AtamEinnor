@@ -17,6 +17,7 @@ var GameSettings = null;
 
 //Assets
 var TileSet = null;
+var World = null;
 
 //Timing
 var TimePrev = null;

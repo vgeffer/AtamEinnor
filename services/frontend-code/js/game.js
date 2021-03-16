@@ -1,17 +1,28 @@
 function StartGame() {
 
     CreateWebSocket();
-    
+    World = new Map();
 
     GameRunning = true;
     requestAnimationFrame(NextFrame);
 }
 
 function SendChatMessage() {
-    socket.send(JSON.stringify({
-        type: "send_message",
-        content: document.getElementById("Message").value
-    }));
+    if(document.getElementById('Message').value != "") {
+        socket.send(JSON.stringify({
+            type: "send_message",
+            content: document.getElementById("Message").value
+        }));
+        document.getElementById("Message").value = "";
+    }
+}
+
+function EnterHandler() {
+
+    if(window.event.key == "Enter") {
+        SendChatMessage();
+    }
+
 }
 
 function DisplayChatMessage(nick, message) {
@@ -30,6 +41,8 @@ function DisplayChatMessage(nick, message) {
     MsgWrapper.prepend(NickWrapper);
 
     document.getElementById('Messages').appendChild(MsgWrapper);
+    document.getElementById('Messages').scrollTo(0, document.getElementById('Messages').scrollHeight);
+
 
     FirstMessage = false;
 }

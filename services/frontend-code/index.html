@@ -131,14 +131,14 @@
 			<canvas id = "window" class = "Background"></canvas>
 
 			<!--Chat-->
-			<div id = "ChatWindow" class = "Chat Container">
+			<div id = "ChatWindow" class = "Chat">
 				<div id = "Messages" class = "MessageBox top-margin">
 
 				</div>
 
 
 				<div class = "inline">
-					<input id = "Message" type = "text" placeholder = "Message"/>
+					<input id = "Message" type = "text" placeholder = "Message" onkeydown = "EnterHandler()"/>
 					<button class = "left-margin" onclick = "SendChatMessage()">Send</button>
 				</div>
 

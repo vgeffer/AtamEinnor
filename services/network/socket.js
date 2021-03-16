@@ -1,6 +1,7 @@
 const WebSocketServer = require("ws").Server;
 const jwt = require("./jwt.js");
 const room = require("./../game/room.js");
+const player = require("./../game/player.js");
 
 let wss = null;
 
@@ -14,12 +15,9 @@ module.exports = function(httpServer){
         });
     });
 
-
-
     wss.on("connection", function(ws){
 
         let usr_nick = "";
-        let current_room_code = "";
         let current_room = null;
 
         console.log("user connected");
@@ -37,15 +35,15 @@ module.exports = function(httpServer){
             let payload = {};
             try{
                 payload = JSON.parse(msg);
-                if (current_room_code != "")
-                    current_room = room.get_room(current_room_code);
             } catch(e){
                 return;
             }
 
             switch(payload.type){
                 case "load_messages":
-                    ws.json({type: "chat_data", content: current_room.chat});
+                    if (current_room != null) {
+                        ws.json({type: "chat_data", content: current_room.chat});
+                    }
                 break;
 
                 case "send_message":
@@ -61,8 +59,7 @@ module.exports = function(httpServer){
                                 nick: usr_nick,
                                 message: payload.content
                             }));
-                        }
-                        
+                        }                 
                     }
                 break;
 
@@ -88,19 +85,21 @@ module.exports = function(httpServer){
                 break;
 
                 case "check_host_privileges":
-                    if(usr_nick === current_room.players[0].pnick)
-                        ws.json({type: "response", content: "true"});
-                    else
-                        ws.json({type: "response", content: "false"});
+                    if(current_room != null) {
+                        if(usr_nick === current_room.players[0].pnick)
+                            ws.json({type: "response", content: "true"});
+                        else
+                            ws.json({type: "response", content: "false"});
+                    }
                 break;
 
                 case "host_action":
                 break;
 
                 case "player_action":
-                break;
-
-                case "load_asset":
+                    if(current_room != null) {
+                        player.ParsePlayerAction(parsed_token.content, current_room, ws);
+                    }
                 break;
 
                 default:

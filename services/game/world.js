@@ -11,6 +11,7 @@ exports.generate_chunk = function(x, y, room) {
 
 
     //translate chunk to world
+    return chunk;
 }
 
 const depth_table = [
