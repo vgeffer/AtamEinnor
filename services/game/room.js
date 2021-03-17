@@ -1,7 +1,15 @@
 const crypto = require('crypto');
 const ws = require('./../network/socket.js');
 const rng = require('./../util/prng.js');
+const { RoundTick } = require('./player.js');
 let rooms = new Map();
+
+
+
+//ROUND TIME
+const ROUND_TIMER = 15 * 1000; //in ms
+//----------
+
 
 exports.create_room = function(player_count) {
 
@@ -28,7 +36,8 @@ exports.create_room = function(player_count) {
     for(let i = 0; i < player_count; i++) {
         room_obj.players[i] = {
             socket: null,
-            pnick: null
+            pnick: null,
+            queue: []
         };
     }
     
@@ -46,12 +55,24 @@ exports.verify_room = function(room_id) {
     return true;
 }
 
-exports.start_room_clock(room) {
-    if(room.spcount >= 2 room.pcount){
-
+exports.start_room_clock = function(room) {
+    if(room.spcount >= 2 * (room.pcount / 3)) {
 
         //Anounce start of the game
-        for(let i = 0)
+        for(let i = 0; i < room.spcount; i++) {
+
+            room.room_running = true;
+            room.players[i].socket.send(JSON.parse({
+                type: "game_anouncment",
+                content: {
+                    type: "start"
+                }
+            }));
+        }
+
+        //first call
+        //maybe
+        setInterval(RoundTick(room), ROUND_TIMER);
     }
 }
 

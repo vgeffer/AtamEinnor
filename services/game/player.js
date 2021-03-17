@@ -24,9 +24,20 @@ exports.ParsePlayerAction = function(action, room, ws) {
         case "use-item":
 
         break;
+    }
+}
+
+exports.RoundTick = function(room) {
 
 
+    for(let i = 0; i < room.spcount; i++) {
+        //Parse Queues
 
 
+    }
+
+    for(let i = 0; i < room.spcount; i++) {
+
+        
     }
 }

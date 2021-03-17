@@ -40,7 +40,8 @@ function CreateWebSocket() {
                 }));
 
                 console.log("success");
-           break;
+            break;
+
 
             case "close":
                 console.log(payload.reason);
