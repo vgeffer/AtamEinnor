@@ -33,7 +33,6 @@
 	<body>
 		
 		<div id = "Menu">
-
 			<!--background-->
 
 			<!--add anim-->
@@ -46,7 +45,6 @@
 				<button onclick = "OpenPopup('SettingsContainer')">Settings</button>
 				<button onclick = "OpenPopup('AboutUsContainer')">About us</button>
 			</div>
-
 
 			<div id = "PlayContainer" class = "Container hidden">
 				<div class = "center-content top-margin">
@@ -131,25 +129,63 @@
 			<canvas id = "window" class = "Background"></canvas>
 
 			<!--Chat-->
-			<div id = "ChatWindow" class = "Chat">
-				<div id = "Messages" class = "MessageBox top-margin">
-
-				</div>
-
-
+			<div id = "ChatWindow" class = "Chat hidden">
+				<div id = "Messages" class = "MessageBox top-margin"></div>
 				<div class = "inline">
 					<input id = "Message" type = "text" placeholder = "Message" onkeydown = "EnterHandler()"/>
 					<button class = "left-margin" onclick = "SendChatMessage()">Send</button>
 				</div>
-
 				<div class = "center-content top-margin">
 					<button onclick = "ClosePopup('ChatWindow')">Close</button>
 				</div>
+			</div>
+
+			<!--Shop-->
+			<div id = "Shop" class = "Container hidden">
+				<div class = "center-content top-margin">
+					<a href = "javascript:void(0)" onclick = "{OpenPopup('JoinGameSubcontainer'); ClosePopup('CreateGameSubcontainer');}">Buy</a>
+					<a href = "javascript:void(0)" onclick = "{OpenPopup('CreateGameSubcontainer'); ClosePopup('JoinGameSubcontainer');}" class = "left-margin">Sell</a>
+				</div>
+
+				<div id = "JoinGameSubcontainer" class = "SubContainer">
+					<div class = "InputBoxes">
+						<input id = "JoinNick" autocomplete = "off" type = "text" placeholder = "Nick" oninput = "ResetStyle('JoinNick')"/> 
+						<input id = "JoinCode" autocomplete = "off" type = "text" placeholder = "Code" oninput = "ResetStyle('JoinCode')"/>
+					</div>
+
+					<div class = "center-content top-margin">
+						<button onclick = "JoinGame()">Join</button>
+						<button disabled>Rejoin</button>
+					</div>
+				</div>
+
+				<div id = "CreateGameSubcontainer" class = "SubContainer hidden">
+					<div class = "InputBoxes">
+						<input id = "CreatePlayerCount" autocomplete = "off" type = "number" max = "6" min = "2" placeholder = "Player Count"/> 
+						<input id = "CreateNick" autocomplete = "off" type = "text" placeholder = "Nick"/>
+					</div>
+
+					<div class = "center-content top-margin">
+						<button onclick = "CreateGame()">Create</button>
+					</div>
+				</div>
+
+				<div class = "center-content top-margin">
+					<button onclick = "ClosePopup('PlayContainer')">Close</button>
+				</div>
+			</div>
+
+
+			<!--Pause Menu-->
+
+			<div class = "Hud">
 			</div>
 
 		</div>
 	</body>
 </html>
 
+<!--Sus-->
+<!--Sus-->
+<!--Sus-->
 <!--Amogus-->
-<script src = "js/checkbox.js"></script>

@@ -55,8 +55,8 @@ const server = http.createServer(async (req, res) => {
                         if(room.verify_room(parsed_token.room)) return res.end("invalid");
                         searched_room = room.get_room(parsedBody.room_id);
 
-                        for(let i = 0; i < searched_room.pcount; i++) {
-                            if(searched_room.players[i].pnick === parsed_token.nick) return res.end("request-socket");
+                        for(let i = 0; i < searched_room.spcount; i++) {
+                            if(searched_room.players[i].pnick === parsed_token.nick) return res.end("ok");
                         }
                         res.end("invalid");
                     break;

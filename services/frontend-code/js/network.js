@@ -127,6 +127,35 @@ function JoinGame() {
     });
 }
 
+function JoinGameJWT() {
+
+    fetch('', {
+        method: 'POST',
+        body: JSON.stringify({
+            type: 'join-token',
+            token: window.localStorage.getItem('LOGTOKEN')
+        })
+    }).then(function(res) {
+        if(res.status != 200){
+            return console.error("MALFORMED REQUEST RECIVED BY SERVER!");
+        } 
+
+        res.text().then(function(text){
+            
+            if(text == "invalid") return;
+            else if (text == "success") {
+            
+                setTimeout(() => {
+                    ClosePopup("Menu");
+                    OpenPopup("Game");
+                    StartGame();
+                }, 1000);
+            }
+            return;
+        });
+    });
+}
+
 function CreateGame() {
 
     if (document.getElementById('CreateNick').value == "") return;

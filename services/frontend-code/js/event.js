@@ -72,6 +72,11 @@ function OnLoadEventHandler() {
     document.getElementById("LowQualTextures").checked = GameSettings.LowQualTextures;
     document.getElementById("AutoReconect").checked = GameSettings.AutoReconect;
 
+
+    if(GameSettings.AutoReconect ||  window.localStorage.getItem('OVERRIDE_REJOIN')) {
+
+        JoinGameJWT();
+    }
 }
 
 function OnResizeEventHandler() {
@@ -85,15 +90,8 @@ function OnResizeEventHandler() {
     }
 }
 
-function OnKeyPressHandler(event) {
-
-}
-
-function OnKeyDownEventHandler(event) {
-
-}
-
 function OnMouseDownHandler(event) {
+
 
 }
 
@@ -101,19 +99,8 @@ function OnMouseMoveEventHandler(event) {
 
 }
 
-function OnMouseWheelHandler(event) {
-
-}
-
 //Create Event Listeners
 window.onload = OnLoadEventHandler;
 window.onresize = OnResizeEventHandler;
-window.onkeypress = OnKeyPressHandler;
-window.onkeydown = OnKeyDownEventHandler;
 window.onmousedown = OnMouseDownHandler;
 window.onmousemove = OnMouseMoveEventHandler;
-window.onmousewheel = OnMouseWheelHandler;
-
-
-//Page Stuff
-

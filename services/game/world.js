@@ -17,7 +17,9 @@ exports.generate_chunk = function(x, y, room) {
 const depth_table = [
 
 
-    {}
+    { 
+        
+    }
 
 
 

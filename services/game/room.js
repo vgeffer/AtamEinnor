@@ -20,7 +20,8 @@ exports.create_room = function(player_count) {
     room_obj.exp = Date.now() + 12 * 60 * 60 * 1000; //12 hours lifetime
     room_obj.world = null;
     room_obj.chat = [];
-
+    room_obj.pl_win = -1;
+    room_obj.room_running = false;
 
     //Create all room objs
     room_obj.players = [];
@@ -45,6 +46,14 @@ exports.verify_room = function(room_id) {
     return true;
 }
 
+exports.start_room_clock(room) {
+    if(room.spcount >= 2 room.pcount){
+
+
+        //Anounce start of the game
+        for(let i = 0)
+    }
+}
 
 setInterval(() => {
     let keys = rooms.keys();
