@@ -11,7 +11,6 @@
 		<!--link css-->
 		<link rel = "stylesheet" href = "page.css"/>
 		<link rel = "stylesheet" href = "state.css"/>
-		<link rel = "stylesheet" href = "custom_checkbox.css"/>
 		
 		
 		<!--link functionality-->
@@ -60,7 +59,7 @@
 
 					<div class = "center-content top-margin">
 						<button onclick = "JoinGame()">Join</button>
-						<button disabled>Rejoin</button>
+						<button onclick = "JoinGameJWT()" id = "RejoinButton" disabled>Rejoin</button>
 					</div>
 				</div>
 
@@ -141,51 +140,38 @@
 			</div>
 
 			<!--Shop-->
-			<div id = "Shop" class = "Container hidden">
+			<div id = "ShopContainer" class = "Container hidden">
 				<div class = "center-content top-margin">
 					<a href = "javascript:void(0)" onclick = "{OpenPopup('JoinGameSubcontainer'); ClosePopup('CreateGameSubcontainer');}">Buy</a>
 					<a href = "javascript:void(0)" onclick = "{OpenPopup('CreateGameSubcontainer'); ClosePopup('JoinGameSubcontainer');}" class = "left-margin">Sell</a>
 				</div>
 
-				<div id = "JoinGameSubcontainer" class = "SubContainer">
-					<div class = "InputBoxes">
-						<input id = "JoinNick" autocomplete = "off" type = "text" placeholder = "Nick" oninput = "ResetStyle('JoinNick')"/> 
-						<input id = "JoinCode" autocomplete = "off" type = "text" placeholder = "Code" oninput = "ResetStyle('JoinCode')"/>
-					</div>
-
-					<div class = "center-content top-margin">
-						<button onclick = "JoinGame()">Join</button>
-						<button disabled>Rejoin</button>
-					</div>
+				<div id = "BuySubcontainer" class = "SubContainer">
 				</div>
 
-				<div id = "CreateGameSubcontainer" class = "SubContainer hidden">
-					<div class = "InputBoxes">
-						<input id = "CreatePlayerCount" autocomplete = "off" type = "number" max = "6" min = "2" placeholder = "Player Count"/> 
-						<input id = "CreateNick" autocomplete = "off" type = "text" placeholder = "Nick"/>
-					</div>
-
-					<div class = "center-content top-margin">
-						<button onclick = "CreateGame()">Create</button>
-					</div>
+				<div id = "SellGameSubcontainer" class = "SubContainer hidden">
 				</div>
 
 				<div class = "center-content top-margin">
-					<button onclick = "ClosePopup('PlayContainer')">Close</button>
+					<button onclick = "ClosePopup('ShopContainer')">Close</button>
 				</div>
 			</div>
 
-
 			<!--Pause Menu-->
-
 			<div class = "Hud">
+			
+				<div class = "CoinDisplay">
+					<img class = "CoinIcon" src = "assets/coin_icon512x512.png" alt = "It broken!" />
+					<p>628</p>
+				</div>
+
+				<div class = "OpenChat"></div>
+			
 			</div>
 
 		</div>
 	</body>
 </html>
 
-<!--Sus-->
-<!--Sus-->
 <!--Sus-->
 <!--Amogus-->

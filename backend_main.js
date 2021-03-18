@@ -32,7 +32,7 @@ const server = http.createServer(async (req, res) => {
                         //setup response
                         res.statusCode = 200;
 
-                        if(!room.verify_room(parsedBody.room_id)) return res.end("invalid");
+                        if(!room.verify_joinability(parsedBody.room_id)) return res.end("invalid");
                         searched_room = room.get_room(parsedBody.room_id.toLowerCase());
                         for(let i = 0; i < searched_room.spcount; i++)
                             if(searched_room.players[i].pnick == parsedBody.nick) return res.end("player_exist");
@@ -52,9 +52,11 @@ const server = http.createServer(async (req, res) => {
 
                         let parsed_token = await jwt.verify_jwt(parsedBody.token);
                         if(parsed_token === undefined) return res.end("invalid"); //if token is invalid, throw err
-                        if(room.verify_room(parsed_token.room)) return res.end("invalid");
-                        searched_room = room.get_room(parsedBody.room_id);
+                        if(!room.room_exist(parsed_token.room_id)) return res.end("invalid");
+                        searched_room = room.get_room(parsed_token.room_id);
+                        console.log(searched_room);
 
+                        if(searched_room.pl_win != -1) return res.end("invalid");
                         for(let i = 0; i < searched_room.spcount; i++) {
                             if(searched_room.players[i].pnick === parsed_token.nick) return res.end("ok");
                         }

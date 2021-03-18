@@ -1,4 +1,4 @@
-const world = require("world.js");
+const world = require("./world.js");
 
 exports.ParsePlayerAction = function(action, room, ws) {
 
@@ -36,6 +36,9 @@ exports.RoundTick = function(room) {
 
     }
 
+
+
+    //
     for(let i = 0; i < room.spcount; i++) {
 
         

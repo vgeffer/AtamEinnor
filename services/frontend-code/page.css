@@ -175,6 +175,26 @@ a:hover {
     max-height: 6em;
 }
 
+/*HUD*/
+.CoinDisplay {
+
+    width: 10%;
+    height: auto;
+
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    color: white;
+    background-color: gray;
+}
+
+.CoinIcon {
+    width: 15%;
+    height: 15%;
+}
+
 /*Media*/
 @media(max-width: 620px) {
     .Container {

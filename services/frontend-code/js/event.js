@@ -1,4 +1,4 @@
-
+$ = function(id) { return document.getElementById(id); }
 
 
 function OnLoadEventHandler() {
@@ -18,7 +18,7 @@ function OnLoadEventHandler() {
 
 
     /*CONTEXT CREATION*/
-    CanvasElement = document.getElementById('window');
+    CanvasElement = $('window');
     CanvasElement.style = "width: " + window.innerWidth + "px; height: " + window.innerHeight + "px;";
 
     ctx = CanvasElement.getContext("2d", {
@@ -62,21 +62,23 @@ function OnLoadEventHandler() {
             OpenPopup("JoinGameSubcontainer"); 
             ClosePopup("CreateGameSubcontainer");
             
-            document.getElementById("JoinCode").value = queryObject.join_room;
-            document.getElementById("JoinCode").disabled = true;
+            $("JoinCode").value = queryObject.join_room;
+            $("JoinCode").disabled = true;
         }
     }
 
     /*SET VALUES TO UI*/
-    document.getElementById("Desynchronize").checked = GameSettings.Desynchronize;
-    document.getElementById("LowQualTextures").checked = GameSettings.LowQualTextures;
-    document.getElementById("AutoReconect").checked = GameSettings.AutoReconect;
-
+    $("Desynchronize").checked = GameSettings.Desynchronize;
+    $("LowQualTextures").checked = GameSettings.LowQualTextures;
+    $("AutoReconect").checked = GameSettings.AutoReconect;
 
     if(GameSettings.AutoReconect ||  window.localStorage.getItem('OVERRIDE_REJOIN')) {
-
         JoinGameJWT();
     }
+
+    JWTPing().then((result) => {
+        if (result) $("RejoinButton").disabled = false; 
+    });
 }
 
 function OnResizeEventHandler() {

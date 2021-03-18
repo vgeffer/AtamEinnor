@@ -37,7 +37,9 @@ exports.create_room = function(player_count) {
         room_obj.players[i] = {
             socket: null,
             pnick: null,
-            queue: []
+            queue: [],
+            money_count: 0, 
+            workers: {}
         };
     }
     
@@ -49,11 +51,19 @@ exports.get_room = function(room_id) {
     return rooms.get(room_id);
 }
 
-exports.verify_room = function(room_id) {
+exports.verify_joinability = function(room_id) {
     let vroom = rooms.get(room_id);
     if(vroom === undefined || vroom.spcount == vroom.pcount) return false;
     return true;
 }
+
+exports.room_exist = function(room_id) {
+    let vroom = rooms.get(room_id);
+    console.log(room_id + "; " + vroom);
+    if(vroom === undefined) return false;
+    return true;
+}
+
 
 exports.start_room_clock = function(room) {
     //Anounce start of the game

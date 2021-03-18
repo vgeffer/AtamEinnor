@@ -138,14 +138,16 @@ function JoinGameJWT() {
         })
     }).then(function(res) {
         if(res.status != 200){
+            $("RejoinButton").style = "color: red;";
             return console.error("MALFORMED REQUEST RECIVED BY SERVER!");
         } 
 
         res.text().then(function(text){
             
-            if(text == "invalid") return;
-            else if (text == "success") {
-            
+            if(text == "invalid") return $("RejoinButton").style = "color: red;";
+            else if (text == "ok") {
+                $("RejoinButton").style = "color: green;";
+
                 setTimeout(() => {
                     ClosePopup("Menu");
                     OpenPopup("Game");
@@ -153,6 +155,30 @@ function JoinGameJWT() {
                 }, 1000);
             }
             return;
+        });
+    });
+}
+
+async function JWTPing() {
+    return new Promise((resolve, reject) => {
+        fetch('', {
+            method: 'POST',
+            body: JSON.stringify({
+                type: 'join-token',
+                token: window.localStorage.getItem('LOGTOKEN')
+            })
+        }).then(function(res) {
+            if(res.status != 200){
+                console.error("MALFORMED REQUEST RECIVED BY SERVER!");
+                return resolve(false);
+            } 
+
+            res.text().then(function(text) {
+            
+                if(text == "invalid") return resolve(false);
+                else if (text == "ok") return resolve(true);
+                return resolve(false);
+            });
         });
     });
 }

@@ -83,7 +83,7 @@ module.exports = function(httpServer){
                                 current_room.start_room_clock(current_room);
                             }
 
-                            if(current_room.spcount >= 2 * (pcount / 3)) {
+                            if(current_room.spcount >= 2 * (current_room.pcount / 3)) {
                                 current_room.players[0].socket.send(
                                     JSON.parse({
                                         type: "ask-for-start"
