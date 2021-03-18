@@ -56,25 +56,20 @@ exports.verify_room = function(room_id) {
 }
 
 exports.start_room_clock = function(room) {
-    if(room.spcount >= 2 * (room.pcount / 3)) {
+    //Anounce start of the game
+    for(let i = 0; i < room.spcount; i++) {
 
-        //Anounce start of the game
-        for(let i = 0; i < room.spcount; i++) {
-
-            room.room_running = true;
-            room.players[i].socket.send(JSON.parse({
-                type: "game_anouncment",
-                content: {
-                    type: "start"
-                }
-            }));
-        }
-
-        //first call
-        //maybe
-        setInterval(RoundTick(room), ROUND_TIMER);
+        room.room_running = true;
+        room.players[i].socket.send(JSON.parse({
+            type: "game_anouncment",
+            content: {
+                type: "start"
+            }
+        }));
     }
+    setInterval(RoundTick(room), ROUND_TIMER);
 }
+
 
 setInterval(() => {
     let keys = rooms.keys();

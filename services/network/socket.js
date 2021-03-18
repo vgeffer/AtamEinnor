@@ -78,6 +78,18 @@ module.exports = function(httpServer){
                             console.log(current_room);
                             current_room.players[i].socket = ws;
                             ws.json({type: "auth_response", content: "success"});
+
+                            if(current_room.spcount == current_room.pcount) {
+                                current_room.start_room_clock(current_room);
+                            }
+
+                            if(current_room.spcount >= 2 * (pcount / 3)) {
+                                current_room.players[0].socket.send(
+                                    JSON.parse({
+                                        type: "ask-for-start"
+                                    })
+                                );
+                            }
                             return;
                         }
                     }
