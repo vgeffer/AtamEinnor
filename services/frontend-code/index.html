@@ -121,6 +121,13 @@
 
 			</div>
 
+			<div id = "DisconnectedMsgContainer" class = "Container hidden">
+				<h1> Player Disconected </h1>
+
+				<div class = "center-content top-margin">
+					<button onclick = "ClosePopup('AboutUsContainer')">Close</button>
+				</div>
+			</div>
 		</div>
 
 
@@ -162,7 +169,7 @@
 			
 				<div class = "CoinDisplay">
 					<img class = "CoinIcon" src = "assets/coin_icon512x512.png" alt = "It broken!" />
-					<p>628</p>
+					<p id = "CoinCount">0</p>
 				</div>
 
 				<div class = "OpenChat"></div>

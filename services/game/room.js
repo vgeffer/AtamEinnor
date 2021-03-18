@@ -30,6 +30,7 @@ exports.create_room = function(player_count) {
     room_obj.chat = [];
     room_obj.pl_win = -1;
     room_obj.room_running = false;
+    room_obj.player_queue = new Map(); //So one parsing step would be skipped, sorted while comming in
 
     //Create all room objs
     room_obj.players = [];
@@ -37,7 +38,6 @@ exports.create_room = function(player_count) {
         room_obj.players[i] = {
             socket: null,
             pnick: null,
-            queue: [],
             money_count: 0, 
             workers: {}
         };
@@ -59,7 +59,6 @@ exports.verify_joinability = function(room_id) {
 
 exports.room_exist = function(room_id) {
     let vroom = rooms.get(room_id);
-    console.log(room_id + "; " + vroom);
     if(vroom === undefined) return false;
     return true;
 }

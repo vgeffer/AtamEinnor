@@ -2,8 +2,6 @@
 Short Term:
     -Do networking
     -Do parameter validation in backend
-    -Parameter validation in frontend
-
 
 Long Term:
     -Change private key on release
@@ -16,5 +14,6 @@ Low Priority:
 
 Finnished:
     -Rewrite RENDSETT
+    -Parameter validation in frontend
     -Update loop so it takes 2d instead of WebGL
     -Rework menu UI

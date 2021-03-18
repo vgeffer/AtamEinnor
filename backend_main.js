@@ -54,7 +54,6 @@ const server = http.createServer(async (req, res) => {
                         if(parsed_token === undefined) return res.end("invalid"); //if token is invalid, throw err
                         if(!room.room_exist(parsed_token.room_id)) return res.end("invalid");
                         searched_room = room.get_room(parsed_token.room_id);
-                        console.log(searched_room);
 
                         if(searched_room.pl_win != -1) return res.end("invalid");
                         for(let i = 0; i < searched_room.spcount; i++) {

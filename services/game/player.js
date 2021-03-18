@@ -30,6 +30,7 @@ exports.ParsePlayerAction = function(action, room, ws) {
 exports.RoundTick = function(room) {
 
 
+
     for(let i = 0; i < room.spcount; i++) {
         //Parse Queues
 
@@ -37,10 +38,5 @@ exports.RoundTick = function(room) {
     }
 
 
-
-    //
-    for(let i = 0; i < room.spcount; i++) {
-
-        
-    }
 }
+

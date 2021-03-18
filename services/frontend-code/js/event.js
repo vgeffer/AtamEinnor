@@ -92,13 +92,18 @@ function OnResizeEventHandler() {
     }
 }
 
-function OnMouseDownHandler(event) {
+function OnMouseDownHandler() {
 
+    if (GameRunning) {
+        //Handle logic
+    }
 
 }
 
-function OnMouseMoveEventHandler(event) {
-
+function OnMouseMoveEventHandler() {
+    if (GameRunning) {
+        //Handle logic
+    }
 }
 
 //Create Event Listeners

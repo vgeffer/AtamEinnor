@@ -38,8 +38,6 @@ function CreateWebSocket() {
                 socket.send(JSON.stringify({
                     type: "load_messages"
                 }));
-
-                console.log("success");
             break;
 
 

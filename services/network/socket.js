@@ -75,7 +75,6 @@ module.exports = function(httpServer){
                     //assign socket
                     for(let i = 0; i < current_room.pcount; i++) {
                         if(current_room.players[i].pnick == usr_nick) {
-                            console.log(current_room);
                             current_room.players[i].socket = ws;
                             ws.json({type: "auth_response", content: "success"});
 

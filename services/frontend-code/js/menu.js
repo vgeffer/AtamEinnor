@@ -8,13 +8,13 @@ function ClosePopup(popupid) {
 
 function SaveSettings() {
     
-    if((GameSettings.Desynchronize != document.getElementById("Desynchronize").value || GameSettings.LowQualTextures != document.getElementById("LowQualTextures").value) && GameRunning) {
+    if((GameSettings.Desynchronize != $("Desynchronize").value || GameSettings.LowQualTextures != $("LowQualTextures").value) && GameRunning) {
         window.localStorage.setItem('OVERRIDE_REJOIN', true);
     }
 
-    GameSettings.Desynchronize        = document.getElementById("Desynchronize").checked;
-    GameSettings.LowQualTextures      = document.getElementById("LowQualTextures").checked;
-    GameSettings.AutoReconect         = document.getElementById("AutoReconect").checked;
+    GameSettings.Desynchronize        = $("Desynchronize").checked;
+    GameSettings.LowQualTextures      = $("LowQualTextures").checked;
+    GameSettings.AutoReconect         = $("AutoReconect").checked;
 
     window.localStorage.setItem('GAMESETT', JSON.stringify(GameSettings));
 
@@ -22,5 +22,5 @@ function SaveSettings() {
 }
 
 function ResetStyle(element) {
-    document.getElementById(element).style = "";
+    $(element).style = "";
 }

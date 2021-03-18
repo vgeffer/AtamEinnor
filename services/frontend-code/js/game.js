@@ -46,6 +46,3 @@ function DisplayChatMessage(nick, message) {
 
     FirstMessage = false;
 }
-
-
-//
