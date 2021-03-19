@@ -137,12 +137,23 @@ function JoinGameJWT() {
     }).then(function(res) {
         if(res.status != 200){
             $("RejoinButton").style = "color: red;";
+            setTimeout(() => {
+                $("RejoinButton").disabled = true;
+                $("RejoinButton").style = "";
+            }, 1000);
             return console.error("MALFORMED REQUEST RECIVED BY SERVER!");
         } 
 
         res.text().then(function(text){
             
-            if(text == "invalid") return $("RejoinButton").style = "color: red;";
+            if(text == "invalid") { 
+                $("RejoinButton").style = "color: red;";
+                setTimeout(() => {
+                    $("RejoinButton").disabled = true;
+                    $("RejoinButton").style = "";
+                }, 1000);
+                return;
+            }
             else if (text == "ok") {
                 $("RejoinButton").style = "color: green;";
 

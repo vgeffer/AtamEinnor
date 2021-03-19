@@ -9,7 +9,6 @@ Long Term:
 Low Priority:
     -Change font to something better
     -Create animations for menus
-    -Clean Up fucking spagetti code!
     -Probably add in-chunk interpolation
 
 Finnished:
@@ -17,3 +16,6 @@ Finnished:
     -Parameter validation in frontend
     -Update loop so it takes 2d instead of WebGL
     -Rework menu UI
+
+Dismissed:
+    -Clean Up fucking spagetti code!
