@@ -16,7 +16,10 @@ var ctx = null;
 var GameSettings = null;
 
 //Assets
-var TileSet = null;
+
+var tst_img = [];
+var scaler = 1;
+
 var World = null;
 
 //Timing

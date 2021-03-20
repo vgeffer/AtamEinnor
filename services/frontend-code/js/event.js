@@ -19,7 +19,8 @@ function OnLoadEventHandler() {
 
     /*CONTEXT CREATION*/
     CanvasElement = $('window');
-    CanvasElement.style = "width: " + window.innerWidth + "px; height: " + window.innerHeight + "px;";
+    CanvasElement.width = window.innerWidth; 
+    CanvasElement.height = window.innerHeight;
 
     ctx = CanvasElement.getContext("2d", {
         desynchronized: GameSettings.Desynchronize,
@@ -79,6 +80,23 @@ function OnLoadEventHandler() {
     JWTPing().then((result) => {
         if (result) $("RejoinButton").disabled = false; 
     });
+
+
+    //For Debug
+    tst_img[0] = new Image();
+    tst_img[0].src = "/assets/unknown.png";
+
+    tst_img[1] = new Image();
+    tst_img[1].src = "/assets/unknown2.png";
+
+    tst_img[2] = new Image();
+    tst_img[2].src = "/assets/unknown4.png";
+
+    tst_img[3] = new Image();
+    tst_img[3].src = "/assets/unknown6.png";
+
+
+    
 }
 
 function OnResizeEventHandler() {
@@ -88,14 +106,19 @@ function OnResizeEventHandler() {
     }
     
     if (CanvasElement != null) {
-        CanvasElement.style = "width: " + window.innerWidth + "px; height: " + window.innerHeight + "px;";
+        CanvasElement.width = window.innerWidth; 
+        CanvasElement.height = window.innerHeight;
+        requestAnimationFrame(NextFrame);
     }
 }
 
-function OnMouseDownHandler() {
+function OnMouseDownHandler(event) {
 
     if (GameRunning) {
-        //Handle logic
+
+    
+        console.log(event.x / 16 + ' : ' + event.y / 16 );
+        
     }
 
 }
@@ -106,8 +129,13 @@ function OnMouseMoveEventHandler() {
     }
 }
 
+function OnMouseScrollEventHandler(event) {
+    console.log(event);
+}
+
 //Create Event Listeners
 window.onload = OnLoadEventHandler;
 window.onresize = OnResizeEventHandler;
 window.onmousedown = OnMouseDownHandler;
 window.onmousemove = OnMouseMoveEventHandler;
+window.onscroll = OnMouseScrollEventHandler;
