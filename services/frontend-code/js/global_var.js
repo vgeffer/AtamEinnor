@@ -34,3 +34,8 @@ var socket = null;
 var ResAlertShown = false;
 var FirstMessage = true;
 var GameRunning = false;
+
+//Camera
+var XOffset = 0;
+var YOffset = 0;
+var MouseSpeedMultiplier = 1;

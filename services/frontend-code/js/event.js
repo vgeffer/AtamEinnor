@@ -115,27 +115,42 @@ function OnResizeEventHandler() {
 function OnMouseDownHandler(event) {
 
     if (GameRunning) {
-
-    
-        console.log(event.x / 16 + ' : ' + event.y / 16 );
-        
+        if(event.buttons == 4) MovingScreen = true;
     }
 
 }
 
-function OnMouseMoveEventHandler() {
+function OnMouseUpHandler(event) {
     if (GameRunning) {
-        //Handle logic
+        if(event.button == 1) MovingScreen = false;
+    }
+}
+
+function OnMouseMoveEventHandler(event) {
+    if (GameRunning) {
+        if(MovingScreen) {
+            
+            XOffset += (event.clientX - PrevMouserPosition.x) * MouseSpeedMultiplier;
+            YOffset += (event.clientY - PrevMouserPosition.y) * MouseSpeedMultiplier;
+        }
+        PrevMouserPosition = {x: event.clientX, y: event.clientY};
     }
 }
 
 function OnMouseScrollEventHandler(event) {
-    console.log(event);
-}
+    if (GameRunning) {
+        if (event.deltaY > 0 && scaler > 0.5) scaler -= 0.1;
+        if (event.deltaY < 0 && scaler < 4) scaler += 0.1;
 
+    }
+}
 //Create Event Listeners
 window.onload = OnLoadEventHandler;
 window.onresize = OnResizeEventHandler;
 window.onmousedown = OnMouseDownHandler;
+window.onmouseup = OnMouseUpHandler;
 window.onmousemove = OnMouseMoveEventHandler;
-window.onscroll = OnMouseScrollEventHandler;
+window.onwheel = OnMouseScrollEventHandler;
+
+var MovingScreen = false;
+var PrevMouserPosition = null;

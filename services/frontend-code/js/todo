@@ -2,9 +2,11 @@
 Short Term:
     -Do networking
     -Do parameter validation in backend
+    
 
 Long Term:
     -Change private key on release
+    -Add mouse sensitivity param to settings
     
 Low Priority:
     -Change font to something better

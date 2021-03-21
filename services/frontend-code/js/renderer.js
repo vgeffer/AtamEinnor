@@ -18,7 +18,7 @@ function NextFrame() {
     //Yes this temporary piecoe of shit is what's going to be here
     for(var y = 0; y < y_limit; y++) {
         for(var x = 0; x < x_limit; x++) {
-            ctx.drawImage(tst_img[0], (y % 2 == 0 ? x * x_coord_shift : x * x_coord_shift + 32 * scaler), y * y_coord_shift, 48 * scaler, 32 * scaler);    
+            ctx.drawImage(tst_img[0], (y % 2 == 0 ? x * x_coord_shift : x * x_coord_shift + 32 * scaler) + XOffset, y * y_coord_shift + YOffset, 48 * scaler, 32 * scaler);    
         } 
     }
     requestAnimationFrame(NextFrame);
