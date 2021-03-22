@@ -42,12 +42,12 @@ function CreateWebSocket() {
 
 
             case "close":
-                console.log(payload.reason);
                 socket.close();
+                HandleError(payload.reason);
             break;
 
 			case "error":
-				handleError(payload);
+				HandleError(payload.reason);
 			break;
 		}
 	});

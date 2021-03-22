@@ -52,6 +52,10 @@ function EnterHandler() {
 
 }
 
+function HandleError(err) {
+    
+}
+
 function DisplayChatMessage(nick, message) {
 
     var MsgWrapper = document.createElement('div');
@@ -73,3 +77,4 @@ function DisplayChatMessage(nick, message) {
 
     FirstMessage = false;
 }
+
