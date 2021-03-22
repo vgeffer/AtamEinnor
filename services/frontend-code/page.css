@@ -147,6 +147,15 @@ a:hover {
     margin-top: 1em;
 }
 
+/*Game*/
+.PauseButtons {
+
+    margin-top: 1em;
+    height: 6em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
 
 .Chat {    
     z-index: 2;
@@ -175,6 +184,7 @@ a:hover {
     max-height: 6em;
 }
 
+
 /*HUD*/
 .CoinDisplay {
 
@@ -196,6 +206,30 @@ a:hover {
     width: 15%;
     height: 15%;
 }
+
+.OpenPause {
+
+    position: fixed;
+    left: 99%;
+    top: 1%;
+    transform: translate(-99%, -1%);
+
+    color: white;
+
+    font-size: 1.5rem;
+}
+
+.OpenChat {
+    position: fixed;
+    left: 99%;
+    top: 50%;
+    transform: translate(-99%, -50%);
+
+    color: white;
+
+    font-size: 1.5rem;
+}
+
 
 /*Media*/
 @media(max-width: 620px) {

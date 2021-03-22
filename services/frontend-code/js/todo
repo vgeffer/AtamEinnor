@@ -7,11 +7,12 @@ Short Term:
 Long Term:
     -Change private key on release
     -Add mouse sensitivity param to settings
+    -Reenable debbuger; statement on release
     
 Low Priority:
     -Change font to something better
     -Create animations for menus
-    -Probably add in-chunk interpolation
+    -Add debug credentials for backend socket
 
 Finnished:
     -Rewrite RENDSETT
@@ -21,3 +22,4 @@ Finnished:
 
 Dismissed:
     -Clean Up fucking spagetti code!
+    -Probably add in-chunk interpolation

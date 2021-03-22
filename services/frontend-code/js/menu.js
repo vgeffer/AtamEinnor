@@ -9,7 +9,10 @@ function ClosePopup(popupid) {
 function SaveSettings() {
     
     if((GameSettings.Desynchronize != $("Desynchronize").value || GameSettings.LowQualTextures != $("LowQualTextures").value) && GameRunning) {
-        window.localStorage.setItem('OVERRIDE_REJOIN', true);
+        window.localStorage.setItem('OVERRIDE_REJOIN', "rejoin");
+    }
+    else if((GameSettings.Desynchronize != $("Desynchronize").value || GameSettings.LowQualTextures != $("LowQualTextures").value) && !GameRunning) {
+        window.localStorage.setItem('OVERRIDE_REJOIN', "stay");
     }
 
     GameSettings.Desynchronize        = $("Desynchronize").checked;

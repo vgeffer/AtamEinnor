@@ -168,6 +168,34 @@ function JoinGameJWT() {
     });
 }
 
+function JWTAutoReconnect() {
+    
+    fetch('', {
+        method: 'POST',
+        body: JSON.stringify({
+            type: 'join-token',
+            token: window.localStorage.getItem('LOGTOKEN')
+        })
+    }).then(function(res) {
+        if(res.status != 200){
+            return console.error("MALFORMED REQUEST RECIVED BY SERVER!");
+        } 
+
+        res.text().then(function(text){
+            
+            if(text == "invalid") { 
+                return;
+            }
+            else if (text == "ok") {
+                ClosePopup("Menu");
+                OpenPopup("Game");
+                StartGame();
+            }
+            return;
+        });
+    });
+}
+
 async function JWTPing() {
     return new Promise((resolve, reject) => {
         fetch('', {

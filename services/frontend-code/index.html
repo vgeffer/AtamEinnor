@@ -31,6 +31,19 @@
 
 	<body>
 		
+		<div class = "fullscreen">
+			<div id = "SettingsContainer" class = "Container hidden" style = "z-index: 4;">
+				<h2>Settings</h2>
+				<input id = "Desynchronize" type = "checkbox"/> Desynchonize Renedring <br>
+				<input id = "LowQualTextures" type = "checkbox"/> Lower-Quality Textures <br>
+				<input id = "AutoReconect" type = "checkbox"/> Auto-Reconnect 
+
+				<div class = "center-content top-margin">
+					<button onclick = "SaveSettings()">Close</button>
+				</div>
+			</div>
+		</div>
+
 		<div id = "Menu">
 			<!--background-->
 
@@ -79,17 +92,6 @@
 				</div>
 			</div>
 
-			<div id = "SettingsContainer" class = "Container hidden">
-				<h2>Settings</h2>
-				<input id = "Desynchronize" type = "checkbox"/> Desynchonize Renedring <br>
-				<input id = "LowQualTextures" type = "checkbox"/> Lower-Quality Textures <br>
-				<input id = "AutoReconect" type = "checkbox"/> Auto-Reconnect 
-
-				<div class = "center-content top-margin">
-					<button onclick = "SaveSettings()">Close</button>
-				</div>
-			</div>
-
 			<div id = "AboutUsContainer" class = "Container hidden">
 				<p> <!--Credits-->
 					Project Lead: Hugo Halász <br>
@@ -109,7 +111,7 @@
 					<h1>Playtesters: </h1>
 					<p> <!--Playtesters-->
 						In no particular order: <br>
-						Kotlík, 
+						Kotlík, Jamajčan, 
 					</p>
 				</div>
 
@@ -165,6 +167,15 @@
 			</div>
 
 			<!--Pause Menu-->
+			<div id = "PauseMenuContainer" class = "Container hidden">
+				<div class = "PauseButtons">
+					<button onclick = "ClosePopup('PauseMenuContainer')">Resume Game</button>
+					<button onclick = "OpenPopup('SettingsContainer')">Settings</button>
+					<button onclick = "ExitGame()">Exit Game</button>
+				</div>
+			</div>
+
+			<!--Hud-->
 			<div class = "Hud">
 			
 				<div class = "CoinDisplay">
@@ -172,8 +183,8 @@
 					<p id = "CoinCount">0</p>
 				</div>
 
-				<div class = "OpenChat"></div>
-			
+				<div class = "OpenChat"><button onclick = "OpenPopup('ChatWindow')">&#xf075;</button></div>
+				<div class = "OpenPause"><button onclick = "OpenPopup('PauseMenuContainer')">&#10074;&#10074;</button></div>
 			</div>
 
 		</div>

@@ -73,30 +73,14 @@ function OnLoadEventHandler() {
     $("LowQualTextures").checked = GameSettings.LowQualTextures;
     $("AutoReconect").checked = GameSettings.AutoReconect;
 
-    if(GameSettings.AutoReconect ||  window.localStorage.getItem('OVERRIDE_REJOIN')) {
-        JoinGameJWT();
+    if((GameSettings.AutoReconect && window.localStorage.getItem('OVERRIDE_REJOIN') != "stay") ||  window.localStorage.getItem('OVERRIDE_REJOIN') == "rejoin") {
+        JWTAutoReconnect();
     }
 
     JWTPing().then((result) => {
         if (result) $("RejoinButton").disabled = false; 
     });
-
-
-    //For Debug
-    tst_img[0] = new Image();
-    tst_img[0].src = "/assets/unknown.png";
-
-    tst_img[1] = new Image();
-    tst_img[1].src = "/assets/unknown2.png";
-
-    tst_img[2] = new Image();
-    tst_img[2].src = "/assets/unknown4.png";
-
-    tst_img[3] = new Image();
-    tst_img[3].src = "/assets/unknown6.png";
-
-
-    
+    window.localStorage.setItem('OVERRIDE_REJOIN', ""); //By this time you should have joined or stayed in Menu
 }
 
 function OnResizeEventHandler() {
@@ -108,7 +92,8 @@ function OnResizeEventHandler() {
     if (CanvasElement != null) {
         CanvasElement.width = window.innerWidth; 
         CanvasElement.height = window.innerHeight;
-        requestAnimationFrame(NextFrame);
+        if (GameRunning) //To minimise repainting
+            requestAnimationFrame(NextFrame);
     }
 }
 
@@ -116,24 +101,31 @@ function OnMouseDownHandler(event) {
 
     if (GameRunning) {
         if(event.buttons == 4) MovingScreen = true;
+        if(event.buttons == 1 && event.path[0].nodeName == "CANVAS") { 
+            //Handle UI
+
+            if(SelectedTile == null)
+                SelectedTile = HighlightedTile;
+            else 
+                SelectedTile = null;
+        }
     }
 
 }
 
 function OnMouseUpHandler(event) {
     if (GameRunning) {
-        if(event.button == 1) MovingScreen = false;
+        if(event.button == 1) MovingScreen = false; //Here 1 is middle button. Yes it's weird
     }
 }
 
 function OnMouseMoveEventHandler(event) {
     if (GameRunning) {
         if(MovingScreen) {
-            
-            XOffset += (event.clientX - PrevMouserPosition.x) * MouseSpeedMultiplier;
-            YOffset += (event.clientY - PrevMouserPosition.y) * MouseSpeedMultiplier;
+            XOffset += (event.clientX - MousePos.x) * MouseSpeedMultiplier;
+            YOffset += (event.clientY - MousePos.y) * MouseSpeedMultiplier;
         }
-        PrevMouserPosition = {x: event.clientX, y: event.clientY};
+        MousePos = {x: event.clientX, y: event.clientY};
     }
 }
 
@@ -153,4 +145,3 @@ window.onmousemove = OnMouseMoveEventHandler;
 window.onwheel = OnMouseScrollEventHandler;
 
 var MovingScreen = false;
-var PrevMouserPosition = null;

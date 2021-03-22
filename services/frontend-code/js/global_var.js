@@ -17,7 +17,11 @@ var GameSettings = null;
 
 //Assets
 
+
 var tst_img = [];
+var CursorImg = null;
+
+
 var scaler = 1;
 
 var World = null;
@@ -29,6 +33,12 @@ var TimeElapsed = null;
 
 //Networking
 var socket = null;
+
+//Controls
+var MousePos = {};
+
+var HighlightedTile = {};
+var SelectedTile = null;
 
 //Misc
 var ResAlertShown = false;
