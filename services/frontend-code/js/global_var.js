@@ -22,7 +22,7 @@ var tst_img = [];
 var CursorImg = null;
 
 
-var scaler = 1;
+var scaler = 2;
 
 var World = null;
 

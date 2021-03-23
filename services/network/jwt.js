@@ -7,7 +7,7 @@ exports.verify_jwt = function(token) {
     return new Promise((resolve, reject) => {
     //TODO PROMISE
         jwt.verify(token, private_key, { algorithms: ['HS256'] }, function(err, token){
-            if(err) { console.log(err); return resolve(undefined); }
+            if(err) { return resolve(undefined); }
             resolve(token);
         });
     });

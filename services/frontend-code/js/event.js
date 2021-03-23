@@ -131,8 +131,8 @@ function OnMouseMoveEventHandler(event) {
 
 function OnMouseScrollEventHandler(event) {
     if (GameRunning) {
-        if (event.deltaY > 0 && scaler > 0.5) scaler -= 0.1;
-        if (event.deltaY < 0 && scaler < 4) scaler += 0.1;
+        if (event.deltaY > 0 && scaler > 2) scaler -= 0.1;
+        if (event.deltaY < 0 && scaler < 6) scaler += 0.1;
 
     }
 }

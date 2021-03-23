@@ -5,6 +5,10 @@ function StartGame() {
 
     LoadAssets();
 
+    //Fix Glitch
+    $('ChatWindow').addEventListener("wheel", (event) => { event.stopPropagation(); });  
+
+
     GameRunning = true;
     requestAnimationFrame(NextFrame);
 }
