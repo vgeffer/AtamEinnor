@@ -85,7 +85,7 @@ module.exports = function(httpServer){
                             if(current_room.spcount >= 2 * (current_room.pcount / 3)) {
                                 current_room.players[0].socket.send(
                                     JSON.parse({
-                                        type: "ask-for-start"
+                                        type: "ask_for_start"
                                     })
                                 );
                             }

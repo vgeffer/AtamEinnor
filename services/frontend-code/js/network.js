@@ -40,6 +40,11 @@ function CreateWebSocket() {
                 }));
             break;
 
+            case "ask_for_start":
+
+                
+
+            break;
 
             case "close":
                 socket.close();
@@ -119,7 +124,7 @@ function JoinGame() {
                 setTimeout(() => {
                     ClosePopup("Menu");
                     OpenPopup("Game");
-                    StartGame();
+                    StartGame(gameID);
                 }, 1000);
             }
         });
@@ -154,13 +159,13 @@ function JoinGameJWT() {
                 }, 1000);
                 return;
             }
-            else if (text == "ok") {
+            else {
                 $("RejoinButton").style = "color: green;";
 
                 setTimeout(() => {
                     ClosePopup("Menu");
                     OpenPopup("Game");
-                    StartGame();
+                    StartGame(text);
                 }, 1000);
             }
             return;
@@ -186,10 +191,10 @@ function JWTAutoReconnect() {
             if(text == "invalid") { 
                 return;
             }
-            else if (text == "ok") {
+            else {
                 ClosePopup("Menu");
                 OpenPopup("Game");
-                StartGame();
+                StartGame(text);
             }
             return;
         });
@@ -213,8 +218,7 @@ async function JWTPing() {
             res.text().then(function(text) {
             
                 if(text == "invalid") return resolve(false);
-                else if (text == "ok") return resolve(true);
-                return resolve(false);
+                else return resolve(true);
             });
         });
     });
@@ -278,7 +282,7 @@ function CreateGame() {
                         setTimeout(() => {
                             ClosePopup("Menu");
                             OpenPopup("Game");
-                            StartGame();
+                            StartGame(gameID);
                         }, 1000);
                     }
                 });

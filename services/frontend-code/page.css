@@ -230,6 +230,14 @@ a:hover {
     font-size: 1.5rem;
 }
 
+.CodeText {
+    text-align: center;
+}
+
+.CodeText p, a {
+    margin: 0px;
+}
+
 
 /*Media*/
 @media(max-width: 620px) {

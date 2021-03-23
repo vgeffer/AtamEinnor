@@ -57,7 +57,7 @@ const server = http.createServer(async (req, res) => {
 
                         if(searched_room.pl_win != -1) return res.end("invalid");
                         for(let i = 0; i < searched_room.spcount; i++) {
-                            if(searched_room.players[i].pnick === parsed_token.nick) return res.end("ok");
+                            if(searched_room.players[i].pnick === parsed_token.nick) return res.end(parsed_token.room_id);
                         }
                         res.end("invalid");
                     break;

@@ -166,12 +166,26 @@
 				</div>
 			</div>
 
+			<!--Start Message Container-->
+			<div id = "StartGameQuestionContainer">
+				<h1 id = "StartGameQuestionText"></h1>
+				<div class = "inline top-margin">
+					<button onclick = "">Yes</button>
+					<button onclick = "ClosePopup('StartGameQuestionContainer')">No</button>
+				</div>
+			</div>
+
 			<!--Pause Menu-->
 			<div id = "PauseMenuContainer" class = "Container hidden">
 				<div class = "PauseButtons">
 					<button onclick = "ClosePopup('PauseMenuContainer')">Resume Game</button>
 					<button onclick = "OpenPopup('SettingsContainer')">Settings</button>
 					<button onclick = "ExitGame()">Exit Game</button>
+				</div>
+
+				<div class = "CodeText">
+					<p id = "RoomCode"></p>
+					<a href = "javascript:void(0)" id = "RoomLink">Get room link</a>
 				</div>
 			</div>
 

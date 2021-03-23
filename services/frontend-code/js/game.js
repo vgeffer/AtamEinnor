@@ -1,4 +1,4 @@
-function StartGame() {
+function StartGame(code) {
 
     CreateWebSocket();
     World = new Map();
@@ -7,8 +7,17 @@ function StartGame() {
 
     //Fix Glitch
     $('ChatWindow').addEventListener("wheel", (event) => { event.stopPropagation(); });  
-
-
+    $('RoomCode').textContent = "Room Code: " + code;
+    $('RoomLink').addEventListener("click", async function() {
+        if (!navigator.clipboard)
+            return;
+        try {
+            await navigator.clipboard.writeText(window.location + "?join_room=" + code);
+        } catch (error) {
+            console.error("Copy failed", error);
+        } 
+    
+    });
     GameRunning = true;
     requestAnimationFrame(NextFrame);
 }
@@ -19,7 +28,7 @@ function LoadAssets() {
     CursorImg.src = "./assets/selector.png"
     
     tst_img[0] = new Image();
-    tst_img[0].src = "/assets/unknown.png";
+    tst_img[0].src = "/assets/tst.png";
 
     tst_img[1] = new Image();
     tst_img[1].src = "/assets/unknown2.png";
