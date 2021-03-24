@@ -12,7 +12,7 @@ function StartGame(code) {
         if (!navigator.clipboard)
             return;
         try {
-            await navigator.clipboard.writeText(window.location + "?join_room=" + code);
+            await navigator.clipboard.writeText(window.location.host + "?join_room=" + code);
         } catch (error) {
             console.error("Copy failed", error);
         } 
@@ -42,9 +42,58 @@ function LoadAssets() {
 
 }
 
+/*DOM Callbacks*/
+function AddWorker(worker) {
+    if(worker == "dwarf" && DwarfC < 3 && (DwarfC + GnomeC) < 3) {
+        DwarfC++;   
+    }
+    else if(worker == "gnome" && GnomeC < 3 && (DwarfC + GnomeC) < 3) {
+        GnomeC++;
+    }
+
+    $('DwarfCount').textContent = DwarfC;
+    $('GnomeCount').textContent = GnomeC;
+    $('ConfirmSelection').textContent = (GnomeC + DwarfC) + "/3" 
+
+    if((GnomeC + DwarfC) == 3) {
+        $('ConfirmSelection').textContent = "Confirm";
+        $('ConfirmSelection').disabled = false; 
+    }
+}
+
+function SubWorker(worker) {
+    if(worker == "dwarf" && DwarfC > 0 && (DwarfC + GnomeC) > 0) {
+        DwarfC--;   
+    }
+    else if(worker == "gnome" && GnomeC > 0 && (DwarfC + GnomeC) > 0) {
+        GnomeC--;
+    }
+
+    $('DwarfCount').textContent = DwarfC;
+    $('GnomeCount').textContent = GnomeC;
+    $('ConfirmSelection').textContent = (GnomeC + DwarfC) + "/3"; 
+    $('ConfirmSelection').disabled = true; 
+}
+
+function SaveWorkers() {
+    socket.send(JSON.stringify({
+        type: "save_workers",
+        gcount: GnomeC,
+        dcount: DwarfC
+    }));
+    ClosePopup('CharSelectContainer');
+}
+
 function ExitGame() {
     window.localStorage.setItem('OVERRIDE_REJOIN', "stay");
     window.location = window.location;
+}
+
+function AllowStart() {
+    socket.send(JSON.stringify({
+        type: "host_start_game",
+        content: window.localStorage.getItem('LOGTOKEN')
+    }));
 }
 
 function SendChatMessage() {
@@ -65,10 +114,7 @@ function EnterHandler() {
 
 }
 
-function HandleError(err) {
-    
-}
-
+/*Network Handlers*/
 function DisplayChatMessage(nick, message) {
 
     var MsgWrapper = document.createElement('div');
@@ -91,3 +137,8 @@ function DisplayChatMessage(nick, message) {
     FirstMessage = false;
 }
 
+function HandleError(err) {
+    
+}
+
+var DwarfC = 0, GnomeC = 0;

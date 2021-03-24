@@ -19,8 +19,7 @@ module.exports = function(httpServer){
 
         let usr_nick = "";
         let current_room = null;
-
-        console.log("user connected");
+        let parsed_token = null;
 
         ws.json = function (data){
 			this.send(JSON.stringify(data));
@@ -64,52 +63,73 @@ module.exports = function(httpServer){
                 break;
 
                 case "id_response":
-                    let parsed_token = await jwt.verify_jwt(payload.content);
+                    parsed_token = await jwt.verify_jwt(payload.content);
                     if (parsed_token === undefined) return ws.json({type: "auth_response", content: "failed"});
 
                     usr_nick = parsed_token.nick;
                     current_room_code = parsed_token.room_id;
                     current_room = room.get_room(parsed_token.room_id);
 
+                    console.log("User " + usr_nick + " connected to room " + parsed_token.room_id);
 
                     //assign socket
                     for(let i = 0; i < current_room.pcount; i++) {
                         if(current_room.players[i].pnick == usr_nick) {
+                            console.log(i);
                             current_room.players[i].socket = ws;
                             ws.json({type: "auth_response", content: "success"});
 
-                            if(current_room.spcount == current_room.pcount) {
-                                current_room.start_room_clock(current_room);
-                            }
 
-                            if(current_room.spcount >= 2 * (current_room.pcount / 3)) {
-                                current_room.players[0].socket.send(
-                                    JSON.parse({
-                                        type: "ask_for_start"
-                                    })
-                                );
-                            }
+                            console.log(current_room.players[i].workers);
+                            if(current_room.players[i].workers.length > 0) 
+                                ws.json({type: "workers", content: current_room.players[i].workers});
                             return;
                         }
                     }
                     ws.json({type: "auth_response", content: "failed"});
                 break;
 
-                case "check_host_privileges":
-                    if(current_room != null) {
-                        if(usr_nick === current_room.players[0].pnick)
-                            ws.json({type: "response", content: "true"});
-                        else
-                            ws.json({type: "response", content: "false"});
+                case "host_start_game":
+                    parsed_token = await jwt.verify_jwt(payload.content);
+                    if(payload.nick == current_room.players[0].pcount) {
+                        room.start_room_clock(current_room);
                     }
-                break;
-
-                case "host_action":
                 break;
 
                 case "player_action":
                     if(current_room != null) {
                         player.ParsePlayerAction(parsed_token.content, current_room, ws);
+                    }
+                break;
+
+                case "save_workers":
+                    for(let i = 0; i < current_room.pcount; i++) {
+                        if(current_room.players[i].pnick == usr_nick) {
+                            console.log(i);
+                            for(let g = 0; g < payload.gcount; g++)
+                                current_room.players[i].workers.push({type: "gnome", inv: []});
+                            for(let d = 0; d < payload.dcount; d++) 
+                                current_room.players[i].workers.push({type: "dwarf", inv: []});
+                     
+                            
+                            ws.json({type: "workers", content: current_room.players[i].workers});
+                            console.log(current_room.players[i].workers);
+                            break;
+                            }
+                    }
+
+                    if(current_room.spcount == current_room.pcount) {
+                        room.start_room_clock(current_room);
+                    }
+
+                    else if(current_room.spcount >= 2 * (current_room.pcount / 3)) {
+                        current_room.players[0].socket.send(
+                            JSON.stringify({
+                                type: "ask_for_start",
+                                spcount: current_room.spcount,
+                                pcount: current_room.pcount
+                            })
+                        );
                     }
                 break;
 
@@ -132,3 +152,8 @@ exports.force_conn_end = function(socket, msg){
         })
     );
 }
+
+const DWARF_TEMPLATE = {
+    type: "dwarf",
+    inventory: []
+};

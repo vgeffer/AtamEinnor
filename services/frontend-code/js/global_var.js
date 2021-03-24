@@ -49,3 +49,6 @@ var GameRunning = false;
 var XOffset = 0;
 var YOffset = 0;
 var MouseSpeedMultiplier = 1;
+
+//Game 
+var Workers = [];

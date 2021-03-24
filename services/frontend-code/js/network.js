@@ -9,10 +9,6 @@ function CreateWebSocket() {
 		}));
 	});
 
-	socket.addEventListener("close", (event) => {
-		//trigger disconnect msg
-	});
-
 	socket.addEventListener("message", (event) => {
 		console.log("Message from The Server ", event.data);
 		
@@ -41,9 +37,24 @@ function CreateWebSocket() {
             break;
 
             case "ask_for_start":
+                $("StartGameQuestionText").textContent = "Start the game? " + payload.spcount + "/" + payload.pcount + "  players already connected."; 
+                OpenPopup("StartGameQuestionContainer");
+            break;
 
+            case "game_anouncment":
                 
+                switch(payload.content.type) {
+                    case "start":
+                        ClosePopup("StartGameQuestionContainer");
+                        ClosePopup("WaitingText");
+                    break;
+                }
 
+            break;
+
+            case "workers":
+                ClosePopup('CharSelectContainer');
+                Workers = payload.content;
             break;
 
             case "close":
@@ -52,6 +63,7 @@ function CreateWebSocket() {
             break;
 
 			case "error":
+                socket.close();
 				HandleError(payload.reason);
 			break;
 		}
@@ -229,6 +241,7 @@ function CreateGame() {
     if (document.getElementById('CreateNick').value == "") return;
 
     document.getElementById('CreatePlayerCount').disabled = true;
+    document.getElementById('CreateTurnCount').disabled = true;
     document.getElementById('CreateNick').disabled = true;
 
 
@@ -238,11 +251,13 @@ function CreateGame() {
         method: 'POST',
         body: JSON.stringify({
             type: 'create-room',
-            player_count: document.getElementById('CreatePlayerCount').value
+            player_count: document.getElementById('CreatePlayerCount').value,
+            turn_count: document.getElementById('CreateTurnCount').value
         })
     }).then(function(res) {
         if(res.status != 200){
             document.getElementById('CreatePlayerCount').disabled = false;
+            document.getElementById('CreateTurnCount').disabled = false;
             document.getElementById('CreateNick').disabled = false;
             return console.error("MALFORMED REQUEST RECIVED BY SERVER!");
         } 
@@ -264,6 +279,7 @@ function CreateGame() {
     
                 if(res.status != 200){
                     document.getElementById('CreatePlayerCount').disabled = false;
+                    document.getElementById('CreateTurnCount').disabled = false;
                     document.getElementById('CreateNick').disabled = false;
                     return console.error("MALFORMED REQUEST RECIVED BY SERVER!");
                 } 
@@ -272,6 +288,7 @@ function CreateGame() {
                 res.text().then(function(text){
                     if(text == "invalid") {
                         document.getElementById('CreatePlayerCount').disabled = false;
+                        document.getElementById('CreateTurnCount').disabled = false;
                         document.getElementById('CreateNick').disabled = false;
                         return;
                     }

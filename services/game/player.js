@@ -38,5 +38,19 @@ exports.RoundTick = function(room) {
     }
 
 
+
+    MassSend(room, {
+        type: "game_anouncment",
+        content: {
+            type: "tick_update"
+        }
+    });
 }
 
+function MassSend(room, payload){
+    for(let i = 0; i < room.spcount; i++) {
+
+        room.room_running = true;
+        room.players[i].socket.send(JSON.stringify(payload));
+    }
+}

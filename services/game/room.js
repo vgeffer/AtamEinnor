@@ -11,7 +11,7 @@ const ROUND_TIMER = 15 * 1000; //in ms
 //----------
 
 
-exports.create_room = function(player_count) {
+exports.create_room = function(player_count, turn_count) {
 
     let id = "";
     let room_obj = {};
@@ -29,6 +29,7 @@ exports.create_room = function(player_count) {
     room_obj.world = null;
     room_obj.chat = [];
     room_obj.pl_win = -1;
+    room_obj.turns = turn_count;
     room_obj.room_running = false;
     room_obj.player_queue = new Map(); //So one parsing step would be skipped, sorted while comming in
 
@@ -39,7 +40,7 @@ exports.create_room = function(player_count) {
             socket: null,
             pnick: null,
             money_count: 0, 
-            workers: {}
+            workers: []
         };
     }
     
@@ -69,14 +70,16 @@ exports.start_room_clock = function(room) {
     for(let i = 0; i < room.spcount; i++) {
 
         room.room_running = true;
-        room.players[i].socket.send(JSON.parse({
+        room.players[i].socket.send(JSON.stringify({
             type: "game_anouncment",
             content: {
                 type: "start"
             }
         }));
     }
-    setInterval(RoundTick(room), ROUND_TIMER);
+    setInterval(() => {
+        RoundTick(room);
+    }, ROUND_TIMER);
 }
 
 
@@ -86,6 +89,7 @@ setInterval(() => {
     for(let i = 0; i < keys.length; i++){
         let room = roms.get(keys[i]);
         if(room.exp < Date.now()) {
+            console.log("Room " + keys[i] + " timed out, closing.")
             for(let j = 0; j < room.pcount; j++) {
                 ws.force_conn_end(room.players[i].socket, "Game has ended");
             }

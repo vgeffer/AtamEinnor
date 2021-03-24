@@ -64,7 +64,8 @@ const server = http.createServer(async (req, res) => {
                     
                     case "create-room":
                         res.statusCode = 200;
-                        res.end(room.create_room(parsedBody.player_count));
+                        console.log(parsedBody.turn_count);
+                        res.end(room.create_room(parsedBody.player_count, parsedBody.turn_count));
                     break;
                 }
 

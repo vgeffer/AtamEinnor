@@ -8,8 +8,9 @@ Long Term:
     -Change private key on release
     -Add mouse sensitivity param to settings
     -Reenable debbuger; statement on release
-    -Change Copy target to a website after finnis
-    
+    -Change Copy target to a website after finnish
+    -Disable console spam before release
+
 Low Priority:
     -Create animations for menus
     -Add debug credentials for backend socket
