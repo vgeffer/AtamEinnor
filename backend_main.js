@@ -86,6 +86,12 @@ const server = http.createServer(async (req, res) => {
                 return res.end(err403);
             }
 
+            if(contPath == "/report") {
+                res.writeHead(301, {Location: "https://forms.gle/e3FrMLzG95nF2UdU8"});
+                res.end();
+                return;
+            }
+
             const fstream = fs.createReadStream(path.join("./services/frontend-code", normalized));
             fstream
             .on("error", (error) => {

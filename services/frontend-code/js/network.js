@@ -57,6 +57,11 @@ function CreateWebSocket() {
                 Workers = payload.content;
             break;
 
+            case "world":
+                World = payload.content;
+                console.log(World);
+                break;
+
             case "close":
                 socket.close();
                 HandleError(payload.reason);

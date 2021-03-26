@@ -78,9 +78,8 @@ module.exports = function(httpServer){
                             console.log(i);
                             current_room.players[i].socket = ws;
                             ws.json({type: "auth_response", content: "success"});
+                            ws.json({type: "world", content: current_room.world});
 
-
-                            console.log(current_room.players[i].workers);
                             if(current_room.players[i].workers.length > 0) 
                                 ws.json({type: "workers", content: current_room.players[i].workers});
                             return;

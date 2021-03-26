@@ -34,10 +34,11 @@
 		<div class = "fullscreen">
 			<div id = "SettingsContainer" class = "Container hidden" style = "z-index: 4;">
 				<h2>Settings</h2>
-				<input id = "Desynchronize" type = "checkbox"/> Desynchonize Renedring <br>
-				<input id = "LowQualTextures" type = "checkbox"/> Lower-Quality Textures <br>
-				<input id = "AutoReconect" type = "checkbox"/> Auto-Reconnect 
-
+				<div class = "sans-font">
+					<input id = "Desynchronize" type = "checkbox"/> Desynchonize Renedring <br>
+					<input id = "LowQualTextures" type = "checkbox"/> Lower-Quality Textures <br>
+					<input id = "AutoReconect" type = "checkbox"/> Auto-Reconnect 
+				</div>
 				<div class = "center-content top-margin">
 					<button onclick = "SaveSettings()">Close</button>
 				</div>
@@ -139,7 +140,7 @@
 
 			<!--Chat-->
 			<div id = "ChatWindow" class = "Chat hidden">
-				<div id = "Messages" class = "MessageBox top-margin"></div>
+				<div id = "Messages" class = "MessageBox top-margin sans-font"></div>
 				<div class = "inline">
 					<input id = "Message" type = "text" placeholder = "Message" onkeydown = "EnterHandler()"/>
 					<button class = "left-margin" onclick = "SendChatMessage()">Send</button>

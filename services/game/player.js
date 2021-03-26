@@ -4,15 +4,6 @@ exports.ParsePlayerAction = function(action, room, ws) {
 
     switch (action.type) {
 
-        case "load-chunk": 
-
-            let chunk = world.generate_chunk();
-
-            ws.send({
-                
-            });
-        break;
-
         case "buy-item":
             
         break;

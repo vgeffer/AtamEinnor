@@ -1,14 +1,12 @@
 
 Short Term:
-    -Do networking
     -Do parameter validation in backend
+    -Rework destroyed tiles so they won't cause graphical glitch
     
 
-Long Term:
+On Release:
     -Change private key on release
-    -Add mouse sensitivity param to settings
     -Reenable debbuger; statement on release
-    -Change Copy target to a website after finnish
     -Disable console spam before release
 
 Low Priority:
@@ -21,7 +19,10 @@ Finnished:
     -Update loop so it takes 2d instead of WebGL
     -Rework menu UI
     -Change font to something better
+    -Do networking
+    -Change Copy target to a website after finnish
 
 Dismissed:
     -Clean Up fucking spagetti code!
-    -Probably add in-chunk interpolation
+    -Probably add in-chunk interpolation (system reworked)
+    -Add mouse sensitivity param to settings (pretty much nailed)

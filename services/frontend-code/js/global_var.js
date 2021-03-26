@@ -52,3 +52,5 @@ var MouseSpeedMultiplier = 1;
 
 //Game 
 var Workers = [];
+var World = [];
+var View = [];

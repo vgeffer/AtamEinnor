@@ -28,18 +28,35 @@ function LoadAssets() {
     CursorImg.src = "./assets/selector.png"
     
     tst_img[0] = new Image();
-    tst_img[0].src = "/assets/tst.png";
+    tst_img[0].src = "/assets/dirt.png";
 
     tst_img[1] = new Image();
-    tst_img[1].src = "/assets/unknown2.png";
+    tst_img[1].src = "/assets/stone.png";
 
     tst_img[2] = new Image();
-    tst_img[2].src = "/assets/unknown4.png";
+    tst_img[2].src = "/assets/bedrock.png";
 
     tst_img[3] = new Image();
-    tst_img[3].src = "/assets/unknown6.png";
+    tst_img[3].src = "/assets/dirt_dug.png";
 
+    tst_img[4] = new Image();
+    tst_img[4].src = "/assets/stone_dug.png";
 
+    tst_img[5] = new Image();
+    tst_img[5].src = "/assets/bedrock_dug.png";
+
+    tst_img[6] = new Image();
+    tst_img[6].src = "/assets/crystal_ore.png";
+
+    tst_img[7] = new Image();
+    tst_img[7].src = "/assets/diamond_ore.png";
+
+    tst_img[8] = new Image();
+    tst_img[8].src = "/assets/crystal_single.png";
+    
+    tst_img[9] = new Image();
+    tst_img[9].src = "/assets/diamond_single.png";
+    
 }
 
 /*DOM Callbacks*/

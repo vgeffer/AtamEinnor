@@ -1,8 +1,8 @@
 module.exports = class LCG {
     constructor(a, c, m, seed){
-        this.a = typeof a === "number" ? a : 25214903917;
+        this.a = typeof a === "number" ? a : 12836191;
         this.c = typeof c === "number" ? c : 11;
-        this.m = typeof m === "number" ? m : 281474976710656;
+        this.m = typeof m === "number" ? m : 33554393;
         this.seed = typeof seed === "number" ? seed : Date.now();
     }
 
