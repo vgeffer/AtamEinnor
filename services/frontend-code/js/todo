@@ -1,7 +1,10 @@
 
 Short Term:
-    -Do parameter validation in backend
-    -Rework destroyed tiles so they won't cause graphical glitch
+    -Create FE/BE character system
+    -Create Ladders
+    -Create Torches
+    -Create Support Beams
+    -Create Store
     
 
 On Release:
@@ -21,6 +24,8 @@ Finnished:
     -Change font to something better
     -Do networking
     -Change Copy target to a website after finnish
+    -Rework destroyed tiles so they won't cause graphical glitch
+    -Do parameter validation in backend
 
 Dismissed:
     -Clean Up fucking spagetti code!

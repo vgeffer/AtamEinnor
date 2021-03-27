@@ -68,21 +68,12 @@ function CreateWebSocket() {
             break;
 
 			case "error":
+                console.log(payload.message);
+				HandleError(payload.message);
                 socket.close();
-				HandleError(payload.reason);
 			break;
 		}
 	});
-}
-
-function RequestChunk(x, y) {
-    socket.send(JSON.stringify({
-        type: "player_action",
-        content: {
-            type: "load-chunk",
-            position: {X: x, Y: y}
-        }
-    }));
 }
 
 function JoinGame() {
@@ -256,14 +247,14 @@ function CreateGame() {
         method: 'POST',
         body: JSON.stringify({
             type: 'create-room',
-            player_count: document.getElementById('CreatePlayerCount').value,
-            turn_count: document.getElementById('CreateTurnCount').value
+            player_count: parseInt($('CreatePlayerCount').value),
+            turn_count: parseInt($('CreateTurnCount').value)
         })
     }).then(function(res) {
         if(res.status != 200){
-            document.getElementById('CreatePlayerCount').disabled = false;
-            document.getElementById('CreateTurnCount').disabled = false;
-            document.getElementById('CreateNick').disabled = false;
+            $('CreatePlayerCount').disabled = false;
+            $('CreateTurnCount').disabled = false;
+            $('CreateNick').disabled = false;
             return console.error("MALFORMED REQUEST RECIVED BY SERVER!");
         } 
 
@@ -278,27 +269,27 @@ function CreateGame() {
                 body: JSON.stringify({
                     type: 'join-room',
                     room_id: gameID,
-                    nick: document.getElementById('CreateNick').value
+                    nick: $('CreateNick').value
                 })
             }).then(function(res){
     
                 if(res.status != 200){
-                    document.getElementById('CreatePlayerCount').disabled = false;
-                    document.getElementById('CreateTurnCount').disabled = false;
-                    document.getElementById('CreateNick').disabled = false;
+                    $('CreatePlayerCount').disabled = false;
+                    $('CreateTurnCount').disabled = false;
+                    $('CreateNick').disabled = false;
                     return console.error("MALFORMED REQUEST RECIVED BY SERVER!");
                 } 
     
             
                 res.text().then(function(text){
                     if(text == "invalid") {
-                        document.getElementById('CreatePlayerCount').disabled = false;
-                        document.getElementById('CreateTurnCount').disabled = false;
-                        document.getElementById('CreateNick').disabled = false;
+                        $('CreatePlayerCount').disabled = false;
+                        $('CreateTurnCount').disabled = false;
+                        $('CreateNick').disabled = false;
                         return;
                     }
                     else {
-						document.getElementById('CreateNick').style = "color: green;";		
+						$('CreateNick').style = "color: green;";		
 
                         window.localStorage.setItem('LOGTOKEN', text);
                         setTimeout(() => {

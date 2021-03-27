@@ -39,6 +39,7 @@ var MousePos = {};
 
 var HighlightedTile = {};
 var SelectedTile = null;
+var CursorDrawn = false;
 
 //Misc
 var ResAlertShown = false;

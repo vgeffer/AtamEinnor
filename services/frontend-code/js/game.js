@@ -123,9 +123,10 @@ function SendChatMessage() {
     }
 }
 
-function EnterHandler() {
+function EnterHandler(event) {
 
-    if(window.event.key == "Enter") {
+    event.stopPropagation();
+    if(event.code == "Enter") {
         SendChatMessage();
     }
 
@@ -135,6 +136,8 @@ function EnterHandler() {
 function DisplayChatMessage(nick, message) {
 
     var MsgWrapper = document.createElement('div');
+
+    var TextWrapper = document.createElement('div');
     var NickWrapper = document.createElement('div');
 
     MsgWrapper.classList.add('inline');
@@ -144,8 +147,12 @@ function DisplayChatMessage(nick, message) {
     NickWrapper.classList.add('right-half-margin');
     NickWrapper.textContent = nick;
 
-    MsgWrapper.textContent = message;
-    MsgWrapper.prepend(NickWrapper);
+    TextWrapper.classList.add('break-word');
+    TextWrapper.textContent = message;
+
+
+    MsgWrapper.append(NickWrapper);
+    MsgWrapper.append(TextWrapper);
 
     document.getElementById('Messages').appendChild(MsgWrapper);
     document.getElementById('Messages').scrollTo(0, document.getElementById('Messages').scrollHeight);
@@ -155,7 +162,8 @@ function DisplayChatMessage(nick, message) {
 }
 
 function HandleError(err) {
-    
+    OpenPopup('DisconnectedMsgContainer');
+    $('ErrorReason').textContent = err;
 }
 
 var DwarfC = 0, GnomeC = 0;

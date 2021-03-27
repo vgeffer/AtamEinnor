@@ -64,7 +64,21 @@ const server = http.createServer(async (req, res) => {
                     
                     case "create-room":
                         res.statusCode = 200;
-                        console.log(parsedBody.turn_count);
+                        
+                        //check for type
+                        if(typeof(parsedBody.player_count) !== "number" || typeof(parsedBody.turn_count) !== "number") {
+                            res.statusCode = 400;
+                            res.end("bad request. player_count or turn_count is NaN");
+                            return;
+                        }
+
+                        //check for value
+                        if(parsedBody.player_count < 2 || parsedBody.turn_count < 1) {
+                            res.statusCode = 400;
+                            res.end("bad request. player_count or turn_count has an invalid value");
+                            return;
+                        }
+
                         res.end(room.create_room(parsedBody.player_count, parsedBody.turn_count));
                     break;
                 }

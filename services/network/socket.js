@@ -106,15 +106,15 @@ module.exports = function(httpServer){
                         if(current_room.players[i].pnick == usr_nick) {
                             console.log(i);
                             for(let g = 0; g < payload.gcount; g++)
-                                current_room.players[i].workers.push({type: "gnome", inv: []});
+                                current_room.players[i].workers.push({type: "gnome", inv: {torches: 0, supports: 0, ladders: 0, ores:[]}});
                             for(let d = 0; d < payload.dcount; d++) 
-                                current_room.players[i].workers.push({type: "dwarf", inv: []});
+                                current_room.players[i].workers.push({type: "dwarf", inv: {torches: 0, supports: 0, ladders: 0, ores:[]}});
                      
                             
                             ws.json({type: "workers", content: current_room.players[i].workers});
                             console.log(current_room.players[i].workers);
                             break;
-                            }
+                        }
                     }
 
                     if(current_room.spcount == current_room.pcount) {

@@ -43,6 +43,14 @@
 					<button onclick = "SaveSettings()">Close</button>
 				</div>
 			</div>
+
+			<div id = "DisconnectedMsgContainer" class = "Container hidden">
+				<p id = "ErrorReason" class = "sans-font" style = "color: red;"></p>
+
+				<div class = "center-content top-margin">
+					<button onclick = "window.location = window.location;">Close</button>
+				</div>
+			</div>
 		</div>
 
 		<div id = "Menu">
@@ -56,6 +64,7 @@
 			<div class = "MenuBox">
 				<button onclick = "OpenPopup('PlayContainer')">Play</button>
 				<button onclick = "OpenPopup('SettingsContainer')">Settings</button>
+				<button onclick = "OpenPopup('HowToPlayContainer')">How To Play</button>
 				<button onclick = "OpenPopup('AboutUsContainer')">About us</button>
 			</div>
 
@@ -125,12 +134,12 @@
 
 			</div>
 
-			<div id = "DisconnectedMsgContainer" class = "Container hidden">
-				<h1> Player Disconected </h1>
-
+			<div id = "HowToPlayContainer" class = "Container hidden">
+				TODO WRITE IT
 				<div class = "center-content top-margin">
-					<button onclick = "ClosePopup('AboutUsContainer')">Close</button>
+					<button onclick = "ClosePopup('HowToPlayContainer')">Close</button>
 				</div>
+
 			</div>
 		</div>
 
@@ -142,7 +151,7 @@
 			<div id = "ChatWindow" class = "Chat hidden">
 				<div id = "Messages" class = "MessageBox top-margin sans-font"></div>
 				<div class = "inline">
-					<input id = "Message" type = "text" placeholder = "Message" onkeydown = "EnterHandler()"/>
+					<input id = "Message" type = "text" placeholder = "Message" onkeydown = "EnterHandler(event)"/>
 					<button class = "left-margin" onclick = "SendChatMessage()">Send</button>
 				</div>
 				<div class = "center-content top-margin">
@@ -236,20 +245,20 @@
 
 			<!--Hud-->
 			<div class = "Hud">
-			
+	
 				<div class = "CoinDisplay">
 					<img class = "CoinIcon" src = "assets/coin_icon512x512.png" alt = "It broken!" />
 					<p id = "CoinCount">0</p>
 				</div>
 
-				<div id = "WaitingText" class = "WaitingTextWrapper"> <!--demonstrate, comense, viewed, anounce, footware, lady, am aware of, response-->
+				<div id = "WaitingText" class = "WaitingTextWrapper"> 
 					<h1>Waiting For Players...</h1>
 				</div>
+
 
 				<div class = "OpenChat"><button onclick = "OpenPopup('ChatWindow')">&#xf075;</button></div>
 				<div class = "OpenPause"><button onclick = "OpenPopup('PauseMenuContainer')">&#10074;&#10074;</button></div>
 			</div>
-
 		</div>
 	</body>
 </html>

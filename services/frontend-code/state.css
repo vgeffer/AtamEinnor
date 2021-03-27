@@ -50,3 +50,7 @@
 .sans-font {
     font-family: 'Open Sans', sans-serif;
 }
+
+.break-word {
+    word-break: break-all;
+}

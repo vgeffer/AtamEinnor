@@ -136,6 +136,12 @@ function OnMouseScrollEventHandler(event) {
 
     }
 }
+
+function OnKeyDownEvent(event) {
+        console.log(event);
+
+}
+
 //Create Event Listeners
 window.onload = OnLoadEventHandler;
 window.onresize = OnResizeEventHandler;
@@ -143,5 +149,6 @@ window.onmousedown = OnMouseDownHandler;
 window.onmouseup = OnMouseUpHandler;
 window.onmousemove = OnMouseMoveEventHandler;
 window.onwheel = OnMouseScrollEventHandler;
+window.onkeydown = OnKeyDownEvent;
 
 var MovingScreen = false;
