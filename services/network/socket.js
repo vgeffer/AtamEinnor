@@ -110,7 +110,7 @@ module.exports = function(httpServer){
 
                 case "player_action":
                     if(current_room != null) {
-                        player.ParsePlayerAction(parsed_token.content, current_room, usr_nick, ws);
+                        player.ParsePlayerAction(payload.content, current_room, usr_nick, ws);
                     }
                 break;
 

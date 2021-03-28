@@ -49,10 +49,16 @@ function CreateWebSocket() {
                         ClosePopup("WaitingText");
 
                         CurrentPrices = payload.content.prices;
+
+                        /*Update the store*/
+                        UpdatePricing();
                     break;
 
                     case "tick_update":
                         CurrentPrices = payload.content.prices;
+
+                        /*Update the store*/
+                        UpdatePricing();
                     break;
                 }
 
@@ -63,6 +69,8 @@ function CreateWebSocket() {
                 else if(payload.status == "success") {
                     Money = payload.money;
                     Workers = payload.workers;
+
+                    //Update the store
                     OpenStore(payload.unitid);
 
                     //Update DOM
@@ -118,7 +126,8 @@ function JoinGame() {
         body: JSON.stringify({
             type: 'join-room',
             room_id: gameID,
-            nick: document.getElementById('JoinNick').value
+            nick: document.getElementById('JoinNick').value,
+            token: window.localStorage.getItem('LOGTOKEN')
         })
     }).then(function(res){
 
@@ -287,7 +296,8 @@ function CreateGame() {
                 body: JSON.stringify({
                     type: 'join-room',
                     room_id: gameID,
-                    nick: $('CreateNick').value
+                    nick: $('CreateNick').value,
+                    token: window.localStorage.getItem('LOGTOKEN')
                 })
             }).then(function(res){
     

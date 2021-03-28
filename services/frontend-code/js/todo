@@ -4,7 +4,6 @@ Short Term:
     -Create Ladders
     -Create Torches
     -Create Support Beams
-    -Create Store
     
 
 On Release:
@@ -26,6 +25,7 @@ Finnished:
     -Change Copy target to a website after finnish
     -Rework destroyed tiles so they won't cause graphical glitch
     -Do parameter validation in backend
+    -Create Store
 
 Dismissed:
     -Clean Up fucking spagetti code!

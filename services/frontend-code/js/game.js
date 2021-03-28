@@ -141,15 +141,7 @@ function OpenStore(unitid) {
     $('CrystalAll').textContent = "Sell All (" + Workers[unitid].inv.ores.crystal + ")";
     $('DiamondAll').textContent = "Sell All (" + Workers[unitid].inv.ores.diamond + ")";
 
-
-    //Update Prices 
-
-    $('SupportPrice').textContent = CurrentPrices.supports;
-    $('LadderPrice').textContent = CurrentPrices.ladder;
-    $('TorchPrice').textContent = CurrentPrices.torch;
-
-    $('CrystalPrice').textContent = CurrentPrices.crystal;
-    $('DiamondPrice').textContent = CurrentPrices.diamond;
+    UpdatePricing();
 
     //Disable / enable buttons
     if(Workers[unitid].inv.ores.crystal == 0) {$('CrystalAll').disabled = true; $('CrystalOne').disabled = true;}
@@ -157,16 +149,6 @@ function OpenStore(unitid) {
     
     if(Workers[unitid].inv.ores.diamond == 0) {$('DiamondAll').disabled = true; $('DiamondOne').disabled = true;}
     else {$('DiamondAll').disabled = false; $('DiamondOne').disabled = false;}
-
-    if(Money < CurrentPrices.supports) $('SupportOne').disabled = true; 
-    else $('SupportOne').disabled = false; 
-    
-    if(Money < CurrentPrices.ladder) $('LadderOne').disabled = true; 
-    else $('LadderOne').disabled = false;
-
-    if(Money < CurrentPrices.torch) $('TorchOne').disabled = true; 
-    else $('TorchOne').disabled = false;
-
 
     //Add DOM callbacks
     $('CrystalOne').addEventListener("click", () => { Sell(unitid, 'crystal', 1) });
@@ -182,6 +164,25 @@ function OpenStore(unitid) {
 
     //Open The Popup
     OpenPopup('ShopContainer');
+}
+
+function UpdatePricing() {
+        //Update Prices 
+        $('SupportPrice').textContent = CurrentPrices.supports;
+        $('LadderPrice').textContent = CurrentPrices.ladder;
+        $('TorchPrice').textContent = CurrentPrices.torch;
+    
+        $('CrystalPrice').textContent = CurrentPrices.crystal;
+        $('DiamondPrice').textContent = CurrentPrices.diamond;
+    
+        if(Money < CurrentPrices.supports) $('SupportOne').disabled = true; 
+        else $('SupportOne').disabled = false; 
+        
+        if(Money < CurrentPrices.ladder) $('LadderOne').disabled = true; 
+        else $('LadderOne').disabled = false;
+    
+        if(Money < CurrentPrices.torch) $('TorchOne').disabled = true; 
+        else $('TorchOne').disabled = false;
 }
 
 function Buy(unit, thing) {

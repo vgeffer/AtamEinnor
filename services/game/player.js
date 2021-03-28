@@ -7,7 +7,6 @@ exports.ParsePlayerAction = function(action, room, nick, ws) {
     for(let i = 0; i < room.pcount; i++) 
         if(room.players[i].pnick == nick) id = i;
 
-
     switch (action.type) {
 
         case "buy-item":
@@ -38,7 +37,7 @@ exports.ParsePlayerAction = function(action, room, nick, ws) {
         break;
 
         case "sell-item":
-            if(room.workers[action.unitid].inv.ores[action.item] >= action.quantity) {
+            if(room.players[id].workers[action.unitid].inv.ores[action.item] >= action.quantity) {
                 //Succesful purchase
 
                 room.players[id].workers[action.unitid].inv.ores[action.item] -= action.quantity; //Since you can buy only one per call
@@ -80,6 +79,13 @@ exports.RoundTick = function(room) {
 
 
     //Generate new prices
+    room.current_prices = {
+        crystal: randomIntFromInterval(8, 32), 
+        diamond: randomIntFromInterval(12, 48), 
+        ladder: randomIntFromInterval(4, 24), 
+        torch: randomIntFromInterval(4, 32), 
+        supports: randomIntFromInterval(8, 16)
+    } 
 
     MassSend(room, {
         type: "game_anouncment",
@@ -96,4 +102,8 @@ function MassSend(room, payload){
         room.room_running = true;
         room.players[i].socket.send(JSON.stringify(payload));
     }
+}
+
+function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }

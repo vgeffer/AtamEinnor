@@ -48,7 +48,7 @@
 			</div>
 
 			<div id = "DisconnectedMsgContainer" class = "Container hidden">
-				<p id = "ErrorReason" class = "sans-font" style = "color: red;"></p>
+				<p id = "ErrorReason" class = "sans-font" style = "color: red; font-size: 1.5rem;"></p>
 
 				<div class = "center-content top-margin">
 					<button onclick = "window.location = window.location;">Close</button>
@@ -83,6 +83,11 @@
 						<input id = "JoinCode" autocomplete = "off" type = "text" placeholder = "Code" oninput = "ResetStyle('JoinCode')"/>
 					</div>
 
+					<p class = "sans-font center-text">Warning! By joining new game you'll lose <br>
+						ability to reconnect to any previous game.<br>
+						You'd also be disconnected from any previous game.
+					</p>
+
 					<div class = "center-content top-margin">
 						<button onclick = "JoinGame()">Join</button>
 						<button onclick = "JoinGameJWT()" id = "RejoinButton" disabled>Rejoin</button>
@@ -95,7 +100,12 @@
 						<input id = "CreateTurnCount" autocomplete = "off" type = "number" max = "100" min = "20" placeholder = "Turn Count (20 - 100)"/> 
 						<input id = "CreateNick" autocomplete = "off" type = "text" placeholder = "Nick"/>
 					</div>
-
+					
+					<p class = "sans-font center-text">Warning! By joining new game you'll lose <br>
+						ability to reconnect to any previous game.<br>
+						You'd also be disconnected from any previous game.
+					</p>
+					
 					<div class = "center-content top-margin">
 						<button onclick = "CreateGame()">Create</button>
 					</div>

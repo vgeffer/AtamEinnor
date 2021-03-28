@@ -41,6 +41,11 @@
     justify-content: space-evenly;
 }
 
+.center-text {
+    font-size: 1rem;
+    text-align: center;
+}
+
 .bold-text {
     font-weight: bold;
 }

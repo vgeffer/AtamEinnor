@@ -32,6 +32,23 @@ const server = http.createServer(async (req, res) => {
                         //setup response
                         res.statusCode = 200;
 
+                        //Disconnect the player
+                        let token = await jwt.verify_jwt(parsedBody.token);
+                        if(token !== undefined) {
+                            if(room.room_exist(token.room_id)) {
+                                for(let i = 0; i < room.get_room(token.room_id).pcount; i++) {
+                                    if(room.get_room(token.room_id).players[i].pnick == token.nick) { 
+                                        await room.get_room(token.room_id).players[i].socket.send(JSON.stringify({
+                                            type: "error",
+                                            message: "New session created, disconnecting..."
+                                        }));
+                                        room.get_room(token.room_id).players[i].socket = null;
+                                    }
+                                }
+                            }
+                        }
+
+
                         if(!room.verify_joinability(parsedBody.room_id)) return res.end("invalid");
                         searched_room = room.get_room(parsedBody.room_id.toLowerCase());
                         for(let i = 0; i < searched_room.spcount; i++)
