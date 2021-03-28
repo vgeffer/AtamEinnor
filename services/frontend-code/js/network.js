@@ -58,6 +58,18 @@ function CreateWebSocket() {
 
             break;
 
+            case "transaction":
+                if(payload.status == "failed") return;
+                else if(payload.status == "success") {
+                    Money = payload.money;
+                    Workers = payload.workers;
+                    OpenStore(payload.unitid);
+
+                    //Update DOM
+                    $('CoinCount').textContent = Money;
+                }
+            break;
+
             case "workers":
                 ClosePopup('CharSelectContainer');
                 Workers = payload.content;

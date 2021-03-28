@@ -110,7 +110,7 @@ module.exports = function(httpServer){
 
                 case "player_action":
                     if(current_room != null) {
-                        player.ParsePlayerAction(parsed_token.content, current_room, ws);
+                        player.ParsePlayerAction(parsed_token.content, current_room, usr_nick, ws);
                     }
                 break;
 
@@ -119,9 +119,9 @@ module.exports = function(httpServer){
                         if(current_room.players[i].pnick == usr_nick) {
                             console.log(i);
                             for(let g = 0; g < payload.gcount; g++)
-                                current_room.players[i].workers.push({type: "gnome", inv: {torches: 0, supports: 0, ladders: 0, ores: {crystal: 0, diamond: 0}}});
+                                current_room.players[i].workers.push({type: "gnome", inv: {torch: 0, supports: 0, ladder: 0, ores: {crystal: 0, diamond: 0}}});
                             for(let d = 0; d < payload.dcount; d++) 
-                                current_room.players[i].workers.push({type: "dwarf", inv: {torches: 0, supports: 0, ladders: 0, ores: {crystal: 0, diamond: 0}}});
+                                current_room.players[i].workers.push({type: "dwarf", inv: {torch: 0, supports: 0, ladder: 0, ores: {crystal: 0, diamond: 0}}});
                      
                             
                             ws.json({type: "workers", content: current_room.players[i].workers});

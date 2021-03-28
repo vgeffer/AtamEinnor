@@ -168,17 +168,44 @@ function OpenStore(unitid) {
     else $('TorchOne').disabled = false;
 
 
+    //Add DOM callbacks
+    $('CrystalOne').addEventListener("click", () => { Sell(unitid, 'crystal', 1) });
+    $('CrystalAll').addEventListener("click", () => { Sell(unitid, 'crystal', Workers[unitid].inv.ores.crystal) });
+
+    
+    $('DiamondOne').addEventListener("click", () => { Sell(unitid, 'diamond', 1) });
+    $('DiamondAll').addEventListener("click", () => { Sell(unitid, 'diamond', Workers[unitid].inv.ores.diamond) });
+
+    $('SupportOne').addEventListener("click", () => { Buy(unitid, 'supports') });
+    $('LadderOne').addEventListener("click", () => { Buy(unitid, 'ladder') });
+    $('TorchOne').addEventListener("click", () => { Buy(unitid, 'torch') });
+
     //Open The Popup
     OpenPopup('ShopContainer');
 }
 
-function Buy() {
-
+function Buy(unit, thing) {
+    socket.send(JSON.stringify({
+        type: "player_action",
+        content: {
+            type: "buy-item",
+            unitid: unit,
+            item: thing
+        }
+    }));
 }
 
-function Sell() {
-
-}
+function Sell(unit, ore, amount) {
+    socket.send(JSON.stringify({
+        type: "player_action",
+        content: {
+            type: "sell-item",
+            unitid: unit,
+            item: ore,
+            quantity: amount
+        }
+    }));
+}   
 
 
 /*Network Handlers*/
