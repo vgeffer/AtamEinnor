@@ -20,6 +20,9 @@
     margin-left: 1em;
 }
 
+.right-margin {
+    margin-right: 1em;
+}
 .right-half-margin {
     margin-right: .5em;
 }
@@ -53,4 +56,8 @@
 
 .break-word {
     word-break: break-all;
+}
+.icon {
+    width: 1em;
+    height: 1em;
 }

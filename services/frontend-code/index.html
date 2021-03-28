@@ -12,7 +12,10 @@
 		<link rel = "stylesheet" href = "page.css"/>
 		<link rel = "stylesheet" href = "state.css"/>
 		
-		
+		<!--Link Icon-->
+		<link rel = "icon" type = "image/png" sizes = "32x32" href = "./assets/favicon-32x32.png">
+		<link rel = "icon" type = "image/png" sizes = "16x16" href = "./assets/favicon-16x16.png">
+
 		<!--link functionality-->
 		<script src = "js/menu.js"></script>
 		<script src = "js/global_var.js"></script>
@@ -162,14 +165,80 @@
 			<!--Shop-->
 			<div id = "ShopContainer" class = "Container hidden">
 				<div class = "center-content top-margin">
-					<a href = "javascript:void(0)" onclick = "{OpenPopup('JoinGameSubcontainer'); ClosePopup('CreateGameSubcontainer');}">Buy</a>
-					<a href = "javascript:void(0)" onclick = "{OpenPopup('CreateGameSubcontainer'); ClosePopup('JoinGameSubcontainer');}" class = "left-margin">Sell</a>
+					<a href = "javascript:void(0)" onclick = "{OpenPopup('BuySubcontainer'); ClosePopup('SellGameSubcontainer');}">Buy</a>
+					<a href = "javascript:void(0)" onclick = "{OpenPopup('SellGameSubcontainer'); ClosePopup('BuySubcontainer');}" class = "left-margin">Sell</a>
 				</div>
 
 				<div id = "BuySubcontainer" class = "SubContainer">
+					<!--Support-->
+					<div class = "inline">
+						<img src = "./assets/support-14.png"/>
+						<p class = "right-margin">Support</p>
+						
+						<div class = "inline right-margin">
+							<p id = "SupportPrice">16</p>
+							<img src = "./assets/coin_icon512x512.png" class = "icon"/>
+						</div>
+
+						<button id = "SupportOne">Buy</button>
+					</div>
+
+					<!--Ladder-->
+					<div class = "inline">
+						<img src = "./assets/ladder.png"/>
+						<p class = "right-margin">Ladder</p>
+						
+						<div class = "inline right-margin">
+							<p id = "LadderPrice">32</p>
+							<img src = "./assets/coin_icon512x512.png" class = "icon"/>
+						</div>
+
+						<button id = "LadderOne">Buy</button>
+					</div>
+
+					<!--Torch-->
+					<div class = "inline">
+						<img src = "./assets/torch.png"/>
+						<p class = "right-margin">Torch</p>
+						
+						<div class = "inline right-margin">
+							<p id = "TorchPrice">32</p>
+							<img src = "./assets/coin_icon512x512.png" class = "icon"/>
+						</div>
+
+						<button id = "TorchOne">Buy</button>
+					</div>
 				</div>
 
 				<div id = "SellGameSubcontainer" class = "SubContainer hidden">
+					
+					<!--1st ore-->
+					<div class = "inline">
+						<img src = "./assets/crystal_single.png"/>
+						<p class = "right-margin">Dwarf</p>
+						
+						<div class = "inline right-margin">
+							<p id = "CrystalPrice">16</p>
+							<img src = "./assets/coin_icon512x512.png" class = "icon"/>
+						</div>
+
+						<button id = "CrystalOne">Sell One</button>
+						<button id = "CrystalAll">Sell All (640)</button>
+					</div>
+
+					<!--2st ore-->
+					<div class = "inline">
+						<img src = "./assets/diamond_single.png"/>
+						<p class = "right-margin">Diamond</p>
+						
+						<div class = "inline right-margin">
+							<p id = "DiamondPrice">32</p>
+							<img src = "./assets/coin_icon512x512.png" class = "icon"/>
+						</div>
+
+						<button id = "DiamondOne">Sell One</button>
+						<button id = "DiamondAll">Sell All (16)</button>
+					</div>
 				</div>
 
 				<div class = "center-content top-margin">
@@ -179,7 +248,7 @@
 
 			<div id = "CharSelectContainer" class = "Container fullscreen">
 				<div class = "SelectTitleWrapper">
-					<h1>Add Title Here Lorem Ipsum</h1>
+					<h1>Choose Your Miners</h1>
 				</div>
 				<div class = "DescriptionWrapper">
 					<div>

@@ -24,9 +24,10 @@ exports.create_room = function(player_count, turn_count) {
     room_obj.pcount = player_count;
     room_obj.spcount = 0;
     room_obj.exp = Date.now() + 12 * 60 * 60 * 1000; //12 hours lifetime
-    room_obj.world = world.generate_world(32, 32, crypto.randomBytes(4).readUInt32BE());
+    room_obj.world = world.generate_world(48, 32, crypto.randomBytes(4).readUInt32BE());
     room_obj.chat = [];
     room_obj.pl_win = -1;
+    room_obj.current_prices = {crystal: 8, diamond: 16, ladder: 4, torch: 16, supports: 10};
     room_obj.turns = turn_count;
     room_obj.room_running = false;
     room_obj.player_queue = new Map(); //So one parsing step would be skipped, sorted while comming in
@@ -71,7 +72,8 @@ exports.start_room_clock = function(room) {
         room.players[i].socket.send(JSON.stringify({
             type: "game_anouncment",
             content: {
-                type: "start"
+                type: "start",
+                prices: room.current_prices
             }
         }));
     }

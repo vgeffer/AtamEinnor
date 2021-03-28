@@ -29,11 +29,13 @@ exports.RoundTick = function(room) {
     }
 
 
+    //Generate new prices
 
     MassSend(room, {
         type: "game_anouncment",
         content: {
-            type: "tick_update"
+            type: "tick_update",
+            prices: room.current_prices
         }
     });
 }

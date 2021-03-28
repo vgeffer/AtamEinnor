@@ -73,13 +73,13 @@ const server = http.createServer(async (req, res) => {
                         }
 
                         //check for value
-                        if(parsedBody.player_count < 2 || parsedBody.turn_count < 1) {
+                        if(parsedBody.player_count < 2 || parsedBody.player_count > 6|| parsedBody.turn_count < 1) {
                             res.statusCode = 400;
                             res.end("bad request. player_count or turn_count has an invalid value");
                             return;
                         }
 
-                        res.end(room.create_room(parsedBody.player_count, parsedBody.turn_count));
+                        res.end(room.create_room(parsedBody.player_count, parsedBody.turn_count * 4));
                     break;
                 }
 

@@ -101,7 +101,7 @@ function OnMouseDownHandler(event) {
 
     if (GameRunning) {
         if(event.buttons == 4) MovingScreen = true;
-        if(event.buttons == 1 && event.path[0].nodeName == "CANVAS") { 
+        if(event.buttons == 1 && event.path[0].nodeName == "CANVAS" && CursorDrawn) { 
             //Handle UI
 
             if(SelectedTile == null)
@@ -124,6 +124,9 @@ function OnMouseMoveEventHandler(event) {
         if(MovingScreen) {
             XOffset += (event.clientX - MousePos.x) * MouseSpeedMultiplier;
             YOffset += (event.clientY - MousePos.y) * MouseSpeedMultiplier;
+            
+            //Clamp offsets against movement
+            YOffset = clamp(YOffset, 50 * scaler, -2000 * scaler);
         }
         MousePos = {x: event.clientX, y: event.clientY};
     }
@@ -134,12 +137,15 @@ function OnMouseScrollEventHandler(event) {
         if (event.deltaY > 0 && scaler > 1.5) scaler -= 0.2;
         if (event.deltaY < 0 && scaler < 4) scaler += 0.2;
 
+        //Clamp offsets against scrolls
+        YOffset = clamp(YOffset, 50 * scaler, -2000 * scaler);
     }
 }
 
 function OnKeyDownEvent(event) {
+    if (GameRunning) {
         console.log(event);
-
+    }
 }
 
 //Create Event Listeners
@@ -151,4 +157,9 @@ window.onmousemove = OnMouseMoveEventHandler;
 window.onwheel = OnMouseScrollEventHandler;
 window.onkeydown = OnKeyDownEvent;
 
+
+
+function max(a, b) { return a > b ? a : b; }
+function min(a, b) { return a < b ? a : b; }
+function clamp(fa, fmax, fmin) { return min(fmax, max(fmin, fa)); }
 var MovingScreen = false;

@@ -82,7 +82,20 @@ module.exports = function(httpServer){
 
                             if(current_room.players[i].workers.length > 0) 
                                 ws.json({type: "workers", content: current_room.players[i].workers});
+                            
+                            if(current_room.room_running){
+                                ws.json({
+                                    type: "game_anouncment",
+                                    content: {
+                                        type: "start",
+                                        prices: current_room.current_prices
+                                    }
+                                });
+                            }
+                            
                             return;
+
+
                         }
                     }
                     ws.json({type: "auth_response", content: "failed"});
@@ -106,9 +119,9 @@ module.exports = function(httpServer){
                         if(current_room.players[i].pnick == usr_nick) {
                             console.log(i);
                             for(let g = 0; g < payload.gcount; g++)
-                                current_room.players[i].workers.push({type: "gnome", inv: {torches: 0, supports: 0, ladders: 0, ores:[]}});
+                                current_room.players[i].workers.push({type: "gnome", inv: {torches: 0, supports: 0, ladders: 0, ores: {crystal: 0, diamond: 0}}});
                             for(let d = 0; d < payload.dcount; d++) 
-                                current_room.players[i].workers.push({type: "dwarf", inv: {torches: 0, supports: 0, ladders: 0, ores:[]}});
+                                current_room.players[i].workers.push({type: "dwarf", inv: {torches: 0, supports: 0, ladders: 0, ores: {crystal: 0, diamond: 0}}});
                      
                             
                             ws.json({type: "workers", content: current_room.players[i].workers});
@@ -151,8 +164,3 @@ exports.force_conn_end = function(socket, msg){
         })
     );
 }
-
-const DWARF_TEMPLATE = {
-    type: "dwarf",
-    inventory: []
-};

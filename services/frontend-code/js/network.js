@@ -47,6 +47,12 @@ function CreateWebSocket() {
                     case "start":
                         ClosePopup("StartGameQuestionContainer");
                         ClosePopup("WaitingText");
+
+                        CurrentPrices = payload.content.prices;
+                    break;
+
+                    case "tick_update":
+                        CurrentPrices = payload.content.prices;
                     break;
                 }
 

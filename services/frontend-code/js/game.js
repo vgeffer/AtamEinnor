@@ -12,7 +12,7 @@ function StartGame(code) {
         if (!navigator.clipboard)
             return;
         try {
-            await navigator.clipboard.writeText(window.location.host + "?join_room=" + code);
+            await navigator.clipboard.writeText(window.location.host + "/?join_room=" + code);
         } catch (error) {
             console.error("Copy failed", error);
         } 
@@ -131,6 +131,55 @@ function EnterHandler(event) {
     }
 
 }
+
+
+/*Store (calls from network)*/
+function OpenStore(unitid) { 
+
+
+    //Update ore quantities
+    $('CrystalAll').textContent = "Sell All (" + Workers[unitid].inv.ores.crystal + ")";
+    $('DiamondAll').textContent = "Sell All (" + Workers[unitid].inv.ores.diamond + ")";
+
+
+    //Update Prices 
+
+    $('SupportPrice').textContent = CurrentPrices.supports;
+    $('LadderPrice').textContent = CurrentPrices.ladder;
+    $('TorchPrice').textContent = CurrentPrices.torch;
+
+    $('CrystalPrice').textContent = CurrentPrices.crystal;
+    $('DiamondPrice').textContent = CurrentPrices.diamond;
+
+    //Disable / enable buttons
+    if(Workers[unitid].inv.ores.crystal == 0) {$('CrystalAll').disabled = true; $('CrystalOne').disabled = true;}
+    else {$('CrystalAll').disabled = false; $('CrystalOne').disabled = false;}
+    
+    if(Workers[unitid].inv.ores.diamond == 0) {$('DiamondAll').disabled = true; $('DiamondOne').disabled = true;}
+    else {$('DiamondAll').disabled = false; $('DiamondOne').disabled = false;}
+
+    if(Money < CurrentPrices.supports) $('SupportOne').disabled = true; 
+    else $('SupportOne').disabled = false; 
+    
+    if(Money < CurrentPrices.ladder) $('LadderOne').disabled = true; 
+    else $('LadderOne').disabled = false;
+
+    if(Money < CurrentPrices.torch) $('TorchOne').disabled = true; 
+    else $('TorchOne').disabled = false;
+
+
+    //Open The Popup
+    OpenPopup('ShopContainer');
+}
+
+function Buy() {
+
+}
+
+function Sell() {
+
+}
+
 
 /*Network Handlers*/
 function DisplayChatMessage(nick, message) {

@@ -55,3 +55,7 @@ var MouseSpeedMultiplier = 1;
 var Workers = [];
 var World = [];
 var View = [];
+
+//Economy
+var CurrentPrices = null;
+var Money = 0;
