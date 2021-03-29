@@ -49,6 +49,7 @@ function CreateWebSocket() {
                         ClosePopup("WaitingText");
 
                         CurrentPrices = payload.content.prices;
+                        PID = payload.content.id;
 
                         /*Update the store*/
                         UpdatePricing();

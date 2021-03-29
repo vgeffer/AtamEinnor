@@ -43,6 +43,7 @@ exports.ParsePlayerAction = function(action, room, nick, ws) {
                 room.players[id].workers[action.unitid].inv.ores[action.item] -= action.quantity; //Since you can buy only one per call
                 room.players[id].money_count += room.current_prices[action.item];
 
+
                 ws.send(JSON.stringify({
                     type: "transaction",
                     status: "success",
@@ -64,12 +65,24 @@ exports.ParsePlayerAction = function(action, room, nick, ws) {
         case "use-item":
 
         break;
+
+        case "move-player":
+        
+        break;
+
+        case "dig-burry-me":
+
+        break;
+
+        case "gather-ore":
+
+        break;
     }
 }
 
 exports.RoundTick = function(room) {
 
-
+    room.turns--;
 
     for(let i = 0; i < room.spcount; i++) {
         //Parse Queues
@@ -87,11 +100,31 @@ exports.RoundTick = function(room) {
         supports: randomIntFromInterval(8, 16)
     } 
 
+    //Gather Entity data
+    let entityData = [];
+
+    for(let i = 0; i < room.spcount; i++) {
+        entityData[i] = [];
+        for(let u = 0; u < room.players[i].workers.length; u++){
+            entityData[i][u] = {
+                type: room.players[i].workers[u].type,
+                action: room.players[i].workers[u].a,
+                tx: room.players[i].workers[u].tx,
+                ty: room.players[i].workers[u].ty
+            };
+        }
+    }
+
+
     MassSend(room, {
         type: "game_anouncment",
         content: {
             type: "tick_update",
-            prices: room.current_prices
+            prices: room.current_prices,
+            ticks: room.ticks,
+            turns: Math.floor(room.ticks / 4),
+            world: room.world,
+            ent_data: entityData
         }
     });
 }

@@ -63,8 +63,10 @@ const server = http.createServer(async (req, res) => {
                             
                             if(searched_room.players[i].pnick == null) {
                         
-                                searched_room.players[searched_room.spcount++].pnick = parsedBody.nick;
+                                searched_room.players[i].pnick = parsedBody.nick;
                                 searched_room.spcount++;
+
+                                console.log(searched_room.players)
                                 return res.end(jwt.sign_jwt({
                                     nick: parsedBody.nick,
                                     room_id: parsedBody.room_id
@@ -142,7 +144,7 @@ const server = http.createServer(async (req, res) => {
                 res.statusCode = 404;
                 res.end(err404 + contPath);
                 
-                console.log(error);
+                //console.log(error);
             })
             .on("open", () => {
                 fstream.pipe(res);

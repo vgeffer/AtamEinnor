@@ -30,7 +30,6 @@ exports.create_room = function(player_count, turn_count) {
     room_obj.current_prices = {crystal: 8, diamond: 16, ladder: 4, torch: 16, supports: 10};
     room_obj.turns = turn_count;
     room_obj.room_running = false;
-    room_obj.player_queue = new Map(); //So one parsing step would be skipped, sorted while comming in
 
     //Create all room objs
     room_obj.players = [];
@@ -39,7 +38,8 @@ exports.create_room = function(player_count, turn_count) {
             socket: null,
             pnick: null,
             money_count: 0, 
-            workers: []
+            workers: [],
+            action_queue: []
         };
     }
     
@@ -73,7 +73,8 @@ exports.start_room_clock = function(room) {
             type: "game_anouncment",
             content: {
                 type: "start",
-                prices: room.current_prices
+                prices: room.current_prices,
+                id: i
             }
         }));
     }

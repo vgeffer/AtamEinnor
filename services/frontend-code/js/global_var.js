@@ -55,6 +55,7 @@ var MouseSpeedMultiplier = 1;
 var Workers = [];
 var World = [];
 var View = [];
+var PID = -1;
 
 //Economy
 var CurrentPrices = null;

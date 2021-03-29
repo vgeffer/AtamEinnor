@@ -158,7 +158,6 @@ window.onwheel = OnMouseScrollEventHandler;
 window.onkeydown = OnKeyDownEvent;
 
 
-
 function max(a, b) { return a > b ? a : b; }
 function min(a, b) { return a < b ? a : b; }
 function clamp(fa, fmax, fmin) { return min(fmax, max(fmin, fa)); }
