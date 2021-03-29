@@ -82,7 +82,37 @@ exports.ParsePlayerAction = function(action, room, nick, ws) {
 
 exports.RoundTick = function(room) {
 
+
+    if(!room.room_running) return;
     room.turns--;
+
+    
+    if(room.turns == 0) {
+        //End Game Handler
+        let max_coins = -1;
+        let max_id = -1;
+
+        for(let i = 0; i < room.spcount; i++) {
+            
+            if(room.players[i].money_count > max_coins) {
+                max_id = i;
+                max_coins = room.players[i].money_count;
+            }
+        }
+
+        room.pl_win = max_id;
+        room.room_running = false;
+        MassSend(room, {
+            type: "game_anouncment",
+            content: {
+                type: "game_end",
+                winner_nick: room.players[max_id].pnick,
+                coins: max_coins
+            }
+        });
+
+        return;
+    }
 
     for(let i = 0; i < room.spcount; i++) {
         //Parse Queues
@@ -121,8 +151,8 @@ exports.RoundTick = function(room) {
         content: {
             type: "tick_update",
             prices: room.current_prices,
-            ticks: room.ticks,
-            turns: Math.floor(room.ticks / 4),
+            ticks: room.turns,
+            turns: Math.ceil(room.turns / 4),
             world: room.world,
             ent_data: entityData
         }
@@ -139,4 +169,9 @@ function MassSend(room, payload){
 
 function randomIntFromInterval(min, max) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+
+async function ApplyDeltasAsync(queue, room, id) {
+
 }
