@@ -42,7 +42,13 @@ const server = http.createServer(async (req, res) => {
                                             type: "error",
                                             message: "New session created, disconnecting..."
                                         }));
-                                        room.get_room(token.room_id).players[i].socket = null;
+                                        room.get_room(token.room_id).spcount--;
+                                        room.get_room(token.room_id).players[i] = {
+                                            socket: null,
+                                            pnick: null,
+                                            money_count: 0, 
+                                            workers: []
+                                        };
                                     }
                                 }
                             }
@@ -51,16 +57,23 @@ const server = http.createServer(async (req, res) => {
 
                         if(!room.verify_joinability(parsedBody.room_id)) return res.end("invalid");
                         searched_room = room.get_room(parsedBody.room_id.toLowerCase());
-                        for(let i = 0; i < searched_room.spcount; i++)
-                            if(searched_room.players[i].pnick == parsedBody.nick) return res.end("player_exist");
-                        searched_room.players[searched_room.spcount++].pnick = parsedBody.nick;
-        
-                        res.end(jwt.sign_jwt({
-                            nick: parsedBody.nick,
-                            room_id: parsedBody.room_id
-                        }));
+                        for(let i = 0; i < searched_room.pcount; i++){
 
-                    break;
+                            if(searched_room.players[i].pnick == parsedBody.nick) return res.end("player_exist");
+                            
+                            if(searched_room.players[i].pnick == null) {
+                        
+                                searched_room.players[searched_room.spcount++].pnick = parsedBody.nick;
+                                searched_room.spcount++;
+                                return res.end(jwt.sign_jwt({
+                                    nick: parsedBody.nick,
+                                    room_id: parsedBody.room_id
+                                }));
+                            }   
+                            
+                        }
+
+                    return res.end("invalid");
 
                     case "join-token":
                         
