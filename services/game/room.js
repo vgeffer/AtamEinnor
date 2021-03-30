@@ -39,7 +39,8 @@ exports.create_room = function(player_count, turn_count) {
             pnick: null,
             money_count: 0, 
             workers: [],
-            action_queue: []
+            action_queue: null,
+            input_queue: []
         };
     }
     

@@ -134,7 +134,7 @@ function OnMouseMoveEventHandler(event) {
 
 function OnMouseScrollEventHandler(event) {
     if (GameRunning) {
-        if (event.deltaY > 0 && scaler > 1.5) scaler -= 0.2;
+        if (event.deltaY > 0 && scaler > 1) scaler -= 0.2;
         if (event.deltaY < 0 && scaler < 4) scaler += 0.2;
 
         //Clamp offsets against scrolls

@@ -83,7 +83,7 @@ exports.ParsePlayerAction = function(action, room, nick, ws) {
 exports.RoundTick = function(room) {
 
 
-    if(!room.room_running) return;
+    if(room.pl_win != -1) return;
     room.turns--;
 
     
@@ -114,11 +114,95 @@ exports.RoundTick = function(room) {
         return;
     }
 
+    //Update World & Players
+    let cover_deltas = [];
+    let ore_deltas = [];
+    let entityData = [];
+
+
     for(let i = 0; i < room.spcount; i++) {
         //Parse Queues
+            
+        //So no errors would be thrown
+        let block = null;
+        let side = null;
+        let unit_id = null;
+
+        switch(room.players[i].action_queue.type) {
+            case "dig":
+                //get the block and the side that's beeing dug
+                block = room.world.covers[room.players[i].action_queue.y * room.world.size_x + room.players[i].action_queue.x];
+                side = room.players[i].action_queue[j].side;
+
+                //check if the block has already been mined
+                if(block.walls[side] === 0) break;
+
+                //if not, subtract durability
+                block.walls[side]--;
+
+                //save the delta
+                cover_deltas.push({
+                    x: room.players[i].action_queue.x,
+                    y: room.players[i].action_queue.y,
+                    cover: block
+                });
+            break;
+
+            case "move":
+                //swap position and target variables
+                unit_id = room.players[i].action_queue.uid;
+                    
+                room.players[i].workers[unit_id].x = room.players[i].workers[uint_id].tx;
+                room.players[i].workers[unit_id].y = room.players[i].workers[uint_id].ty;
+
+            break;
+
+            case "collect":
+                //get the block and the side that's beeing dug
+                block = room.world.ores[room.players[i].action_queue.y * room.world.size_x + room.players.action_queue.x];
+                unit_id = room.players[i].action_queue.uid;
+
+                //check, if it has ores
+                if(!block.ore) break;
+
+                //if yes, how many & what type
+                    let ore_count = 0;
+                    let ore_type = block.type;
+
+                    //count the ores
+                    for(let k = 0; k < 7; k++) 
+                        if(block.walls[k] === 1) 
+                            ore_count++;
+
+                    //remove them from the world
+                    block.walls = [0,0,0,0,0,0,0];
+
+                    //add them to unit's inventory
+                    room.players[i].workers[unit_id].inv.ores[ore_type == 0 ? "crystal" : "diamond"] += ore_count;
+
+                    //save the delta
+                    ore_deltas.push({
+                        x: room.players[i].action_queue.x,
+                        y: room.players[i].action_queue.y,
+                        ore: block
+                    });
+                break;
+
+            case "use":
+                    
+
+            break;
+        }
+
+    }
+
+    //Swap the queues
+    for(let i = 0; i < room.spcount; i++) {
+
 
 
     }
+
 
 
     //Generate new prices
@@ -131,8 +215,6 @@ exports.RoundTick = function(room) {
     } 
 
     //Gather Entity data
-    let entityData = [];
-
     for(let i = 0; i < room.spcount; i++) {
         entityData[i] = [];
         for(let u = 0; u < room.players[i].workers.length; u++){
@@ -145,7 +227,6 @@ exports.RoundTick = function(room) {
         }
     }
 
-
     MassSend(room, {
         type: "game_anouncment",
         content: {
@@ -153,7 +234,8 @@ exports.RoundTick = function(room) {
             prices: room.current_prices,
             ticks: room.turns,
             turns: Math.ceil(room.turns / 4),
-            world: room.world,
+            cdeltas: cover_deltas,
+            odeltas: ore_deltas,
             ent_data: entityData
         }
     });
@@ -161,7 +243,6 @@ exports.RoundTick = function(room) {
 
 function MassSend(room, payload){
     for(let i = 0; i < room.spcount; i++) {
-
         room.room_running = true;
         room.players[i].socket.send(JSON.stringify(payload));
     }
@@ -169,9 +250,4 @@ function MassSend(room, payload){
 
 function randomIntFromInterval(min, max) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-
-async function ApplyDeltasAsync(queue, room, id) {
-
 }

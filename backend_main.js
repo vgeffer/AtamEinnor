@@ -47,7 +47,9 @@ const server = http.createServer(async (req, res) => {
                                             socket: null,
                                             pnick: null,
                                             money_count: 0, 
-                                            workers: []
+                                            workers: [],
+                                            action_queue: null,
+                                            input_queue: []
                                         };
                                     }
                                 }

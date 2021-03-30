@@ -21,9 +21,9 @@ exports.generate_world = function(x_res, y_res, seed) {
             let cover_value = gen.next_double() * y;
 
             //translate the depth
-            if(cover_value <= 4) chunk.covers[y * x_res + x] = {sprite: 0, hardness: 1, walls: [1,1,1,1,1,1]}; //1 tick 
-            else if(cover_value <= 20) chunk.covers[y * x_res + x] = {sprite: 1, hardness: 2, walls: [1,1,1,1,1,1]}; //1 tick 
-            else chunk.covers[y * x_res + x] = {sprite: 2, hardness: 4, walls: [1,1,1,1,1,1]}; //1 tick 
+            if(cover_value <= 4) chunk.covers[y * x_res + x] = {sprite: 0, item: "none", hardness: 1}; //1 tick 
+            else if(cover_value <= 20) chunk.covers[y * x_res + x] = {sprite: 1, item: "none", hardness: 2}; //2 tick 
+            else chunk.covers[y * x_res + x] = {sprite: 2, item: "none", hardness: 4}; //4 tick 
 
 
             if(perlin_map[y * x_res + x] > 0.4 && y > 2) { 

@@ -58,8 +58,20 @@ function CreateWebSocket() {
                     case "tick_update":
                         CurrentPrices = payload.content.prices;
 
+                        //Parse cover deltas
+                        for(var i = 0; i < payload.content.cdeltas.length; i++) {
+                            World.covers[payload.content.cdeltas[i].y * World.size_x + payload.content.cdeltas[i].x] = payload.content.cdeltas[i].cover;
+                        }
+
+                        //Parse ore deltas
+                        for(var i = 0; i < payload.content.odeltas.length; i++) {
+                            World.ores[payload.content.odeltas[i].y * World.size_x + payload.content.odeltas[i].x] = payload.content.odeltas[i].ore;
+                        }
+
                         /*Update the store*/
                         UpdatePricing();
+
+
                     break;
                 }
 
