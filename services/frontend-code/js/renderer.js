@@ -41,7 +41,7 @@ function NextFrame(once) {
 
                 //Draw Covers
                 var cover_img = null;
-                if(World.covers[y* x_limit + x].walls[t] != 0) cover_img = tst_img[World.covers[y * x_limit + x].sprite];
+                if(World.covers[y* x_limit + x].hardness != 0) cover_img = tst_img[World.covers[y * x_limit + x].sprite];
                 else cover_img = tst_img[World.covers[y * x_limit + x].sprite + 3];
                 
                 ctx.drawImage(cover_img, TileOffsets[t].sx, TileOffsets[t].sy, 64, 64, (y % 2 == 0 ? x * x_coord_shift : x * x_coord_shift + 128 * scaler) + XOffset + TileOffsets[t].sx * scaler, y * y_coord_shift + YOffset + TileOffsets[t].sy * scaler, 64 * scaler, 64 * scaler);   
