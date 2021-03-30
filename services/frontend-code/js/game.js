@@ -1,7 +1,6 @@
 function StartGame(code) {
 
     CreateWebSocket();
-    World = new Map();
 
     LoadAssets();
 

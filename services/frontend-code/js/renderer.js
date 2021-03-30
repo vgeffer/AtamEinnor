@@ -1,7 +1,4 @@
-
-
-function NextFrame() {
-
+function NextFrame(once) {
     TimeNow = performance.now();
     TimeElapsed = TimeNow - TimePrev;
     TimePrev = TimeNow;
@@ -50,32 +47,91 @@ function NextFrame() {
                 ctx.drawImage(cover_img, TileOffsets[t].sx, TileOffsets[t].sy, 64, 64, (y % 2 == 0 ? x * x_coord_shift : x * x_coord_shift + 128 * scaler) + XOffset + TileOffsets[t].sx * scaler, y * y_coord_shift + YOffset + TileOffsets[t].sy * scaler, 64 * scaler, 64 * scaler);   
             }
 
-            if(CursorDrawn) {
-                //Check for cursor and draw it
-                if(MousePos.x > (y % 2 == 0 ? x * x_coord_shift : x * x_coord_shift + 128 * scaler) + XOffset
-                    && MousePos.x < (y % 2 == 0 ? (x + 1) * x_coord_shift : (x + 1) * x_coord_shift + 128 * scaler) + XOffset
-                    && MousePos.y > y * y_coord_shift + YOffset
-                    && MousePos.y < (y + 1) * y_coord_shift + YOffset 
-                    && SelectedTile == null) { //Also check if any tile is selected
-                        ctx.drawImage(CursorImg, (y % 2 == 0 ? x * x_coord_shift : x * x_coord_shift + 128 * scaler) + XOffset, y * y_coord_shift + YOffset, 192 * scaler, 128 * scaler);
-                        HighlightedTile = {x: x, y: y};
-                }
-
-                if(SelectedTile != null) {
-                    if(SelectedTile.x == x 
-                      && SelectedTile.y == y)
-                        ctx.drawImage(CursorImg, (y % 2 == 0 ? x * x_coord_shift : x * x_coord_shift + 128 * scaler) + XOffset, y * y_coord_shift + YOffset, 192 * scaler, 128 * scaler);
-                }
-            }
+            
         } 
+    }
+
+    if (CursorDrawn) {
+        //Check for cursor and draw it
+        const mouseX = MousePos.x - XOffset;
+        const mouseY = MousePos.y - YOffset;
+
+        const tileHeight = 128 * scaler;
+        const tileWidth = 192 * scaler;
+
+        let y = mouseY / (tileHeight * 0.5);
+        let yFraction = y - Math.floor(y);
+        y = Math.floor(y);
+
+        let xFraction = mouseX / (tileWidth * 4 / 3);
+        xFraction = xFraction - Math.floor(xFraction);
+        let x = Math.floor(xFraction * 4);
+        xFraction = xFraction * 4 - x;
+
+        if (y % 2 === 0){
+            switch (x){
+                case 0:
+                    if (yFraction < (1 - xFraction)){
+                        y -= 1;
+                    }
+                    break;
+                case 1:
+
+                    break;
+                case 2:
+                    if (yFraction < xFraction){
+                        y -= 1;
+                    }
+                    break;
+                case 3:
+                    y -= 1;
+                    break;
+            }
+        } else {
+            switch (x){
+                case 0:
+                    if (yFraction < xFraction){
+                        y -= 1;
+                    }
+                    break;
+                case 1:
+                    y -= 1;
+                    break;
+                case 2:
+                    if (yFraction < (1 - xFraction)){
+                        y -= 1;
+                    }
+                    break;
+                case 3:
+                    
+                    break;
+            }
+        }
+        
+        if (y % 2 === 0){
+            x = Math.floor(mouseX / (tileWidth * 4 / 3));
+        } else {
+            x = Math.floor((mouseX - tileWidth * 2 / 3) / (tileWidth * 4 / 3));
+        }
+
+        ctx.drawImage(CursorImg, (y % 2 == 0 ? x * x_coord_shift : x * x_coord_shift + 128 * scaler) + XOffset, y * y_coord_shift + YOffset, 192 * scaler, 128 * scaler);
+        HighlightedTile = {x: x, y: y};
+        
+        
+
+        if(SelectedTile != null) {
+            if(SelectedTile.x == x 
+              && SelectedTile.y == y)
+                ctx.drawImage(CursorImg, (y % 2 == 0 ? x * x_coord_shift : x * x_coord_shift + 128 * scaler) + XOffset, y * y_coord_shift + YOffset, 192 * scaler, 128 * scaler);
+        }
     }
 
     //debugger; //To stop at least some cheating
 
-
-    requestAnimationFrame(NextFrame);
+    if (once !== true){
+        requestAnimationFrame(NextFrame);
+    }
 }
-
 
 //Constant Tile Offsets
 const TileOffsets = [

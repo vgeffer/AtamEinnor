@@ -93,7 +93,7 @@ function OnResizeEventHandler() {
         CanvasElement.width = window.innerWidth; 
         CanvasElement.height = window.innerHeight;
         if (GameRunning) //To minimise repainting
-            requestAnimationFrame(NextFrame);
+            NextFrame(true);
     }
 }
 
