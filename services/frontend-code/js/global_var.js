@@ -19,6 +19,7 @@ var GameSettings = null;
 
 
 var tst_img = [];
+var torch = [];
 var CursorImg = null;
 
 
@@ -30,6 +31,8 @@ var World = null;
 var TimePrev = null;
 var TimeNow = null;
 var TimeElapsed = null;
+var FrameCounter = 0;
+
 
 //Networking
 var socket = null;
@@ -50,13 +53,22 @@ var GameRunning = false;
 var XOffset = 0;
 var YOffset = 0;
 var MouseSpeedMultiplier = 1;
+var RoomRunning = false;
 
 //Game 
 var Workers = [];
 var World = [];
 var View = [];
 var PID = -1;
+var SelectedUnit = -1;
 
 //Economy
 var CurrentPrices = null;
 var Money = 0;
+
+
+//Characters
+var DwarfPl = [];
+var DwarfEn = [];
+
+var WorkerPaths = [];

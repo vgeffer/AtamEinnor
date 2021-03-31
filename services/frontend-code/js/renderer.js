@@ -3,6 +3,8 @@ function NextFrame(once) {
     TimeElapsed = TimeNow - TimePrev;
     TimePrev = TimeNow;
 
+    FrameCounter++;
+
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
     //Todo: Replace with size recived with world
@@ -40,6 +42,11 @@ function NextFrame(once) {
                 }
             }
                
+            //Draw Items
+            if(World.covers[y* x_limit + x].item == "torch") {
+                ctx.drawImage(torch[Math.floor(FrameCounter / 4) % 9], (y % 2 == 0 ? x * x_coord_shift + 76 * scaler : x * x_coord_shift + 204 * scaler) + XOffset, y * y_coord_shift + 32 * scaler + YOffset, 32 * scaler, 64 * scaler);
+            }
+
             //Draw Covers
             var cover_img = null;
             if(World.covers[y* x_limit + x].hardness != 0) cover_img = tst_img[World.covers[y * x_limit + x].sprite];
@@ -112,6 +119,16 @@ function NextFrame(once) {
             x = Math.floor((mouseX - tileWidth * 2 / 3) / (tileWidth * 4 / 3));
         }
 
+        if(SelectedUnit != -1) {
+            if(x != HighlightedTile.x || y != HighlightedTile.y) {
+                if(x >= 0 && y >= 0) {
+                
+                    
+                
+                }
+            }
+        }
+
         if(x >= 0 && y >= 0) {
             ctx.drawImage(CursorImg, (y % 2 == 0 ? x * x_coord_shift : x * x_coord_shift + 128 * scaler) + XOffset, y * y_coord_shift + YOffset, 192 * scaler, 128 * scaler);
             HighlightedTile = {x: x, y: y};
@@ -123,8 +140,23 @@ function NextFrame(once) {
               && SelectedTile.y == y)
                 ctx.drawImage(CursorImg, (y % 2 == 0 ? x * x_coord_shift : x * x_coord_shift + 128 * scaler) + XOffset, y * y_coord_shift + YOffset, 192 * scaler, 128 * scaler);
         }
+
     }
 
+    //Draw characters & do path update for the next frame
+    for(let i = 0; i < Workers.length; i++) {
+        if(Workers[i].type == "dwarf") {
+            ctx.drawImage(DwarfPl[Workers[i].dir], Workers[i].x * scaler + XOffset, Workers[i].y * scaler + YOffset, 64 * scaler, 64 * scaler);
+    
+            if(Workers[i].a == 1) { //Movement
+                //Check if any path is available 
+                if(WorkerPaths.length < 0) continue;
+
+                //if yes, go
+            }
+    
+        }
+    }
     //debugger; //To stop at least some cheating
 
     if (once !== true){

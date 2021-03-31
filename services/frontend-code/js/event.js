@@ -143,8 +143,45 @@ function OnMouseScrollEventHandler(event) {
 }
 
 function OnKeyDownEvent(event) {
-    if (GameRunning) {
-        console.log(event);
+    if (RoomRunning) {
+        var KeyCode = event.code;
+        console.log(KeyCode);
+        console.log(SelectedUnit);
+
+        if(SelectedUnit != -1) {
+            if(KeyCode == "Escape") { //select action
+
+                //Close ui
+
+                $('WaitingText').classList.add("hidden");
+                SelectedUnit = -1;
+                return;
+            }
+        }
+        else {
+            if(KeyCode == "Digit1" || KeyCode == "Numpad1") { 
+                SelectedUnit = 0; 
+                
+                //Open UI
+                $('WaitMsg').textContent = "Unit type: " + Workers[0].type + ", X: " + Workers[0].x + "  Y: " + Workers[0].y; 
+                $('WaitingText').classList.remove("hidden");
+            };
+            if(KeyCode == "Digit2" || KeyCode == "Numpad2") { 
+                SelectedUnit = 1; 
+                
+                //Open UI
+                $('WaitMsg').textContent = "Unit type: " + Workers[1].type + ", X: " + Workers[1].x + "  Y: " + Workers[1].y; 
+                $('WaitingText').classList.remove("hidden");
+            };
+            if(KeyCode == "Digit3" || KeyCode == "Numpad3") { 
+                SelectedUnit = 2; 
+                
+                //Open UI
+                $('WaitMsg').textContent = "Unit type: " + Workers[2].type + ", X: " + Workers[2].x + "  Y: " + Workers[2].y; 
+                $('WaitingText').classList.remove("hidden");
+            };
+        }
+
     }
 }
 

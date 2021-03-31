@@ -50,6 +50,7 @@ function CreateWebSocket() {
 
                         CurrentPrices = payload.content.prices;
                         PID = payload.content.id;
+                        RoomRunning = true;
 
                         /*Update the store*/
                         UpdatePricing();

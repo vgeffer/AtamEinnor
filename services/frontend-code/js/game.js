@@ -55,6 +55,20 @@ function LoadAssets() {
     
     tst_img[9] = new Image();
     tst_img[9].src = "/assets/diamond_single.png";
+
+    DwarfPl[0] = new Image();
+    DwarfPl[0].src = "/assets/pl_dwarf_r.png";
+
+    DwarfPl[1] = new Image();
+    DwarfPl[1].src = "/assets/pl_dwarf_l.png";
+
+
+
+    //Load Torch Animation (9 frames)
+    for(let i = 0; i < 9; i++) {
+        torch[i] = new Image();
+        torch[i].src = "/assets/torch/torch" + i + ".png";
+    }
     
 }
 

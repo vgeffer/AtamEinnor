@@ -120,9 +120,9 @@ module.exports = function(httpServer){
                         if(current_room.players[i].pnick == usr_nick) {
                             console.log(i);
                             for(let g = 0; g < payload.gcount; g++)
-                                current_room.players[i].workers.push({type: "gnome", x: 0, y: 0, tx: 0, ty: 0, a: 0, inv: {torch: 0, supports: 0, ladder: 0, ores: {crystal: 0, diamond: 0}}});
+                                current_room.players[i].workers.push({type: "gnome", x: 0, y: 0, tx: 0, ty: 0, a: 0, dir: 0, inv: {torch: 0, supports: 0, ladder: 0, ores: {crystal: 0, diamond: 0}}});
                             for(let d = 0; d < payload.dcount; d++) 
-                                current_room.players[i].workers.push({type: "dwarf", x: 0, y: 0, tx: 0, ty: 0, a: 0, inv: {torch: 0, supports: 0, ladder: 0, ores: {crystal: 0, diamond: 0}}});
+                                current_room.players[i].workers.push({type: "dwarf", x: 0, y: 0, tx: 0, ty: 0, a: 0, dir: 0, inv: {torch: 0, supports: 0, ladder: 0, ores: {crystal: 0, diamond: 0}}});
                      
                             
                             ws.json({type: "workers", content: current_room.players[i].workers});
@@ -130,18 +130,20 @@ module.exports = function(httpServer){
                         }
                     }
 
-                    if(current_room.spcount == current_room.pcount) {
-                        room.start_room_clock(current_room);
-                    }
+                    if(!current_room.room_running){
+                        if(current_room.spcount == current_room.pcount) {
+                            room.start_room_clock(current_room);
+                        }
 
-                    else if(current_room.spcount >= 2 * (current_room.pcount / 3)) {
-                        current_room.players[0].socket.send(
-                            JSON.stringify({
-                                type: "ask_for_start",
-                                spcount: current_room.spcount,
-                                pcount: current_room.pcount
-                            })
-                        );
+                        else if(current_room.spcount >= 2 * (current_room.pcount / 3)) {
+                            current_room.players[0].socket.send(
+                                JSON.stringify({
+                                    type: "ask_for_start",
+                                    spcount: current_room.spcount,
+                                    pcount: current_room.pcount
+                                })
+                            );
+                        }
                     }
                 break;
 
