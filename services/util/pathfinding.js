@@ -6,6 +6,12 @@ module.exports = function pathfind(world, width, height, x1, y1, x2, y2){
 	//each hexagon is described as a tuple array like this: [x, y]
 	//both startpoint and endpoint are included in the returned path
 
+	//check for stupid input
+	if (x1 < 0 || y1 < 0 || x1 >= width || y1 >= height) return null;
+	if (x2 < 0 || y2 < 0 || x2 >= width || y2 >= height) return null;
+
+	if (world[y1 * width + x1].hardness !== 0) return null;
+
 	//array of sets holding all visited tiles (if we have already been here, there is certainly a shorter/equal path, we can skip the current one)
 	const xmap = [];
 	for (var i = 0; i < width; i++){
@@ -32,7 +38,7 @@ module.exports = function pathfind(world, width, height, x1, y1, x2, y2){
 				//console.log(next); //DEBUG
 
 				//tile out of play area
-				if (next[0] < 0 || next[1] < 0 || next[0] > width - 1 || next[1] > height - 1) continue;
+				if (next[0] < 0 || next[1] < 0 || next[0] >= width || next[1] >= height) continue;
 
 				//tile mined/accessible
 				if (world[next[1] * width + next[0]].hardness !== 0) continue;
@@ -42,7 +48,7 @@ module.exports = function pathfind(world, width, height, x1, y1, x2, y2){
 
 				//check for ladders if going up/down
 				if (move === moveUp || move === moveDown){
-					if (!(world[end[1] * width + end[0]] === "ladder" && world[next[1] * width + next[0]].item === "ladder")){
+					if (!(world[end[1] * width + end[0]].item === "ladder" && world[next[1] * width + next[0]].item === "ladder")){
 						continue;
 					}
 				}
