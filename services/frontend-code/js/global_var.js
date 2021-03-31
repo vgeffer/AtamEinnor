@@ -21,7 +21,7 @@ var GameSettings = null;
 var tst_img = [];
 var torch = [];
 var CursorImg = null;
-
+var DisabledCursorImg = null;
 
 var scaler = 2;
 

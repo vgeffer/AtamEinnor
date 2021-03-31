@@ -95,8 +95,6 @@ module.exports = function(httpServer){
                             }
                             
                             return;
-
-
                         }
                     }
                     ws.json({type: "auth_response", content: "failed"});
@@ -162,7 +160,7 @@ exports.force_conn_end = function(socket, msg){
     socket.send(
         JSON.parse({
             type: "close",
-            reason: message
+            reason: msg
         })
     );
 }

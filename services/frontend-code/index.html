@@ -148,7 +148,19 @@
 			</div>
 
 			<div id = "HowToPlayContainer" class = "Container hidden">
-				TODO WRITE IT
+				<div id = "Messages" class = "MessageBox top-margin" style = "max-height: 16em;">
+					<h2>Atam Einnor</h2> <br><br>
+					Not even the oldest men alive remember the day when the shooting star hit the Nomein mountains. But it wouldn’t be important until now. It is just a few days since a lazy gnome found the first crystal in these hills. These crystals seem to manifest special properties, some glow in the dark, some float in thin air, and some even cure wounds. Ever since then new dwarves and gnomes found their way into this land with promises of great fortune in their heads. All of this is even better for the local duke which goes by the name Vadasz lowered the taxes and transport fees to a minimum. We are at the doorstep of a new era. The era of treachery, hard work but most importantly, the era of gold.
+
+					<br>
+					<h2>Controls</h2> 
+						
+					Middle Mouse Button: pohyb kamery <br>
+					Ľavé tlačidlo myši: Potvrdenie výberu destinácie pre pohyb <br>
+					1 – 3: výber postavy, výber predmetu <br>
+					M: pohyb, D: kopanie, C: zbieranie rudy, U: použitie predmetu 
+
+				</div>
 				<div class = "center-content top-margin">
 					<button onclick = "ClosePopup('HowToPlayContainer')">Close</button>
 				</div>
@@ -225,7 +237,7 @@
 					<!--1st ore-->
 					<div class = "inline">
 						<img src = "./assets/crystal_single.png"/>
-						<p class = "right-margin">Dwarf</p>
+						<p class = "right-margin">Crystal</p>
 						
 						<div class = "inline right-margin">
 							<p id = "CrystalPrice">16</p>
@@ -263,16 +275,15 @@
 				<div class = "DescriptionWrapper">
 					<div>
 						<h1>Dwarf</h1>
-							<img src = "assets/dwarf0.png" alt = "it broken"/>
+							<img src = "assets/pl_dwarf_l.png" alt = "it broken"/>
 							<ul>
 								<li>Mines Faster</li>
 								<li>Moves Slower</li>
-								<li>TODO ADD MORE</li>
 							</ul>
 							<div class = "inline">
-								<button onclick = "AddWorker('dwarf')">+</button>
-								<p id = "DwarfCount">0</p>
 								<button onclick = "SubWorker('dwarf')">-</button>
+								<p id = "DwarfCount">0</p>
+								<button onclick = "AddWorker('dwarf')">+</button>
 							</div>
 					</div>
 
@@ -282,13 +293,12 @@
 						<ul>
 							<li>Mines Slower</li>
 							<li>Moves Faster</li>
-							<li>TODO ADD MORE</li>
 						</ul>
 
 						<div class = "inline">
-							<button onclick = "AddWorker('gnome')">+</button>
-							<p id = "GnomeCount">0</p>
 							<button onclick = "SubWorker('gnome')">-</button>
+							<p id = "GnomeCount">0</p>
+							<button onclick = "AddWorker('gnome')">+</button>
 						</div>
 					</div>
 				</div>

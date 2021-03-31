@@ -1,7 +1,6 @@
 
 Short Term:
     -Create FE/BE character system
-    -Create Ladders
     -Create Torches
     -Create Support Beams
     
@@ -11,11 +10,8 @@ On Release:
     -Reenable debbuger; statement on release
     -Disable console spam before release
 
-Low Priority:
-    -Create animations for menus
-    -Add debug credentials for backend socket
 
-Finnished:
+Finished:
     -Rewrite RENDSETT
     -Parameter validation in frontend
     -Update loop so it takes 2d instead of WebGL
@@ -26,6 +22,7 @@ Finnished:
     -Rework destroyed tiles so they won't cause graphical glitch
     -Do parameter validation in backend
     -Create Store
+    -Create Ladders
 
 Dismissed:
     -Clean Up fucking spagetti code!

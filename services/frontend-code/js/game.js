@@ -24,8 +24,11 @@ function StartGame(code) {
 function LoadAssets() {
 
     CursorImg = new Image();
-    CursorImg.src = "./assets/selector.png"
+    CursorImg.src = "./assets/selector.png";
     
+    DisabledCursorImg = new Image();
+    DisabledCursorImg.src = "/assets/selector_disabled.png";
+
     tst_img[0] = new Image();
     tst_img[0].src = "/assets/dirt.png";
 
@@ -101,8 +104,11 @@ function SubWorker(worker) {
 
     $('DwarfCount').textContent = DwarfC;
     $('GnomeCount').textContent = GnomeC;
-    $('ConfirmSelection').textContent = (GnomeC + DwarfC) + "/3"; 
-    $('ConfirmSelection').disabled = true; 
+
+    if((GnomeC + DwarfC) < 3) {
+        $('ConfirmSelection').textContent = (GnomeC + DwarfC) + "/3"; 
+        $('ConfirmSelection').disabled = true; 
+    }
 }
 
 function SaveWorkers() {
