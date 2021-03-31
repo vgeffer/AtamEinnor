@@ -20,6 +20,8 @@ var GameSettings = null;
 
 var tst_img = [];
 var torch = [];
+var ladder = null;
+var support = null;
 var CursorImg = null;
 var DisabledCursorImg = null;
 

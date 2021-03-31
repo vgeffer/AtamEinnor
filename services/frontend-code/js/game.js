@@ -65,7 +65,11 @@ function LoadAssets() {
     DwarfPl[1] = new Image();
     DwarfPl[1].src = "/assets/pl_dwarf_l.png";
 
+    support = new Image();
+    support.src = "/assets/support.png";
 
+    ladder = new Image();
+    ladder.src = "/assets/ladder.png";
 
     //Load Torch Animation (9 frames)
     for(let i = 0; i < 9; i++) {
@@ -155,7 +159,8 @@ function EnterHandler(event) {
 /*Store (calls from network)*/
 function OpenStore(unitid) { 
 
-
+    if(!RoomRunning) return;
+    
     //Update ore quantities
     $('CrystalAll').textContent = "Sell All (" + Workers[unitid].inv.ores.crystal + ")";
     $('DiamondAll').textContent = "Sell All (" + Workers[unitid].inv.ores.diamond + ")";
@@ -183,6 +188,7 @@ function OpenStore(unitid) {
 
     //Open The Popup
     OpenPopup('ShopContainer');
+
 }
 
 function UpdatePricing() {
