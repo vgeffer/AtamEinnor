@@ -1,17 +1,20 @@
 const world = require("./world.js");
 
 exports.ParsePlayerAction = function(action, room, nick, ws) {
+    if (!room.room_running){
+        return;
+    }
 
     //Get player id
     let id = 0;
-    for(let i = 0; i < room.pcount; i++) 
-        if(room.players[i].pnick == nick) id = i;
+    for (let i = 0; i < room.pcount; i++) 
+        if (room.players[i].pnick == nick) id = i;
 
     switch (action.type) {
 
         case "buy-item":
             
-            if(room.current_prices[action.item] <= room.players[id].money_count) {
+            if (room.current_prices[action.item] <= room.players[id].money_count) {
                 //Succesful purchase
 
                 room.players[id].workers[action.unitid].inv[action.item]++; //Since you can buy only one per call
@@ -37,7 +40,7 @@ exports.ParsePlayerAction = function(action, room, nick, ws) {
         break;
 
         case "sell-item":
-            if(room.players[id].workers[action.unitid].inv.ores[action.item] >= action.quantity) {
+            if (room.players[id].workers[action.unitid].inv.ores[action.item] >= action.quantity) {
                 //Succesful purchase
 
                 room.players[id].workers[action.unitid].inv.ores[action.item] -= action.quantity; //Since you can buy only one per call
@@ -83,18 +86,18 @@ exports.ParsePlayerAction = function(action, room, nick, ws) {
 exports.RoundTick = function(room) {
 
 
-    if(room.pl_win != -1) return;
+    if (room.pl_win != -1) return;
     room.turns--;
 
     
-    if(room.turns == 0) {
+    if (room.turns == 0) {
         //End Game Handler
         let max_coins = -1;
         let max_id = -1;
 
-        for(let i = 0; i < room.spcount; i++) {
+        for (let i = 0; i < room.spcount; i++) {
             
-            if(room.players[i].money_count > max_coins) {
+            if (room.players[i].money_count > max_coins) {
                 max_id = i;
                 max_coins = room.players[i].money_count;
             }
@@ -120,7 +123,7 @@ exports.RoundTick = function(room) {
     let entityData = [];
 
 
-    for(let i = 0; i < room.spcount; i++) {
+    for (let i = 0; i < room.spcount; i++) {
         //Parse Queues
             
         //So no errors would be thrown
@@ -128,17 +131,17 @@ exports.RoundTick = function(room) {
         let side = null;
         let unit_id = null;
 
-        switch(room.players[i].action_queue.type) {
+        switch (room.players[i].action_queue.type) {
             case "dig":
                 //get the block and the side that's beeing dug
                 block = room.world.covers[room.players[i].action_queue.y * room.world.size_x + room.players[i].action_queue.x];
                 side = room.players[i].action_queue[j].side;
 
                 //check if the block has already been mined
-                if(block.walls[side] === 0) break;
+                if (block.hardness === 0) break;
 
                 //if not, subtract durability
-                block.walls[side]--;
+                block.hardness--;
 
                 //save the delta
                 cover_deltas.push({
@@ -163,15 +166,15 @@ exports.RoundTick = function(room) {
                 unit_id = room.players[i].action_queue.uid;
 
                 //check, if it has ores
-                if(!block.ore) break;
+                if (!block.ore) break;
 
                 //if yes, how many & what type
                     let ore_count = 0;
                     let ore_type = block.type;
 
                     //count the ores
-                    for(let k = 0; k < 7; k++) 
-                        if(block.walls[k] === 1) 
+                    for (let k = 0; k < 7; k++) 
+                        if (block.walls[k] === 1) 
                             ore_count++;
 
                     //remove them from the world
@@ -197,10 +200,10 @@ exports.RoundTick = function(room) {
     }
 
     //Swap the queues
-    for(let i = 0; i < room.spcount; i++) {
-
-
-
+    for (let i = 0; i < room.spcount; i++) {
+        for (let j = 0; j < 3; j++){
+            room.players[i].action_queue = room.players[i].input_queue.shift(); //undefined if non-existent
+        }
     }
 
 
@@ -212,12 +215,12 @@ exports.RoundTick = function(room) {
         ladder: randomIntFromInterval(4, 24), 
         torch: randomIntFromInterval(4, 32), 
         supports: randomIntFromInterval(8, 16)
-    } 
+    };
 
     //Gather Entity data
-    for(let i = 0; i < room.spcount; i++) {
+    for (let i = 0; i < room.spcount; i++) {
         entityData[i] = [];
-        for(let u = 0; u < room.players[i].workers.length; u++){
+        for (let u = 0; u < room.players[i].workers.length; u++){
             entityData[i][u] = {
                 type: room.players[i].workers[u].type,
                 action: room.players[i].workers[u].a,
@@ -242,7 +245,7 @@ exports.RoundTick = function(room) {
 }
 
 function MassSend(room, payload){
-    for(let i = 0; i < room.spcount; i++) {
+    for (let i = 0; i < room.spcount; i++) {
         room.room_running = true;
         room.players[i].socket.send(JSON.stringify(payload));
     }
