@@ -98,9 +98,8 @@ function OnResizeEventHandler() {
 }
 
 function OnMouseDownHandler(event) {
-
     if (GameRunning) {
-        if(event.buttons == 4) MovingScreen = true;
+        if(event.buttons == 4 || event.buttons == 1) MovingScreen = true;
         if(event.buttons == 1 && event.path[0].nodeName == "CANVAS" && CursorDrawn) { 
             //Handle UI
 
@@ -114,8 +113,9 @@ function OnMouseDownHandler(event) {
 }
 
 function OnMouseUpHandler(event) {
+    console.log(event);
     if (GameRunning) {
-        if(event.button == 1) MovingScreen = false; //Here 1 is middle button. Yes it's weird
+        if(event.button == 1 || event.button == 0) MovingScreen = false; //Here 1 is middle button. Yes it's weird
     }
 }
 
