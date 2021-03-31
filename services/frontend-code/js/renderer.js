@@ -119,21 +119,21 @@ function NextFrame(once) {
             x = Math.floor((mouseX - tileWidth * 2 / 3) / (tileWidth * 4 / 3));
         }
 
-        if(SelectedUnit != -1) {
+        if(SelectedUnit != -1 && SelectedUnit < 3) {
             if(x != HighlightedTile.x || y != HighlightedTile.y) {
                 if(x >= 0 && y >= 0) {
                 
+                    var path = pathfind(World.covers, 48, 32, x, y, Workers[SelectedUnit].x, Workers[SelectedUnit].y);
+                    console.log(path);
                     
-                
+                    if(path == null) ctx.drawImage(DisabledCursorImg, (y % 2 == 0 ? x * x_coord_shift : x * x_coord_shift + 128 * scaler) + XOffset, y * y_coord_shift + YOffset, 192 * scaler, 128 * scaler);
+                    else {
+                        ctx.drawImage(CursorImg, (y % 2 == 0 ? x * x_coord_shift : x * x_coord_shift + 128 * scaler) + XOffset, y * y_coord_shift + YOffset, 192 * scaler, 128 * scaler);
+                        HighlightedTile = {x: x, y: y};
+                    }
                 }
             }
         }
-
-        if(x >= 0 && y >= 0) {
-            ctx.drawImage(CursorImg, (y % 2 == 0 ? x * x_coord_shift : x * x_coord_shift + 128 * scaler) + XOffset, y * y_coord_shift + YOffset, 192 * scaler, 128 * scaler);
-            HighlightedTile = {x: x, y: y};
-        }
-        
 
         if(SelectedTile != null) {
             if(SelectedTile.x == x 
