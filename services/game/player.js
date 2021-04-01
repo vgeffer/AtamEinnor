@@ -319,3 +319,87 @@ function MassSend(room, payload){
 function randomIntFromInterval(min, max) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+function checkTileForFall(world, width, height, x, y){
+    if (checkOutOfBounds(width, height, x, y)) return false;
+    
+    const tile = world[y * width + x];
+    
+    if (tile.hardness !== 0) return false;
+    if (tile.item === "support") return false;
+    
+    let above = moveUp(x, y);
+    if (checkOutOfBounds(width, height, above[0], above[1])) return false;
+    else if (world[above[1] * width + above[0]].hardness === 0) return false;
+
+    let leftSide = false;
+    let rightSide = false;
+
+    let checking = moveUpLeft(x, y);
+    if (checkOutOfBounds(width, height, checking[0], checking[1])){
+        if (world[checking[1] * width + checking[0]].hardness === 0){
+            leftSide = true;
+        } else {
+            checking = moveDownLeft(x, y);
+            if (checkOutOfBounds(width, height, checking[0], checking[1])){
+                if (world[checking[1] * width + checking[0]].hardness === 0){
+                    leftSide = true;
+                }
+            }
+        }
+    }
+
+    checking = moveUpRight(x, y);
+    if (checkOutOfBounds(width, height, checking[0], checking[1])){
+        if (world[checking[1] * width + checking[0]].hardness === 0){
+            rightSide = true;
+        } else {
+            checking = moveDownRight(x, y);
+            if (checkOutOfBounds(width, height, checking[0], checking[1])){
+                if (world[checking[1] * width + checking[0]].hardness === 0){
+                    rightSide = true;
+                }
+            }
+        }
+    }
+
+    return leftSide && rightSide;
+}
+
+function moveUp(x, y){
+	return [x, y - 2];
+}
+function moveUpRight(x, y){
+	if (y % 2 === 0){
+		return [x, y - 1];
+	} else {
+		return [x + 1, y - 1];
+	}
+}
+function moveDownRight(x, y){
+	if (y % 2 === 0){
+		return [x, y + 1];
+	} else {
+		return [x + 1, y + 1];
+	}
+}
+function moveDown(x, y){
+	return [x, y + 2];
+}
+function moveDownLeft(x, y){
+	if (y % 2 === 0){
+		return [x - 1, y + 1];
+	} else {
+		return [x, y + 1];
+	}
+}
+function moveUpLeft(x, y){
+	if (y % 2 === 0){
+		return [x - 1, y - 1];
+	} else {
+		return [x, y - 1];
+	}
+}
+function checkOutOfBounds(width, height, x, y){
+    return x < 0 || y < 0 || x >= width || y >= height;
+}

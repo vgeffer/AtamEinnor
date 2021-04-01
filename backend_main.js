@@ -167,12 +167,12 @@ const server = http.createServer(async (req, res) => {
 			let contPath = url.parse(req.url, true).pathname;
 
 			//If url is in form url.sth/something/, append index.html to loaded path
-			if(contPath.lastIndexOf("/") == contPath.length - 1)
+			if(contPath.endsWith("/"))
 				contPath += "index.html"; 
 
 			//Remove ../ and ./ attacks from content path
 			const normalized = path.normalize(contPath);
-			if (normalized.substring(0, 3) === "../" || normalized.substring(0, 2) === "./"){
+			if (normalized.startsWith("../") || normalized.startsWith("./")){
 				
 				//If such attack found, send 403 to the sender
 				res.statusCode = 403;

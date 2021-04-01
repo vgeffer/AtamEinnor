@@ -71,60 +71,10 @@ function NextFrame(once) {
         const tileHeight = 128 * scaler;
         const tileWidth = 192 * scaler;
 
-        let y = mouseY / (tileHeight * 0.5);
-        let yFraction = y - Math.floor(y);
-        y = Math.floor(y);
+        const tile = screenCoordsToGrid(tileWidth, tileHeight, mouseX, mouseY);
 
-        let xFraction = mouseX / (tileWidth * 4 / 3);
-        xFraction = xFraction - Math.floor(xFraction);
-        let x = Math.floor(xFraction * 4);
-        xFraction = xFraction * 4 - x;
-
-        if (y % 2 === 0){
-            switch (x){
-                case 0:
-                    if (yFraction < (1 - xFraction)){
-                        y -= 1;
-                    }
-                    break;
-                case 1:
-
-                    break;
-                case 2:
-                    if (yFraction < xFraction){
-                        y -= 1;
-                    }
-                    break;
-                case 3:
-                    y -= 1;
-                    break;
-            }
-        } else {
-            switch (x){
-                case 0:
-                    if (yFraction < xFraction){
-                        y -= 1;
-                    }
-                    break;
-                case 1:
-                    y -= 1;
-                    break;
-                case 2:
-                    if (yFraction < (1 - xFraction)){
-                        y -= 1;
-                    }
-                    break;
-                case 3:
-                    
-                    break;
-            }
-        }
-        
-        if (y % 2 === 0){
-            x = Math.floor(mouseX / (tileWidth * 4 / 3));
-        } else {
-            x = Math.floor((mouseX - tileWidth * 2 / 3) / (tileWidth * 4 / 3));
-        }
+        let x = tile.x;
+        let y = tile.y;
 
         if(SelectedUnit != -1 && SelectedUnit < 3) {
             if(x != HighlightedTile.x || y != HighlightedTile.y) {
@@ -180,3 +130,68 @@ const TileOffsets = [
     {sx: 64, sy: 64},
     {sx: 128, sy: 64}
 ];
+
+function screenCoordsToGrid(tileWidth, tileHeight, regularX, regularY){
+    const tileHeight = 128 * scaler;
+    const tileWidth = 192 * scaler;
+
+    let y = regularY / (tileHeight * 0.5);
+    let yFraction = y - Math.floor(y);
+    y = Math.floor(y);
+
+    let xFraction = regularX / (tileWidth * 4 / 3);
+    xFraction = xFraction - Math.floor(xFraction);
+    let x = Math.floor(xFraction * 4);
+    xFraction = xFraction * 4 - x;
+
+    if (y % 2 === 0){
+        switch (x){
+            case 0:
+                if (yFraction < (1 - xFraction)){
+                    y -= 1;
+                }
+                break;
+            case 1:
+
+                break;
+            case 2:
+                if (yFraction < xFraction){
+                    y -= 1;
+                }
+                break;
+            case 3:
+                y -= 1;
+                break;
+        }
+    } else {
+        switch (x){
+            case 0:
+                if (yFraction < xFraction){
+                    y -= 1;
+                }
+                break;
+            case 1:
+                y -= 1;
+                break;
+            case 2:
+                if (yFraction < (1 - xFraction)){
+                    y -= 1;
+                }
+                break;
+            case 3:
+                
+                break;
+        }
+    }
+    
+    if (y % 2 === 0){
+        x = Math.floor(regularX / (tileWidth * 4 / 3));
+    } else {
+        x = Math.floor((regularX - tileWidth * 2 / 3) / (tileWidth * 4 / 3));
+    }
+
+    return {
+        x: x,
+        y: y
+    };
+}
