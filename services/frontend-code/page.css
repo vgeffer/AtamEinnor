@@ -46,7 +46,7 @@ a {
 }
 
 button:hover {
-    border: 1px solid #FCAC34; /*TODO:CHANGE*/
+    border: 1px solid #FCAC34; 
 }
 
 button:disabled {

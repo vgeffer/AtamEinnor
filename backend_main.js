@@ -1,10 +1,9 @@
-
+//Import libs
 const http          = require('http');
 const fs            = require('fs');
 const url           = require('url'); 
 const path          = require('path');
 
-//temp workaround
 const room = require('./services/game/room.js');
 const jwt = require('./services/network/jwt.js');
 
@@ -12,148 +11,207 @@ const jwt = require('./services/network/jwt.js');
 const err403 = "<title>403: Access denied</title><h1>403:</h1>You don't have permision to view this content!";
 const err404 = "<title>404: Not Found</title><h1>404:</h1>Unable to fetch ./www";
 
-
+//Create the HTTP server (https handled externaly)
 const server = http.createServer(async (req, res) => {
-        
-        if(req.method == 'POST'){
-            var body = '';
-            req.on('data', function (data) {
-                body += data;
-            });
+		
+		//Parse the POST requests
+		if(req.method == 'POST'){
+			
+			//Get the body of the request
+			var body = '';
+			req.on('data', function (data) {
+				body += data;
+			});
 
-            req.on('end', async () => {
-                var parsedBody = JSON.parse(body);
+			//Send a response
+			req.on('end', async () => {
+				
+				//Parse the body from JSON to JS object
+				var parsedBody = JSON.parse(body);
 
-                let searched_room = null;
-                switch(parsedBody.type){
+				//Defined here, so I don't get errors
+				let searched_room = null;
 
-                    case "join-room":
+				switch(parsedBody.type){
 
-                        //setup response
-                        res.statusCode = 200;
+					case "join-room":
 
-                        //Disconnect the player
-                        let token = await jwt.verify_jwt(parsedBody.token);
-                        if(token !== undefined) {
-                            if(room.room_exist(token.room_id)) {
-                                for(let i = 0; i < room.get_room(token.room_id).pcount; i++) {
-                                    if(room.get_room(token.room_id).players[i].pnick == token.nick) { 
-                                        await room.get_room(token.room_id).players[i].socket.send(JSON.stringify({
-                                            type: "error",
-                                            message: "New session created, disconnecting..."
-                                        }));
-                                        room.get_room(token.room_id).spcount--;
-                                        room.get_room(token.room_id).players[i] = {
-                                            socket: null,
-                                            pnick: null,
-                                            money_count: 0, 
-                                            workers: [],
-                                            action_queue: null,
-                                            input_queue: []
-                                        };
-                                    }
-                                }
-                            }
-                        }
+						//setup response
+						res.statusCode = 200;
 
+						//Check, if the new room could be joined. If not, return
+						if(!room.verify_joinability(parsedBody.room_id)) return res.end("invalid");
 
-                        if(!room.verify_joinability(parsedBody.room_id)) return res.end("invalid");
-                        searched_room = room.get_room(parsedBody.room_id.toLowerCase());
-                        for(let i = 0; i < searched_room.pcount; i++){
+						//If any previous connection exists, destroy it
+						let token = await jwt.verify_jwt(parsedBody.token);
 
-                            if(searched_room.players[i].pnick == parsedBody.nick) return res.end("player_exist");
-                            
-                            if(searched_room.players[i].pnick == null) {
-                        
-                                searched_room.players[i].pnick = parsedBody.nick;
-                                searched_room.spcount++;
+						//If the token is valid, disconnect the player
+						if (token !== undefined) {
 
-                                console.log(searched_room.players)
-                                return res.end(jwt.sign_jwt({
-                                    nick: parsedBody.nick,
-                                    room_id: parsedBody.room_id
-                                }));
-                            }   
-                            
-                        }
+							//Check, if the room still extists
+							if(room.room_exist(token.room_id)) {
 
-                    return res.end("invalid");
+								//If yes, find the player
+								for(let i = 0; i < room.get_room(token.room_id).pcount; i++) {
+									if(room.get_room(token.room_id).players[i].pnick == token.nick) { 
+										
+										//Send a message to a previous game
+										await room.get_room(token.room_id).players[i].socket.send(JSON.stringify({
+											type: "error",
+											message: "New session created, disconnecting..."
+										}));
 
-                    case "join-token":
-                        
-                        //setup response
-                        res.statusCode = 200;
+										//Remove the player from the room
+										room.get_room(token.room_id).spcount--;
+										room.get_room(token.room_id).players[i] = {
+											socket: null,
+											pnick: null,
+											money_count: 0, 
+											workers: [],
+											action_queue: null,
+											input_queue: []
+										};
+									}
+								}
+							}
+						}
 
-                        let parsed_token = await jwt.verify_jwt(parsedBody.token);
-                        if(parsed_token === undefined) return res.end("invalid"); //if token is invalid, throw err
-                        if(!room.room_exist(parsed_token.room_id)) return res.end("invalid");
-                        searched_room = room.get_room(parsed_token.room_id);
+						//Get the room object
+						searched_room = room.get_room(parsedBody.room_id.toLowerCase());
+						
+						//Find first free spot for the player
+						for(let i = 0; i < searched_room.pcount; i++){
 
-                        if(searched_room.pl_win != -1) return res.end("invalid");
-                        for(let i = 0; i < searched_room.spcount; i++) {
-                            if(searched_room.players[i].pnick === parsed_token.nick) return res.end(parsed_token.room_id);
-                        }
-                        res.end("invalid");
-                    break;
-                    
-                    case "create-room":
-                        res.statusCode = 200;
-                        
-                        //check for type
-                        if(typeof(parsedBody.player_count) !== "number" || typeof(parsedBody.turn_count) !== "number") {
-                            res.statusCode = 400;
-                            res.end("bad request. player_count or turn_count is NaN");
-                            return;
-                        }
+							//Check, if player with the same nick already exists in the room
+							if(searched_room.players[i].pnick == parsedBody.nick) return res.end("player_exist");
+							
+							//If the free spot is found, save the player
+							if(searched_room.players[i].pnick == null) {
+						
+								//Save player's nick and increase active player count in the room
+								searched_room.players[i].pnick = parsedBody.nick;
+								searched_room.spcount++;
 
-                        //check for value
-                        if(parsedBody.player_count < 2 || parsedBody.player_count > 6|| parsedBody.turn_count < 1) {
-                            res.statusCode = 400;
-                            res.end("bad request. player_count or turn_count has an invalid value");
-                            return;
-                        }
+								//Return player's id to the user
+								return res.end(jwt.sign_jwt({
+									nick: parsedBody.nick,
+									room_id: parsedBody.room_id
+								}));
+							}   
+							
+						}
+					//If room is full, exit
+					return res.end("invalid");
 
-                        res.end(room.create_room(parsedBody.player_count, parsedBody.turn_count * 4));
-                    break;
-                }
+					case "join-token":
+		
+						//Setup response
+						res.statusCode = 200;
 
+						//Check, if supplied token is valid
+						let parsed_token = await jwt.verify_jwt(parsedBody.token);
+						
+						//If token is invalid, throw err
+						if(parsed_token === undefined) return res.end("invalid"); 
+						
+						//Check, if the room still exists
+						if(!room.room_exist(parsed_token.room_id)) return res.end("invalid");
+						
+						//Get the room object
+						searched_room = room.get_room(parsed_token.room_id);
+						
+						//Check, if the game has already ended
+						if(searched_room.pl_win != -1) return res.end("invalid");
 
-            });
-        }
-        else {
-            let contPath = url.parse(req.url, true).pathname;
+						//Find the user
+						for(let i = 0; i < searched_room.spcount; i++) {
+							
+							//If found, return params for client to join the room
+							if(searched_room.players[i].pnick === parsed_token.nick) return res.end(parsed_token.room_id);
+						}
 
-            //if url is in form url.dom/something/, append index.html to loaded path
-            if(contPath.lastIndexOf("/") == contPath.length - 1)
-                contPath += "index.html"; 
+						//If not found, throw an error
+						res.end("invalid");
+					break;
+					
+					case "create-room":
 
-            const normalized = path.normalize(contPath);
+						//Setup the response
+						res.statusCode = 200;
+						
+						//Check if player_count and turn_count are numbers
+						if(typeof(parsedBody.player_count) !== "number" || typeof(parsedBody.turn_count) !== "number") {
+							
+							//If not, throw an error
+							res.statusCode = 400;
+							res.end("bad request. player_count or turn_count is NaN");
+							return;
+						}
 
-            if (normalized.substring(0, 3) === "../" || normalized.substring(0, 2) === "./"){
-                res.statusCode = 403;
-                return res.end(err403);
-            }
+						//Check if values for player_count and turn_count are valid
+						if(parsedBody.player_count < 2 || parsedBody.player_count > 6|| parsedBody.turn_count < 1) {
 
-            if(contPath == "/report") {
-                res.writeHead(301, {Location: "https://forms.gle/e3FrMLzG95nF2UdU8"});
-                res.end();
-                return;
-            }
+							//If not, throw an error
+							res.statusCode = 400;
+							res.end("bad request. player_count or turn_count has an invalid value");
+							return;
+						}
 
-            const fstream = fs.createReadStream(path.join("./services/frontend-code", normalized));
-            fstream
-            .on("error", (error) => {
-                res.statusCode = 404;
-                res.end(err404 + contPath);
-                
-                //console.log(error);
-            })
-            .on("open", () => {
-                fstream.pipe(res);
-            });
-        }
+						//If all checks passed, create the room
+						res.end(room.create_room(parsedBody.player_count, parsedBody.turn_count * 4));
+					break;
+				}
+			});
+		}
+		else {
+			let contPath = url.parse(req.url, true).pathname;
+
+			//If url is in form url.sth/something/, append index.html to loaded path
+			if(contPath.lastIndexOf("/") == contPath.length - 1)
+				contPath += "index.html"; 
+
+			//Remove ../ and ./ attacks from content path
+			const normalized = path.normalize(contPath);
+			if (normalized.substring(0, 3) === "../" || normalized.substring(0, 2) === "./"){
+				
+				//If such attack found, send 403 to the sender
+				res.statusCode = 403;
+				return res.end(err403);
+			}
+
+			//Setup /report redirect to google forms
+			if(contPath == "/report") {
+				
+				//Create redirection header
+				res.writeHead(301, {Location: "https://forms.gle/e3FrMLzG95nF2UdU8"});
+				
+				//Send the response
+				return res.end();
+			}
+
+			//Create async file stream
+			const fstream = fs.createReadStream(path.join("./services/frontend-code", normalized));
+
+			//Read the file from the disk
+			fstream
+			.on("error", (error) => {
+				
+				//If any error occured, return 404
+				res.statusCode = 404;
+				res.end(err404 + contPath);
+				
+				//console.log(error);
+			})
+			.on("open", () => {
+
+				//If the opening succeeded, send the file to user
+				fstream.pipe(res);
+			});
+		}
 });
 
-
+//Start the HTTP server
 server.listen(6502, "127.0.0.1");
+
+//Start WS listener
 require("./services/network/socket.js")(server);

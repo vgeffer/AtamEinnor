@@ -1,4 +1,3 @@
-const world = require("./world.js");
 
 exports.ParsePlayerAction = function(action, room, nick, ws) {
     if (!room.room_running){
@@ -129,81 +128,138 @@ exports.RoundTick = function(room) {
         //So no errors would be thrown
         let block = null;
         let side = null;
-        let unit_id = null;
 
-        switch (room.players[i].action_queue.type) {
-            case "dig":
-                //get the block and the side that's beeing dug
-                block = room.world.covers[room.players[i].action_queue.y * room.world.size_x + room.players[i].action_queue.x];
-                side = room.players[i].action_queue[j].side;
+        //Iterate through workers
+        for (let j = 0; j < 3; j++) {
 
-                //check if the block has already been mined
-                if (block.hardness === 0) break;
+            let unit_id = j;
 
-                //if not, subtract durability
-                block.hardness--;
+            //Check if action_queue is undefined (no action)
+            if(room.players[i].action_queue[j] == undefined) break;
 
-                //save the delta
-                cover_deltas.push({
-                    x: room.players[i].action_queue.x,
-                    y: room.players[i].action_queue.y,
-                    cover: block
-                });
-            break;
+            switch (room.players[i].action_queue[j].type) {
+                case "dig":
+                    //get the block and the side that's beeing dug
+                    block = room.world.covers[room.players[i].action_queue[j].y * room.world.size_x + room.players[i].action_queue[j].x];
+                    side = room.players[i].action_queue[j].side;
 
-            case "move":
-                //swap position and target variables
-                unit_id = room.players[i].action_queue.uid;
-                    
-                room.players[i].workers[unit_id].x = room.players[i].workers[uint_id].tx;
-                room.players[i].workers[unit_id].y = room.players[i].workers[uint_id].ty;
+                    //check if the block has already been mined
+                    if (block.hardness === 0) break;
 
-            break;
+                    //if not, subtract durability
+                    block.hardness--;
 
-            case "collect":
-                //get the block and the side that's beeing dug
-                block = room.world.ores[room.players[i].action_queue.y * room.world.size_x + room.players.action_queue.x];
-                unit_id = room.players[i].action_queue.uid;
+                    //if the block above or under has support, destroy it
+                    if (block.hardness === 0) {
 
-                //check, if it has ores
-                if (!block.ore) break;
+                        let block_above = room.world.covers[(room.players[i].action_queue[j].y - 1) * room.world.size_x + room.players[i].action_queue[j].x];
+                        let block_below = room.world.covers[(room.players[i].action_queue[j].y + 1) * room.world.size_x + room.players[i].action_queue[j].x];
+                        
+                        //check, if the block above has support
+                        if (block_above.item == "support"){ 
+                            //Destroy the support
+                            block_above.item = "none";
+                            cover_deltas.push({
+                                x: room.players[i].action_queue[j].x,
+                                y: room.players[i].action_queue[j].y - 1,
+                                cover: block_above
+                            });
+                        }
 
-                //if yes, how many & what type
-                    let ore_count = 0;
-                    let ore_type = block.type;
-
-                    //count the ores
-                    for (let k = 0; k < 7; k++) 
-                        if (block.walls[k] === 1) 
-                            ore_count++;
-
-                    //remove them from the world
-                    block.walls = [0,0,0,0,0,0,0];
-
-                    //add them to unit's inventory
-                    room.players[i].workers[unit_id].inv.ores[ore_type == 0 ? "crystal" : "diamond"] += ore_count;
+                        //check, if the block below has support
+                        if (block_below.item == "support"){ 
+                            //Destroy the support
+                            block_below.item = "none";
+                            cover_deltas.push({
+                                x: room.players[i].action_queue[j].x,
+                                y: room.players[i].action_queue[j].y + 1,
+                                cover: block_below
+                            });
+                        }
+                    }
 
                     //save the delta
-                    ore_deltas.push({
-                        x: room.players[i].action_queue.x,
-                        y: room.players[i].action_queue.y,
-                        ore: block
+                    cover_deltas.push({
+                        x: room.players[i].action_queue[j].x,
+                        y: room.players[i].action_queue[j].y,
+                        cover: block
                     });
                 break;
 
-            case "use":
-                    
+                case "move":
+                    //swap position and target variables
+                    room.players[i].workers[unit_id].x = room.players[i].workers[uint_id].tx;
+                    room.players[i].workers[unit_id].y = room.players[i].workers[uint_id].ty;
+                break;
 
-            break;
+                case "collect":
+                    //get the block and the side that's beeing dug
+                    block = room.world.ores[room.players[i].action_queue[j].y * room.world.size_x + room.players.action_queue[j].x];
+                    unit_id = room.players[i].action_queue[j].uid;
+
+                    //check, if it has ores
+                    if (!block.ore) break;
+
+                    //if yes, how many & what type
+                        let ore_count = 0;
+                        let ore_type = block.type;
+
+                        //count the ores
+                        for (let k = 0; k < 7; k++) 
+                            if (block.walls[k] === 1) 
+                                ore_count++;
+
+                        //remove them from the world
+                        block.walls = [0,0,0,0,0,0,0];
+
+                        //add them to unit's inventory
+                        room.players[i].workers[unit_id].inv.ores[ore_type == 0 ? "crystal" : "diamond"] += ore_count;
+
+                        //save the delta
+                        ore_deltas.push({
+                            x: room.players[i].action_queue[j].x,
+                            y: room.players[i].action_queue[j].y,
+                            ore: block
+                        });
+                    break;
+
+                case "use":
+
+                    //check, if the tile is dug
+                    if(room.world.covers[room.players[i].action_queue[j].target.y * room.world.size_x + room.players[i].action_queue[j].target.x].hardness > 0)
+                        break;
+
+                    //check, if player and target is at the same tile
+                    if(room.players[i].workers[unit_id].x == room.players[i].action_queue[j].target.x &&
+                       room.players[i].workers[uint_id].y == room.players[i].action_queue[j].target.y) {
+
+                        //get the target block
+                        block = room.world.covers[room.players[i].action_queue[j].target.y * room.world.size_x + room.players[i].action_queue[j].target.x];
+
+                        //save data
+                        block.item = room.players[i].action_queue[j].item;
+                        
+                        //save the delta
+                        cover_deltas.push({
+                            x: room.players[i].action_queue[j].x,
+                            y: room.players[i].action_queue[j].y + 1,
+                            cover: block
+                        });
+
+                    }
+
+                break;
+            }
         }
-
     }
 
     //Swap the queues
     for (let i = 0; i < room.spcount; i++) {
-        for (let j = 0; j < 3; j++){
-            room.players[i].action_queue = room.players[i].input_queue.shift(); //undefined if non-existent
+        for (let j = 0; j < 3; j++) {
+            room.players[i].action_queue[j] = room.players[i].input_queue[j].shift(); //undefined if non-existent
         }
+
+        //TODO ADD THINGS
     }
 
 
@@ -216,6 +272,15 @@ exports.RoundTick = function(room) {
         torch: randomIntFromInterval(4, 32), 
         supports: randomIntFromInterval(8, 16)
     };
+
+    //check for tile falls
+    for (let tile_id = 0; tile_id < room.world.size_x * room.world.size_y; tile_id++) {
+
+
+
+
+    }
+
 
     //Gather Entity data
     for (let i = 0; i < room.spcount; i++) {

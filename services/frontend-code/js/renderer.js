@@ -7,7 +7,6 @@ function NextFrame(once) {
 
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
-    //Todo: Replace with size recived with world
     var x_limit = World.size_x;
     var y_limit = World.size_y; 
     
