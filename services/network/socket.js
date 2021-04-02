@@ -128,7 +128,7 @@ module.exports = function(httpServer){
                             //Send World to user
                             ws.json({type: "world", content: current_room.world});
 
-                            //If player is rejoining, send his assigned workers
+                            //If player is rejoining, send his assigned workers                            
                             if(current_room.players[i].workers.length > 0) 
                                 ws.json({type: "workers", content: current_room.players[i].workers});
                             
@@ -182,7 +182,7 @@ module.exports = function(httpServer){
                 case "save_workers":
 
                     //Check the type of input
-                    if (typeof(payload.dcount) == "number" && typeof(payload.gcount) == "number") return;
+                    if (typeof payload.dcount != "number" || typeof payload.gcount != "number") return;
 
                     //Get the player id
                     for (let i = 0; i < current_room.pcount; i++) {

@@ -132,9 +132,6 @@ const TileOffsets = [
 ];
 
 function screenCoordsToGrid(tileWidth, tileHeight, regularX, regularY){
-    const tileHeight = 128 * scaler;
-    const tileWidth = 192 * scaler;
-
     let y = regularY / (tileHeight * 0.5);
     let yFraction = y - Math.floor(y);
     y = Math.floor(y);
@@ -143,6 +140,8 @@ function screenCoordsToGrid(tileWidth, tileHeight, regularX, regularY){
     xFraction = xFraction - Math.floor(xFraction);
     let x = Math.floor(xFraction * 4);
     xFraction = xFraction * 4 - x;
+
+    
 
     if (y % 2 === 0){
         switch (x){
@@ -184,6 +183,12 @@ function screenCoordsToGrid(tileWidth, tileHeight, regularX, regularY){
         }
     }
     
+/*     let third = x;
+    if (y % 2 === 1){
+        third += 2;
+        third %= 4;
+    } */
+
     if (y % 2 === 0){
         x = Math.floor(regularX / (tileWidth * 4 / 3));
     } else {
