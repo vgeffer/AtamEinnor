@@ -23,13 +23,18 @@ module.exports = function(httpServer){
         });
     });
 
+    //Define variables used across the code
+    let usr_nick = "";
+    let current_room = null;
+    let parsed_token = null;
+
+    //Log the socket closing
+    wss.on("close", function() {
+
+    });
+
     //Handle user's connection
     wss.on("connection", function(ws){
-
-        //Define variables used across the code
-        let usr_nick = "";
-        let current_room = null;
-        let parsed_token = null;
 
         //Function, that will parse and send object
         ws.json = function (data){
@@ -162,35 +167,51 @@ module.exports = function(httpServer){
                     }
                 break;
 
+                //Handle player input
                 case "player_action":
+
+                    //Check, if the player is connected
                     if(current_room != null && typeof(payload.content) != "undefined") {
+                        
+                        //if yes, parse the action
                         player.ParsePlayerAction(payload.content, current_room, usr_nick, ws);
                     }
                 break;
 
+                //Save the player's workers
                 case "save_workers":
 
+                    //Check the type of input
                     if (typeof(payload.dcount) == "number" && typeof(payload.gcount) == "number") return;
-                    for(let i = 0; i < current_room.pcount; i++) {
 
-                        if(current_room.players[i].pnick == usr_nick) {
-                            for(let g = 0; g < payload.gcount; g++)
+                    //Get the player id
+                    for (let i = 0; i < current_room.pcount; i++) {
+
+                        //Save the workers
+                        if (current_room.players[i].pnick == usr_nick) {
+                            for (let g = 0; g < payload.gcount; g++)
                                 current_room.players[i].workers.push({type: "gnome", x: 0, y: 0, tx: 0, ty: 0, dir: 0, a: 0, inv: {torch: 0, supports: 0, ladder: 0, ores: {crystal: 0, diamond: 0}}});
-                            for(let d = 0; d < payload.dcount; d++) 
+                            for (let d = 0; d < payload.dcount; d++) 
                                 current_room.players[i].workers.push({type: "dwarf", x: 0, y: 0, tx: 0, ty: 0, dir: 0, a: 0, inv: {torch: 0, supports: 0, ladder: 0, ores: {crystal: 0, diamond: 0}}});
                      
-                            
+                            //Inform the players
                             ws.json({type: "workers", content: current_room.players[i].workers});
                             break;
                         }
                     }
 
-                    if(!current_room.room_running){
-                        if(current_room.spcount == current_room.pcount) {
+                    //Check, if the room is running
+                    if (!current_room.room_running) {
+
+                        //If not, check if it could be started
+                        if (current_room.spcount == current_room.pcount) {
                             room.start_room_clock(current_room);
                         }
 
-                        else if(current_room.spcount >= 2 * (current_room.pcount / 3)) {
+                        //If not, check if atleast 2/3 of the players have alredy joined
+                        else if (current_room.spcount >= 2 * (current_room.pcount / 3)) {
+                            
+                            //If yes, ask the host, if the game could be started
                             current_room.players[0].socket.send(
                                 JSON.stringify({
                                     type: "ask_for_start",
@@ -202,6 +223,7 @@ module.exports = function(httpServer){
                     }
                 break;
 
+                //If any unknown command is recived, throw an error
                 default:
                     ws.error("payload type unknown:" + payload.type);
                 break;
@@ -212,7 +234,7 @@ module.exports = function(httpServer){
 }
 
 
-
+//Force close the socket with an error
 exports.force_conn_end = function(socket, msg){
     socket.send(
         JSON.parse({

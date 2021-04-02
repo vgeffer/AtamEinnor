@@ -2,7 +2,7 @@
 const jwt = require('jsonwebtoken');
  
 //Private key of JWT signature generator
-const private_key = "2598e6536e5217aeadacf84ddf8095a40c560e8576b3622e78dcdd3f9ba5c2db";
+const private_key = "9a56e17dfa19b24dfe06021ab41bd9da969693e8e177d3e4cc17b0a7ac36b105";
 
 //Function, that verifies, if supplied JWT is valid one
 //If it's valid, return decoded version

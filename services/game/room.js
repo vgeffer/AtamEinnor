@@ -47,7 +47,7 @@ exports.create_room = function(player_count, turn_count) {
 			money_count: 0, //Player's amount of money
 			workers: [], //Player's miners
 			action_queue: [], //Queue, that holds actions currently beeing executed
-			input_queue: [] //Queue, that holds actions coming over from player
+			input_queue: [[], [], []] //Queue, that holds actions coming over from player
 		};
 	}
 	

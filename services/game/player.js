@@ -1,4 +1,6 @@
 
+
+//Function, that parses player input
 exports.ParsePlayerAction = function(action, room, nick, ws) {
     if (!room.room_running){
         return;
@@ -65,23 +67,69 @@ exports.ParsePlayerAction = function(action, room, nick, ws) {
         break;
 
         case "use-item":
+            //action.unitid
+            //action.x, action.y
+            //action.item
 
+            //Check, if everything is valid
+            if (typeof(action.unitid) != "number" || action.unitid < 0 || action.unitid > 2) return;
+            if (typeof(action.x) != "number" || action.x < 0 || action.x > room.world.size_x) return;
+            if (typeof(action.y) != "number" || action.y < 0 || action.y > room.world.size_y) return;
+
+
+            let item = "";
+
+            //Check, if the item is valid
+            if (action.item == "support") item = "supports";
+            if (action.item == "torch") item = "torch";
+            if (action.item == "ladder") item = "ladder";
+
+            if (item == "") return;
+
+            //Check, if the player has the item
+            if (room.players[id].workers[action.unitid].inv[item] < 0) return;
+
+            room.players[id].input_queue[action.unitid] = {type: "move", x: action.x, y: action.y, uid: action.unitid, item: action.item};
         break;
 
         case "move-player":
-        
+            //action.unitid
+            //action.x, action.y
+
+            if(typeof(action.unitid) != "number" || action.unitid < 0 || action.unitid > 2) return;
+            if(typeof(action.x) != "number" || action.x < 0 || action.x > room.world.size_x) return;
+            if(typeof(action.y) != "number" || action.y <  -1 || action.y > room.world.size_y) return; //-1 is the store
+
+
+            room.players[id].input_queue[action.unitid] = {type: "move", x: action.x, y: action.y, uid: action.unitid};
+
         break;
 
-        case "dig-burry-me":
+        case "dig":
+            //action.unitid
+            //action.x, action.y
+            if(typeof(action.unitid) != "number" || action.unitid < 0 || action.unitid > 2) return;
+            if(typeof(action.x) != "number" || action.x < 0 || action.x > room.world.size_x) return;
+            if(typeof(action.y) != "number" || action.y < 0 || action.y > room.world.size_y) return;
 
+
+            room.players[id].input_queue[action.unitid] = {type: "dig", x: action.x, y: action.y, uid: action.unitid};
         break;
 
         case "gather-ore":
+            //action.unitid
+            //action.x, action.y
+            if(typeof(action.unitid) != "number" || action.unitid < 0 || action.unitid > 2) return;
+            if(typeof(action.x) != "number" || action.x < 0 || action.x > room.world.size_x) return;
+            if(typeof(action.y) != "number" || action.y < 0 || action.y > room.world.size_y) return;
 
+
+            room.players[id].input_queue[action.unitid] = {type: "use", x: action.x, y: action.y, uid: action.unitid};
         break;
     }
 }
 
+//Function, that parses round tick
 exports.RoundTick = function(room) {
 
 
@@ -123,7 +171,6 @@ exports.RoundTick = function(room) {
 
 
     for (let i = 0; i < room.spcount; i++) {
-        //Parse Queues
             
         //So no errors would be thrown
         let block = null;
@@ -141,7 +188,6 @@ exports.RoundTick = function(room) {
                 case "dig":
                     //get the block and the side that's beeing dug
                     block = room.world.covers[room.players[i].action_queue[j].y * room.world.size_x + room.players[i].action_queue[j].x];
-                    side = room.players[i].action_queue[j].side;
 
                     //check if the block has already been mined
                     if (block.hardness === 0) break;
@@ -226,15 +272,15 @@ exports.RoundTick = function(room) {
                 case "use":
 
                     //check, if the tile is dug
-                    if(room.world.covers[room.players[i].action_queue[j].target.y * room.world.size_x + room.players[i].action_queue[j].target.x].hardness > 0)
+                    if(room.world.covers[room.players[i].action_queue[j].y * room.world.size_x + room.players[i].action_queue[j].x].hardness > 0)
                         break;
 
                     //check, if player and target is at the same tile
-                    if(room.players[i].workers[unit_id].x == room.players[i].action_queue[j].target.x &&
-                       room.players[i].workers[uint_id].y == room.players[i].action_queue[j].target.y) {
+                    if(room.players[i].workers[unit_id].x == room.players[i].action_queue[j].x &&
+                       room.players[i].workers[uint_id].y == room.players[i].action_queue[j].y) {
 
                         //get the target block
-                        block = room.world.covers[room.players[i].action_queue[j].target.y * room.world.size_x + room.players[i].action_queue[j].target.x];
+                        block = room.world.covers[room.players[i].action_queue[j].y * room.world.size_x + room.players[i].action_queue[j].x];
 
                         //save data
                         block.item = room.players[i].action_queue[j].item;
@@ -257,13 +303,30 @@ exports.RoundTick = function(room) {
     for (let i = 0; i < room.spcount; i++) {
         for (let j = 0; j < 3; j++) {
             room.players[i].action_queue[j] = room.players[i].input_queue[j].shift(); //undefined if non-existent
-        }
+        
+        
+            if (room.players[i].action_queue[j] == undefined) room.players[i].workers[j].a = 0; //idle
+            else if (room.players[i].action_queue[j].type == "move") { 
+                room.players[i].workers[j].a = 1; 
+                room.players[i].workers[j].tx = room.players[i].action_queue[j].x;
+                room.players[i].workers[j].ty = room.players[i].action_queue[j].y;
 
-        //TODO ADD THINGS
+                if(room.players[i].action_queue[j].x == -1) {
+                    room.players[i].socket.send(JSON.stringify({type: "open_shop", uid: j}));
+                }
+            }//move, set the target
+
+            else if (room.players[i].action_queue[j].type == "dig" || 
+                     room.players[i].action_queue[j].type == "collect") room.players[i].workers[j].a = 2; //dig, collect
+            else if (room.players[i].action_queue[j].type == "use") {
+                room.players[i].workers[j].a = 2;
+                room.playes[i].workers[j].inv[room.players[i].action_queue[j].item == "support" ? "supports" : room.players[i].action_queue[j].item]--;
+            }//use, remove item
+        }
     }
 
 
-
+ //2*dlzka/pocet-1
     //Generate new prices
     room.current_prices = {
         crystal: randomIntFromInterval(8, 32), 
@@ -273,12 +336,18 @@ exports.RoundTick = function(room) {
         supports: randomIntFromInterval(8, 16)
     };
 
-    //check for tile falls
-    for (let tile_id = 0; tile_id < room.world.size_x * room.world.size_y; tile_id++) {
+    if (room.turns % 4 == 0) {
+        for (let x = 0; x < room.world.size_x; x++) {
+            for (let y = 0; y < room.world.size_y; y++) {
 
-
-
-
+                if (checkTileForFall(room.world.covers, 48, 32, x, y))
+                {
+                    if(room.world.covers[y * room.world.size_x + x].sprite == 0) room.world.covers[y * room.world.size_x + x].hardness = 1;
+                    if(room.world.covers[y * room.world.size_x + x].sprite == 1) room.world.covers[y * room.world.size_x + x].hardness = 2;
+                    if(room.world.covers[y * room.world.size_x + x].sprite == 2) room.world.covers[y * room.world.size_x + x].hardness = 4;
+                }
+            }
+        }
     }
 
 
@@ -290,7 +359,8 @@ exports.RoundTick = function(room) {
                 type: room.players[i].workers[u].type,
                 action: room.players[i].workers[u].a,
                 tx: room.players[i].workers[u].tx,
-                ty: room.players[i].workers[u].ty
+                ty: room.players[i].workers[u].ty,
+                inv: room.players[i].workers[u].inv
             };
         }
     }
@@ -309,6 +379,7 @@ exports.RoundTick = function(room) {
     });
 }
 
+//Function, that sends message to every player in the room
 function MassSend(room, payload){
     for (let i = 0; i < room.spcount; i++) {
         room.room_running = true;
@@ -316,10 +387,13 @@ function MassSend(room, payload){
     }
 }
 
+//Function, that returns a random nuber from n to m
 function randomIntFromInterval(min, max) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+
+//Function, that checks if the tile should fall (don't really feel commenting)
 function checkTileForFall(world, width, height, x, y){
     if (checkOutOfBounds(width, height, x, y)) return false;
     
