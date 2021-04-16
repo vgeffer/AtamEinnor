@@ -70,7 +70,7 @@ exports.verify_joinability = function(room_id) {
 	let vroom = rooms.get(room_id);
 
 	//Check, if the room is joinable
-	if(vroom === undefined || vroom.spcount == vroom.pcount || vroom.pl_win == -1) return false;
+	if(vroom === undefined || vroom.spcount == vroom.pcount || vroom.pl_win != -1) return false;
 	return true;
 }
 
